@@ -21,7 +21,7 @@ Desenvolver uma **calculadora de impacto ambiental** capaz de:
 
 ---
 
-## 🚨 Problema
+## 🚨 Problema:
 
 Atualmente, muitas empresas ainda utilizam **cartões físicos para distribuição de benefícios**, o que gera impactos ambientais significativos.
 

@@ -60,7 +60,17 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 - Apresentação de **indicadores ambientais**
 
 ---
-
+## ENTREGA 1:
 ## 🎥 Screencast
 
 https://youtu.be/SQf9WNKf4Dc
+
+## 📖 Histórias do Usuário
+
+
+## 🤖 Protótipo(figma)
+
+<img width="579" height="411" alt="image" src="https://github.com/user-attachments/assets/3452c956-31a7-4248-8eff-c041ac92738d" /> <img width="582" height="412" alt="image" src="https://github.com/user-attachments/assets/a56443d8-2210-4c33-b9ca-89be7b580605" />
+
+[Acesso ao Protótipo](https://www.figma.com/design/RvPYGINYFSBpAgE24C5KMr/Untitled?node-id=9-268&t=xy7N0eqQJVLpM0VP-0)
+

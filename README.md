@@ -67,6 +67,8 @@ https://youtu.be/SQf9WNKf4Dc
 
 ## 📖 Histórias do Usuário
 
+<a href="https://docs.google.com/document/d/1fcP53fYztpmlGFBK54jSPlQQTDfIzIZsheAbDZFWVyI/edit?usp=sharing">
+    <img src="https://img.shields.io/badge/Histórias-483D8B?style=for-the-badge&logo=google&logoColor=white" alt="Histórias Usuário"/></a>
 
 ## 🤖 Protótipo(figma)
 

@@ -63,7 +63,13 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 ## ENTREGA 1:
 ## 🎥 Screencast
 
-https://youtu.be/SQf9WNKf4Dc
+[DEMONSTRAÇÃO FIGMA](https://youtu.be/SQf9WNKf4Dc)
+
+### Histórias 1 e 2:
+História de usuário 1 - Informar quantidade de transações
+História de usuário 2 — Executar cálculo da simulação
+
+[ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
 
 ## 📖 Histórias do Usuário
 

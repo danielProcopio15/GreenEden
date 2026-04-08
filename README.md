@@ -79,8 +79,8 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 ---
 ## ENTREGA 2:
 ### Screencast Histórias 1 e 2:
-História de usuário 1 - Informar quantidade de transações
-História de usuário 2 — Executar cálculo da simulação
+- História de usuário 1: Informar quantidade de transações
+- História de usuário 2: Executar cálculo da simulação
 
 [ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
 

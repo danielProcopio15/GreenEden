@@ -31,19 +31,30 @@ public class CalculadoraController {
 
 
     @PostMapping("/calcular")
-    public String calcularImpacto(@RequestParam("quantidade") Integer quantidade, Model model) {
+    public String calcularImpacto(
+            @RequestParam("quantidadeCartoes") Integer quantidadeCartoes,
+            @RequestParam("quantidadeTransacoes") Integer quantidadeTransacoes,
+            @RequestParam("distanciaLogistica") Double distanciaLogistica,
+            @RequestParam("tipoTransporte") String tipoTransporte,
+            Model model) {
 
-        if (quantidade == null || quantidade < 1) {
-            model.addAttribute("erro", "A quantidade deve ser um número maior que zero.");
+        if (quantidadeCartoes == null || quantidadeCartoes < 1) {
+            model.addAttribute("erro", "A quantidade de cartões deve ser um número maior que zero.");
+            return "calculadora";
+        }
+        if (quantidadeTransacoes == null || quantidadeTransacoes < 0) {
+            model.addAttribute("erro", "A quantidade de transações não pode ser negativa.");
+            return "calculadora";
+        }
+        if (distanciaLogistica == null || distanciaLogistica <= 0) {
+            model.addAttribute("erro", "A distância logística deve ser maior que zero.");
             return "calculadora";
         }
 
-
-
         try {
-            ImpactoAmbiental impacto = calculadoraService.calcularImpacto(quantidade);
+            ImpactoAmbiental impacto = calculadoraService.calcularImpacto(
+                    quantidadeCartoes, quantidadeTransacoes, distanciaLogistica, tipoTransporte);
             model.addAttribute("impacto", impacto);
-            model.addAttribute("quantidade", impacto.getQuantidadeTransacoes());
             return "resultado";
 
         } catch (Exception e) {

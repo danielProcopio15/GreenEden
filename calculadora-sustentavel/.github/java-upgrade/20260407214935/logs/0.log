@@ -1,0 +1,420 @@
+2026-04-07T21:49:35.888Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:49:35.889Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "event": "precheckCompleted",
+  "phase": "precheck",
+  "status": "succeeded"
+}}).
+2026-04-07T21:49:35.890Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:49:35.896Z [INFO] Project c:\Users\danie\OneDrive\Área de Trabalho\GreenEden\calculadora-sustentavel is a maven project, try to get java version from pom.xml
+2026-04-07T21:49:35.897Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'precheckCompleted' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:49:35.898Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:49:35.901Z [INFO] Project java version: 17
+2026-04-07T21:49:35.902Z [INFO] Maven project detected.
+2026-04-07T21:49:35.903Z [INFO] Build tool type: mvnw
+2026-04-07T21:49:36.430Z [INFO] JDK: {
+  "name": "java",
+  "path": "C:\\Program Files\\Java\\jdk-17\\bin",
+  "version": "17"
+}
+2026-04-07T21:49:36.431Z [INFO] Build tool: {
+  "name": "mvnw",
+  "path": ".",
+  "version": ""
+}
+2026-04-07T21:49:36.431Z [INFO] Project config: {
+  "buildTool": {
+    "path": ".",
+    "name": "mvnw",
+    "version": ""
+  },
+  "jdk": {
+    "path": "C:\\Program Files\\Java\\jdk-17\\bin",
+    "name": "java",
+    "version": "17"
+  },
+  "name": "calculadora-sustentavel",
+  "dir": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel"
+}
+2026-04-07T21:49:55.337Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:49:55.338Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "planGenerationStarted",
+  "phase": "plan",
+  "sessionId": "20260407214935",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "status": "succeeded"
+}}).
+2026-04-07T21:49:55.339Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:49:55.339Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:49:55.340Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:49:55.376Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:49:55.377Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "planGenerationStarted",
+  "phase": "plan",
+  "sessionId": "20260407214935",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "status": "succeeded"
+}}).
+2026-04-07T21:49:55.377Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:49:55.378Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'planGenerationStarted' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:49:55.378Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:50:24.750Z [INFO] ---------------------prepare appmod-list-jdks----------------------
+2026-04-07T21:50:24.750Z [INFO] [Tool.prepareInvocation]({name: appmod-list-jdks, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:50:24.751Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:50:24.751Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "List jdks"
+}}).
+2026-04-07T21:50:24.752Z [INFO] ----------------------prepared appmod-list-jdks----------------------
+2026-04-07T21:50:24.802Z [INFO] ----------------------invoke appmod-list-jdks----------------------
+2026-04-07T21:50:24.803Z [INFO] [Tool.invoke]({name: appmod-list-jdks, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:50:24.803Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:50:24.833Z [INFO] [Tool.invoke]({result: {
+  "message": "We found following jdks in your system:\n\n1. Java 17.0.12\n   📁 Path: C:\\Program Files\\Java\\jdk-17\\bin\n   🏷️ Source: PATH,JAVA_HOME\n\n2. Java 17.0.11\n   📁 Path: C:\\Users\\danie\\.jdks\\corretto-17.0.11\\bin\n   🏷️ Source: others\n\n3. Java 17.0.11\n   📁 Path: C:\\Users\\danie\\.jdks\\graalvm-jdk-17.0.11\\bin\n   🏷️ Source: others\n\n4. Java 21.0.7\n   📁 Path: C:\\Users\\danie\\.jdks\\ms-21.0.7\\bin\n   🏷️ Source: others\n\n5. Java 22.0.1\n   📁 Path: C:\\Users\\danie\\.jdks\\openjdk-22.0.1\\bin\n   🏷️ Source: others\n\nTotal: 5 JDK installation(s) found"
+}}).
+2026-04-07T21:50:24.833Z [INFO] ----------------------invoked appmod-list-jdks----------------------
+2026-04-07T21:51:37.422Z [INFO] ---------------------prepare appmod-list-mavens----------------------
+2026-04-07T21:51:37.423Z [INFO] [Tool.prepareInvocation]({name: appmod-list-mavens, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:51:37.424Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:51:37.425Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "List mavens"
+}}).
+2026-04-07T21:51:37.426Z [INFO] ----------------------prepared appmod-list-mavens----------------------
+2026-04-07T21:51:37.471Z [INFO] ----------------------invoke appmod-list-mavens----------------------
+2026-04-07T21:51:37.471Z [INFO] [Tool.invoke]({name: appmod-list-mavens, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:51:37.471Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:51:37.478Z [INFO] [Tool.invoke]({result: {
+  "message": "No Maven installations found."
+}}).
+2026-04-07T21:51:37.479Z [INFO] ----------------------invoked appmod-list-mavens----------------------
+2026-04-07T21:52:32.919Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:52:32.920Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "planInitialized",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:32.920Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:52:32.921Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:52:32.921Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:52:32.966Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:52:32.966Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "planInitialized",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:32.966Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:52:32.967Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'planInitialized' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:52:32.968Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:52:35.259Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:52:35.260Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "environmentAnalyzed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:35.260Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:52:35.261Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:52:35.262Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:52:35.351Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:52:35.351Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "environmentAnalyzed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:35.352Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:52:35.354Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'environmentAnalyzed' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:52:35.355Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:52:37.836Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:52:37.837Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "dependenciesAnalyzed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:37.837Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:52:37.838Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:52:37.838Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:52:37.881Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:52:37.882Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "dependenciesAnalyzed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:52:37.882Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:52:37.884Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'dependenciesAnalyzed' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:52:37.885Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:55:12.967Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:55:12.968Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "upgradePathDesigned",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:12.969Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:55:12.969Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:55:12.969Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:55:13.029Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:55:13.029Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "upgradePathDesigned",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:13.030Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:55:13.031Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'upgradePathDesigned' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:55:13.031Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:55:40.939Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:55:40.940Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "planReviewed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:40.940Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:55:40.941Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:55:40.943Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:55:41.056Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:55:41.057Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "planReviewed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:41.057Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:55:41.059Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'planReviewed' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:55:41.059Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:55:43.629Z [INFO] ---------------------prepare appmod-confirm-upgrade-plan----------------------
+2026-04-07T21:55:43.630Z [INFO] [Tool.prepareInvocation]({name: appmod-confirm-upgrade-plan, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:55:43.630Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:55:43.632Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Review [upgrade plan](file:///c:/Users/danie/OneDrive/Área de Trabalho/GreenEden/calculadora-sustentavel/.github/java-upgrade/20260407214935/plan.md)",
+  "confirmationMessages": {
+    "title": "Plan generated",
+    "message": "Please review the generated plan and make any necessary adjustments before proceeding. You can modify the generated [`plan.md`](file:///c:/Users/danie/OneDrive/Área de Trabalho/GreenEden/calculadora-sustentavel/.github/java-upgrade/20260407214935/plan.md) directly."
+  }
+}}).
+2026-04-07T21:55:43.633Z [INFO] ----------------------prepared appmod-confirm-upgrade-plan----------------------
+2026-04-07T21:55:49.875Z [INFO] ----------------------invoke appmod-confirm-upgrade-plan----------------------
+2026-04-07T21:55:49.876Z [INFO] [Tool.invoke]({name: appmod-confirm-upgrade-plan, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:55:49.876Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:55:49.876Z [INFO] Upgrade plan confirmed successfully.
+2026-04-07T21:55:49.893Z [INFO] [Tool.invoke]({result: {
+  "message": "Generated plan is reviewed and confirmed by the user! the upgrade process will start now and be tracked in markdown file: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935\\progress.md."
+}}).
+2026-04-07T21:55:49.894Z [INFO] ----------------------invoked appmod-confirm-upgrade-plan----------------------
+2026-04-07T21:55:52.528Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:55:52.529Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "planConfirmed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:52.530Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:55:52.531Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:55:52.532Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:55:52.590Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:55:52.590Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "planConfirmed",
+  "phase": "plan",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:55:52.590Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:55:52.592Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'planConfirmed' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:55:52.593Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:56:20.675Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T21:56:20.676Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "planExecutionStarted",
+  "phase": "execute",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:56:20.676Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:56:20.677Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T21:56:20.677Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T21:56:20.728Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T21:56:20.728Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "planExecutionStarted",
+  "phase": "execute",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded"
+}}).
+2026-04-07T21:56:20.728Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:56:20.841Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'planExecutionStarted' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T21:56:20.842Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T21:56:30.467Z [INFO] ---------------------prepare appmod-install-jdk----------------------
+2026-04-07T21:56:30.468Z [INFO] [Tool.prepareInvocation]({name: appmod-install-jdk, input: {
+  "sessionId": "20260407214935",
+  "version": "25"
+}}).
+2026-04-07T21:56:30.468Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:56:30.772Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Download and install JDK",
+  "confirmationMessages": {
+    "title": "Download and install JDK",
+    "message": "\nThis tool will download and install JDK 25 from Adoptium with below settings.\n- **Version**: 25\n- **Vendor**: Adoptium\n- **Url**: https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_windows_hotspot_25.0.2_10.zip\n- **Destination**: `C:\\Users\\danie\\.jdk`\n- **Checksum**: SHA256: 06ac5f5444a1269dd11d11cbb7ab6ebaecedc60dc1caca82cdb56f29100b7b8c\n- **Signature**: https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_windows_hotspot_25.0.2_10.zip.sig\n- **Public Key**: https://packages.adoptium.net/artifactory/api/gpg/key/public\n"
+  }
+}}).
+2026-04-07T21:56:30.773Z [INFO] ----------------------prepared appmod-install-jdk----------------------
+2026-04-07T21:56:43.425Z [INFO] ----------------------invoke appmod-install-jdk----------------------
+2026-04-07T21:56:43.426Z [INFO] [Tool.invoke]({name: appmod-install-jdk, input: {
+  "sessionId": "20260407214935",
+  "version": "25"
+}}).
+2026-04-07T21:56:43.426Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:57:00.743Z [INFO] [Tool.invoke]({result: {
+  "result": {
+    "name": "java",
+    "path": "C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+    "version": "25"
+  },
+  "message": "JDK 25 is installed at C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+  "telemetry": {
+    "tool": "JDK",
+    "version": "25"
+  }
+}}).
+2026-04-07T21:57:00.743Z [INFO] ----------------------invoked appmod-install-jdk----------------------
+2026-04-07T21:57:04.186Z [INFO] ---------------------prepare appmod-list-jdks----------------------
+2026-04-07T21:57:04.186Z [INFO] [Tool.prepareInvocation]({name: appmod-list-jdks, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:57:04.187Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T21:57:04.187Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "List jdks"
+}}).
+2026-04-07T21:57:04.188Z [INFO] ----------------------prepared appmod-list-jdks----------------------
+2026-04-07T21:57:04.246Z [INFO] ----------------------invoke appmod-list-jdks----------------------
+2026-04-07T21:57:04.246Z [INFO] [Tool.invoke]({name: appmod-list-jdks, input: {
+  "sessionId": "20260407214935"
+}}).
+2026-04-07T21:57:04.247Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T21:57:04.569Z [INFO] [Tool.invoke]({result: {
+  "message": "We found following jdks in your system:\n\n1. Java 17.0.12\n   📁 Path: C:\\Program Files\\Java\\jdk-17\\bin\n   🏷️ Source: PATH,JAVA_HOME\n\n2. Java 17.0.11\n   📁 Path: C:\\Users\\danie\\.jdks\\corretto-17.0.11\\bin\n   🏷️ Source: others\n\n3. Java 17.0.11\n   📁 Path: C:\\Users\\danie\\.jdks\\graalvm-jdk-17.0.11\\bin\n   🏷️ Source: others\n\n4. Java 21.0.7\n   📁 Path: C:\\Users\\danie\\.jdks\\ms-21.0.7\\bin\n   🏷️ Source: others\n\n5. Java 22.0.1\n   📁 Path: C:\\Users\\danie\\.jdks\\openjdk-22.0.1\\bin\n   🏷️ Source: others\n\n6. Java 25.0.2\n   📁 Path: C:\\Users\\danie\\.jdk\\jdk-25\\bin\n   🏷️ Source: install\n\nTotal: 6 JDK installation(s) found"
+}}).
+2026-04-07T21:57:04.569Z [INFO] ----------------------invoked appmod-list-jdks----------------------
+2026-04-07T22:32:22.732Z [INFO] ---------------------prepare appmod-report-event----------------------
+2026-04-07T22:32:22.734Z [INFO] [Tool.prepareInvocation]({name: appmod-report-event, input: {
+  "event": "environmentSetup",
+  "phase": "execute",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded",
+  "details": {
+    "jdkPath": "C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+    "buildToolPath": "."
+  }
+}}).
+2026-04-07T22:32:22.734Z [INFO] [Tool.prepareInvocation] do prepare invocation.
+2026-04-07T22:32:22.735Z [INFO] [Tool.prepareInvocation]({result: {
+  "invocationMessage": "Report upgrade event"
+}}).
+2026-04-07T22:32:22.735Z [INFO] ----------------------prepared appmod-report-event----------------------
+2026-04-07T22:32:22.788Z [INFO] ----------------------invoke appmod-report-event----------------------
+2026-04-07T22:32:22.788Z [INFO] [Tool.invoke]({name: appmod-report-event, input: {
+  "event": "environmentSetup",
+  "phase": "execute",
+  "projectPath": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel",
+  "sessionId": "20260407214935",
+  "status": "succeeded",
+  "details": {
+    "jdkPath": "C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+    "buildToolPath": "."
+  }
+}}).
+2026-04-07T22:32:22.789Z [INFO] [Tool.invoke] do invoke.
+2026-04-07T22:32:22.791Z [INFO] Project c:\Users\danie\OneDrive\Área de Trabalho\GreenEden\calculadora-sustentavel is a maven project, try to get java version from pom.xml
+2026-04-07T22:32:22.792Z [INFO] [Tool.invoke]({result: {
+  "message": "Event 'environmentSetup' reported!\nSession ID: 20260407214935,\nSession Dir: c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel\\.github\\java-upgrade\\20260407214935"
+}}).
+2026-04-07T22:32:22.793Z [INFO] ----------------------invoked appmod-report-event----------------------
+2026-04-07T22:32:22.794Z [INFO] Project java version: 17
+2026-04-07T22:32:22.796Z [INFO] Maven project detected.
+2026-04-07T22:32:22.797Z [INFO] Build tool type: mvnw
+2026-04-07T22:32:22.797Z [INFO] JDK: {
+  "name": "java",
+  "path": "C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+  "version": "17"
+}
+2026-04-07T22:32:22.798Z [INFO] Build tool: {
+  "name": "mvnw",
+  "path": ".",
+  "version": ""
+}
+2026-04-07T22:32:22.798Z [INFO] Project config: {
+  "buildTool": {
+    "path": ".",
+    "name": "mvnw",
+    "version": ""
+  },
+  "jdk": {
+    "path": "C:\\Users\\danie\\.jdk\\jdk-25\\bin",
+    "name": "java",
+    "version": "17"
+  },
+  "name": "calculadora-sustentavel",
+  "dir": "c:\\Users\\danie\\OneDrive\\Área de Trabalho\\GreenEden\\calculadora-sustentavel"
+}

@@ -85,17 +85,67 @@
                     </div>
 
                     <form th:action="@{/calcular}" method="post" class="needs-validation" novalidate>
-                        <div class="mb-4">
-                            <label class="form-label">Quantidade de transações</label>
-                            <input type="number" 
-                                   name="quantidade" 
-                                   class="form-control form-control-lg"
-                                   placeholder="Ex: 210"
-                                   min="1"
-                                   required>
-                            <div class="form-text mt-2">
-                                <i class="fas fa-info-circle"></i> 
-                                Este valor representa o número de transações com cartão físico no período analisado.
+
+                        <div class="row g-4 mb-4">
+                            <!-- Quantidade de cartões -->
+                            <div class="col-md-6">
+                                <label class="form-label">Quantidade de cartões emitidos</label>
+                                <input type="number"
+                                       name="quantidadeCartoes"
+                                       class="form-control form-control-lg"
+                                       placeholder="Ex: 10000"
+                                       min="1"
+                                       required>
+                                <div class="form-text mt-1">
+                                    <i class="fas fa-credit-card"></i>
+                                    Número de cartões físicos produzidos e distribuídos.
+                                </div>
+                            </div>
+
+                            <!-- Quantidade de transações -->
+                            <div class="col-md-6">
+                                <label class="form-label">Quantidade de transações realizadas</label>
+                                <input type="number"
+                                       name="quantidadeTransacoes"
+                                       class="form-control form-control-lg"
+                                       placeholder="Ex: 500000"
+                                       min="0"
+                                       required>
+                                <div class="form-text mt-1">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    Total de transações com os cartões no período.
+                                </div>
+                            </div>
+
+                            <!-- Distância logística -->
+                            <div class="col-md-6">
+                                <label class="form-label">Distância logística média (km)</label>
+                                <input type="number"
+                                       name="distanciaLogistica"
+                                       class="form-control form-control-lg"
+                                       placeholder="Ex: 500"
+                                       min="1"
+                                       step="any"
+                                       required>
+                                <div class="form-text mt-1">
+                                    <i class="fas fa-route"></i>
+                                    Distância média percorrida na distribuição dos cartões.
+                                </div>
+                            </div>
+
+                            <!-- Tipo de transporte -->
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de transporte utilizado</label>
+                                <select name="tipoTransporte" class="form-control form-control-lg" required>
+                                    <option value="" disabled selected>Selecione...</option>
+                                    <option value="RODOVIARIO">🚚 Rodoviário (caminhão)</option>
+                                    <option value="AEREO">✈️ Aéreo (avião de carga)</option>
+                                    <option value="FERROVIARIO">🚂 Ferroviário (trem)</option>
+                                </select>
+                                <div class="form-text mt-1">
+                                    <i class="fas fa-truck"></i>
+                                    Modal predominante na distribuição dos cartões.
+                                </div>
                             </div>
                         </div>
 

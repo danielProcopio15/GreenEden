@@ -77,7 +77,7 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 [Acesso ao Protótipo](https://www.figma.com/design/RvPYGINYFSBpAgE24C5KMr/Untitled?node-id=9-268&t=xy7N0eqQJVLpM0VP-0)
 
 ---
-##ENTREGA 2:
+## ENTREGA 2:
 ### Screencast Histórias 1 e 2:
 História de usuário 1 - Informar quantidade de transações
 História de usuário 2 — Executar cálculo da simulação

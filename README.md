@@ -65,12 +65,6 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 
 [DEMONSTRAÇÃO FIGMA](https://youtu.be/SQf9WNKf4Dc)
 
-### Histórias 1 e 2:
-História de usuário 1 - Informar quantidade de transações
-História de usuário 2 — Executar cálculo da simulação
-
-[ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
-
 ## 📖 Histórias do Usuário
 
 <a href="https://docs.google.com/document/d/1fcP53fYztpmlGFBK54jSPlQQTDfIzIZsheAbDZFWVyI/edit?usp=sharing">
@@ -81,4 +75,12 @@ História de usuário 2 — Executar cálculo da simulação
 <img width="579" height="411" alt="image" src="https://github.com/user-attachments/assets/3452c956-31a7-4248-8eff-c041ac92738d" /> <img width="582" height="412" alt="image" src="https://github.com/user-attachments/assets/a56443d8-2210-4c33-b9ca-89be7b580605" />
 
 [Acesso ao Protótipo](https://www.figma.com/design/RvPYGINYFSBpAgE24C5KMr/Untitled?node-id=9-268&t=xy7N0eqQJVLpM0VP-0)
+
+---
+##ENTREGA 2:
+### Screencast Histórias 1 e 2:
+História de usuário 1 - Informar quantidade de transações
+História de usuário 2 — Executar cálculo da simulação
+
+[ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
 

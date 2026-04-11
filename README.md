@@ -9,6 +9,10 @@ O projeto foi criado a partir de um desafio proposto pela Edenred, que busca dem
 A aplicação tem como objetivo fornecer **dados claros e mensuráveis** que evidenciem como a migração para soluções digitais pode contribuir para a **redução de impactos ambientais**, como emissões de carbono, uso de plástico e consumo de papel.
 
 ---
+<a href="https://sites.google.com/cesar.school/projetos-3-si/home" target="_blank">
+  <img src="https://img.shields.io/badge/Google%20Sites-GreenEden-34A853?style=for-the-badge&logo=google&logoColor=white" alt="Google Sites - Projeto"/>
+</a>
+
 
 ## 🎯 Objetivo
 

@@ -1,89 +1,52 @@
 package com.greeneden.calculadora_sustentavel.model;
 
-public class ImpactoAmbiental {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-    // Entradas
-    private int quantidadeCartoes;
-    private int quantidadeTransacoes;
-    private double distanciaLogistica;
-    private String tipoTransporte;
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ImpactoAmbiental extends EmissoesCO2 {
 
-    // CO₂ por etapa (kg CO₂e)
-    private double co2Producao;
-    private double co2Embalagem;
-    private double co2Logistica;
-    private double co2Total;
+    private RecursosConsumidos recursos;
+    private EquivalenciasAmbientais equivalencias;
+    private MetadadosCalculo metadados;
 
-    // Cenário digital
-    private double co2CenarioDigital;
-    private double reducaoCO2Digital;
+    public ImpactoAmbiental(EmissoesCO2 emissoes,
+                             RecursosConsumidos recursos,
+                             EquivalenciasAmbientais equivalencias,
+                             MetadadosCalculo metadados) {
+        // propagate EmissoesCO2 (which already carries EntradaCalculo fields)
+        setQuantidadeCartoes(emissoes.getQuantidadeCartoes());
+        setFrequenciaRemessasAno(emissoes.getFrequenciaRemessasAno());
+        setTipoMaterial(emissoes.getTipoMaterial());
+        setVidaUtilTransacoesPorCartao(emissoes.getVidaUtilTransacoesPorCartao());
+        setQuantidadeTransacoes(emissoes.getQuantidadeTransacoes());
+        setTipoTransacaoDigital(emissoes.getTipoTransacaoDigital());
+        setOrigemFabrica(emissoes.getOrigemFabrica());
+        setCepDestino(emissoes.getCepDestino());
+        setDistanciaLogistica(emissoes.getDistanciaLogistica());
+        setTipoTransporte(emissoes.getTipoTransporte());
+        setCenarioDescarte(emissoes.getCenarioDescarte());
 
-    // Recursos consumidos
-    private double consumoPlastico;   // kg
-    private double consumoPapel;      // kg
-    private double consumoAgua;       // litros
-    private double consumoEnergia;    // kWh
+        setCo2Producao(emissoes.getCo2Producao());
+        setCo2Embalagem(emissoes.getCo2Embalagem());
+        setCo2Logistica(emissoes.getCo2Logistica());
+        setCo2FimDeVida(emissoes.getCo2FimDeVida());
+        setCo2Total(emissoes.getCo2Total());
+        setCo2PorTransacaoFisico(emissoes.getCo2PorTransacaoFisico());
+        setCo2ServidorDigital(emissoes.getCo2ServidorDigital());
+        setCo2Telecomunicacoes(emissoes.getCo2Telecomunicacoes());
+        setCo2DispositivoUsuario(emissoes.getCo2DispositivoUsuario());
+        setCo2CenarioDigital(emissoes.getCo2CenarioDigital());
+        setCo2PorTransacaoDigital(emissoes.getCo2PorTransacaoDigital());
+        setReducaoCO2Digital(emissoes.getReducaoCO2Digital());
 
-    // Equivalências
-    private int arvoresSalvas;
-    private int kmCarroEvitado;
-
-    public ImpactoAmbiental(int quantidadeCartoes, int quantidadeTransacoes,
-                            double distanciaLogistica, String tipoTransporte,
-                            double co2Producao, double co2Embalagem, double co2Logistica,
-                            double co2Total, double co2CenarioDigital, double reducaoCO2Digital,
-                            double consumoPlastico, double consumoPapel,
-                            double consumoAgua, double consumoEnergia,
-                            int arvoresSalvas, int kmCarroEvitado) {
-        this.quantidadeCartoes = quantidadeCartoes;
-        this.quantidadeTransacoes = quantidadeTransacoes;
-        this.distanciaLogistica = distanciaLogistica;
-        this.tipoTransporte = tipoTransporte;
-        this.co2Producao = co2Producao;
-        this.co2Embalagem = co2Embalagem;
-        this.co2Logistica = co2Logistica;
-        this.co2Total = co2Total;
-        this.co2CenarioDigital = co2CenarioDigital;
-        this.reducaoCO2Digital = reducaoCO2Digital;
-        this.consumoPlastico = consumoPlastico;
-        this.consumoPapel = consumoPapel;
-        this.consumoAgua = consumoAgua;
-        this.consumoEnergia = consumoEnergia;
-        this.arvoresSalvas = arvoresSalvas;
-        this.kmCarroEvitado = kmCarroEvitado;
+        this.recursos = recursos;
+        this.equivalencias = equivalencias;
+        this.metadados = metadados;
     }
-
-    public int getQuantidadeCartoes() { return quantidadeCartoes; }
-    public int getQuantidadeTransacoes() { return quantidadeTransacoes; }
-    public double getDistanciaLogistica() { return distanciaLogistica; }
-    public String getTipoTransporte() { return tipoTransporte; }
-    public double getCo2Producao() { return co2Producao; }
-    public double getCo2Embalagem() { return co2Embalagem; }
-    public double getCo2Logistica() { return co2Logistica; }
-    public double getCo2Total() { return co2Total; }
-    public double getCo2CenarioDigital() { return co2CenarioDigital; }
-    public double getReducaoCO2Digital() { return reducaoCO2Digital; }
-    public double getConsumoPlastico() { return consumoPlastico; }
-    public double getConsumoPapel() { return consumoPapel; }
-    public double getConsumoAgua() { return consumoAgua; }
-    public double getConsumoEnergia() { return consumoEnergia; }
-    public int getArvoresSalvas() { return arvoresSalvas; }
-    public int getKmCarroEvitado() { return kmCarroEvitado; }
-
-    public void setQuantidadeCartoes(int quantidadeCartoes) { this.quantidadeCartoes = quantidadeCartoes; }
-    public void setQuantidadeTransacoes(int quantidadeTransacoes) { this.quantidadeTransacoes = quantidadeTransacoes; }
-    public void setDistanciaLogistica(double distanciaLogistica) { this.distanciaLogistica = distanciaLogistica; }
-    public void setTipoTransporte(String tipoTransporte) { this.tipoTransporte = tipoTransporte; }
-    public void setCo2Producao(double co2Producao) { this.co2Producao = co2Producao; }
-    public void setCo2Embalagem(double co2Embalagem) { this.co2Embalagem = co2Embalagem; }
-    public void setCo2Logistica(double co2Logistica) { this.co2Logistica = co2Logistica; }
-    public void setCo2Total(double co2Total) { this.co2Total = co2Total; }
-    public void setCo2CenarioDigital(double co2CenarioDigital) { this.co2CenarioDigital = co2CenarioDigital; }
-    public void setReducaoCO2Digital(double reducaoCO2Digital) { this.reducaoCO2Digital = reducaoCO2Digital; }
-    public void setConsumoPlastico(double consumoPlastico) { this.consumoPlastico = consumoPlastico; }
-    public void setConsumoPapel(double consumoPapel) { this.consumoPapel = consumoPapel; }
-    public void setConsumoAgua(double consumoAgua) { this.consumoAgua = consumoAgua; }
-    public void setConsumoEnergia(double consumoEnergia) { this.consumoEnergia = consumoEnergia; }
-    public void setArvoresSalvas(int arvoresSalvas) { this.arvoresSalvas = arvoresSalvas; }
-    public void setKmCarroEvitado(int kmCarroEvitado) { this.kmCarroEvitado = kmCarroEvitado; }
 }

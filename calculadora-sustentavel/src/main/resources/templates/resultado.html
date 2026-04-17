@@ -408,10 +408,183 @@
         </div>
     </div>
 
-    <div class="text-center">
+    <div class="text-center mb-5">
         <a href="/calculadora" class="btn btn-outline-success btn-lg px-5">Nova simulacao</a>
         <a href="/" class="btn btn-success btn-lg px-5 ms-3">Voltar ao Inicio</a>
     </div>
+
+    <!-- FONTES E REFERENCIAS -->
+    <div class="result-card card p-4 mb-5">
+        <h5 class="section-title mb-3">
+            <i class="fas fa-book-open me-2 text-secondary"></i>Fontes e Referencias Cientificas
+        </h5>
+        <p class="text-muted small mb-4">
+            Todos os fatores de emissao e consumo utilizados nesta calculadora sao baseados em publicacoes
+            cientificas, relatorios institucionais e inventarios de ciclo de vida reconhecidos internacionalmente.
+        </p>
+
+        <div class="row g-3">
+
+            <!-- Producao do cartao -->
+            <div class="col-12">
+                <div class="border-start border-danger border-3 ps-3 mb-1">
+                    <div class="fw-semibold text-danger small mb-1">
+                        <i class="fas fa-industry me-1"></i>Producao do Cartao (kg CO&#8322;e/cartao por material)
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>GHG Protocol Corporate Standard</strong> — World Resources Institute / WBCSD.
+                            Escopos 1, 2 e 3 aplicados ao inventario de fabricacao de cartoes PVC.
+                            <a href="https://ghgprotocol.org/corporate-standard" target="_blank" class="text-decoration-none">ghgprotocol.org</a>
+                        </li>
+                        <li>
+                            <strong>Ecoinvent 3.9</strong> — Swiss Centre for Life Cycle Inventories (2023).
+                            Base de dados de ACV: producao de PVC virgem (0,476 kg CO&#8322;e), PVC reciclado pos-consumo (0,286 kg CO&#8322;e) e metal — aco inox/aluminio (1,420 kg CO&#8322;e) por cartao.
+                            <a href="https://ecoinvent.org" target="_blank" class="text-decoration-none">ecoinvent.org</a>
+                        </li>
+                        <li>
+                            <strong>Relatorio Ambiental Edenred 2023</strong> — Inventario de GEE publicado pela Edenred S.A.
+                            Base de referencia: 5,5 milhoes de cartoes/ano, totalizando 3.906,3 tCO&#8322;e/ano (Escopos 1+2+3).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Embalagem -->
+            <div class="col-12">
+                <div class="border-start border-warning border-3 ps-3 mb-1">
+                    <div class="fw-semibold text-warning small mb-1">
+                        <i class="fas fa-box me-1"></i>Embalagem (0,100 kg CO&#8322;e/cartao)
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>GHG Protocol Scope 3, Categoria 1</strong> — Bens e servicos adquiridos.
+                            Representa ~15% do Escopo 3 Edenred: 552.060 kg CO&#8322;e / 5.500.000 cartoes.
+                        </li>
+                        <li>
+                            <strong>Ecoinvent 3.9</strong> — Dados de producao de papelao ondulado e plastico de embalagem.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Logistica -->
+            <div class="col-12">
+                <div class="border-start border-primary border-3 ps-3 mb-1">
+                    <div class="fw-semibold text-primary small mb-1">
+                        <i class="fas fa-truck me-1"></i>Logistica — Fatores por km/cartao
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>DEFRA UK Greenhouse Gas Conversion Factors 2023</strong> — Department for Environment, Food &amp; Rural Affairs (Reino Unido).
+                            Fator rodoviario: 0,000268 kg CO&#8322;e/km/cartao (derivado de 736.080 kg / 5.500.000 cartoes x 500 km de referencia).
+                            Fator aereo de carga: 0,001340 kg CO&#8322;e/km/cartao (~5x o rodoviario).
+                            <a href="https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting" target="_blank" class="text-decoration-none">gov.uk/defra-factors</a>
+                        </li>
+                        <li>
+                            <strong>ICAO Carbon Emissions Calculator</strong> — Formula de Haversine para distancia aerea, conforme padrao do calculador oficial de emissoes da aviacao civil internacional.
+                            <a href="https://www.icao.int/environmental-protection/CarbonOffset" target="_blank" class="text-decoration-none">icao.int</a>
+                        </li>
+                        <li>
+                            <strong>Nominatim / OpenStreetMap</strong> — Geocodificacao de enderecos via CEP.
+                            <strong>OSRM</strong> — Calculo de distancia rodoviaria real por rota.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fim de vida -->
+            <div class="col-12">
+                <div class="border-start border-5 ps-3 mb-1" style="border-color:#6f42c1 !important;">
+                    <div class="fw-semibold small mb-1" style="color:#6f42c1;">
+                        <i class="fas fa-trash-alt me-1"></i>Fim de Vida / Descarte
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>GHG Protocol Scope 3, Categoria 12</strong> — Fim de vida de produtos vendidos.
+                        </li>
+                        <li>
+                            <strong>IPCC AR6 (2021)</strong> — Sexto Relatorio de Avaliacao do IPCC.
+                            Fatores de emissao por cenario: aterro sanitario (+0,0085 kg CO&#8322;e/cartao, emissao de CH&#8324;),
+                            incineracao com recuperacao de energia (+0,0210 kg CO&#8322;e/cartao, combustao de PVC),
+                            reciclagem mecanica (-0,0030 kg CO&#8322;e/cartao, credito de evitacao).
+                            <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank" class="text-decoration-none">ipcc.ch/ar6</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Recursos consumidos -->
+            <div class="col-12">
+                <div class="border-start border-info border-3 ps-3 mb-1">
+                    <div class="fw-semibold text-info small mb-1">
+                        <i class="fas fa-tint me-1"></i>Recursos Consumidos (plastico, papel, agua, energia)
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>Relatorio Ambiental Edenred 2023</strong> — Dados de residuos e consumo de recursos do ciclo produtivo,
+                            rateados por cartao: plastico 56,36 g, papel 125,45 g, agua 1,636 L, energia 1,070 kWh.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Digital -->
+            <div class="col-12">
+                <div class="border-start border-success border-3 ps-3 mb-1">
+                    <div class="fw-semibold text-success small mb-1">
+                        <i class="fas fa-server me-1"></i>Cenario Digital — Emissoes por Transacao
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>IEA (2023)</strong> — International Energy Agency. Consumo energetico de data centers e redes de telecomunicacao.
+                            <a href="https://www.iea.org/reports/data-centres-and-data-transmission-networks" target="_blank" class="text-decoration-none">iea.org</a>
+                        </li>
+                        <li>
+                            <strong>Freitag et al. (2021)</strong> — "The real climate and transformative impact of ICT: A critique of commonly held beliefs".
+                            Patterns, Volume 2, Issue 9. Fatores de energia por transacao digital (servidor, telecom, dispositivo).
+                            <a href="https://doi.org/10.1016/j.patter.2021.100340" target="_blank" class="text-decoration-none">doi.org/10.1016/j.patter.2021.100340</a>
+                        </li>
+                        <li>
+                            <strong>EBA (European Banking Authority)</strong> — Benchmarks de consumo energetico para pagamentos instantaneos (PIX, NFC, QR Code).
+                        </li>
+                        <li>
+                            <strong>MCTI 2023</strong> — Ministerio da Ciencia, Tecnologia e Inovacoes do Brasil.
+                            Fator de emissao da rede eletrica brasileira: 0,0839 kg CO&#8322;e/kWh.
+                            <a href="https://www.gov.br/mcti/pt-br" target="_blank" class="text-decoration-none">gov.br/mcti</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Equivalencias -->
+            <div class="col-12">
+                <div class="border-start border-secondary border-3 ps-3">
+                    <div class="fw-semibold text-secondary small mb-1">
+                        <i class="fas fa-leaf me-1"></i>Equivalencias Ambientais
+                    </div>
+                    <ul class="mb-0 small text-muted ps-3">
+                        <li>
+                            <strong>Arvores:</strong> 22 kg CO&#8322;/arvore/ano — media internacional amplamente utilizada em relatorios de sustentabilidade (FAO / IPCC AR5).
+                        </li>
+                        <li>
+                            <strong>Carro:</strong> 0,21 kg CO&#8322;/km — emissao media de automovel a gasolina no Brasil (CETESB — Relatorio de Emissoes Veiculares 2023).
+                            <a href="https://cetesb.sp.gov.br/veicular/" target="_blank" class="text-decoration-none">cetesb.sp.gov.br</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4 p-3 bg-light rounded-3 text-muted small">
+            <i class="fas fa-info-circle me-1"></i>
+            Os fatores aqui aplicados sao estimativas baseadas em dados publicos e relatorios de referencia do setor.
+            Para auditorias formais de inventario de GEE, recomenda-se a verificacao por organismo independente
+            conforme <strong>ISO 14064-3</strong> e o <strong>GHG Protocol Corporate Standard</strong>.
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

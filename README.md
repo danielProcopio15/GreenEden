@@ -97,8 +97,8 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 
 **Fechados:**
 
-![Issues fechados](<img width="1853" height="925" alt="image" src="https://github.com/user-attachments/assets/77be7895-f8a5-4289-9628-01e2c4de2114" />
-)
+<img width="1853" height="925" alt="image" src="https://github.com/user-attachments/assets/77be7895-f8a5-4289-9628-01e2c4de2114" />
+
 
 ### Screencast Histórias 3 e 4:
 

@@ -88,3 +88,25 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 
 [ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
 
+
+---
+
+## ENTREGA 3:
+
+### Issues:
+
+**Fechados:**
+
+![Issues fechados](COLE_A_IMAGEM_DOS_FECHADOS_AQUI)
+
+**Abertos:**
+
+![Issues abertos](COLE_A_IMAGEM_DOS_ABERTOS_AQUI)
+
+### Screencast Histórias 3 e 4:
+
+- História do usuário 3: Exibir comparação entre transações físicas e digitais
+- História do usuário 4: Mostrar redução de impacto ambiental
+
+[VÍDEO DE HISTÓRIAS 3 E 4](https://youtu.be/YY-lYN32ajc)
+

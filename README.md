@@ -63,7 +63,59 @@ Essas informações podem ajudar empresas e usuários a **compreender melhor os 
 - Visualização clara dos resultados
 - Apresentação de **indicadores ambientais**
 
+## 🗂️ Estrutura do Projeto
+
+```
+GreenEden/
+├── calculadora-sustentavel/    # Módulo principal da aplicação
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/           # Código-fonte Java (backend)
+│   │   │   └── resources/
+│   │   │       └── templates/  # Arquivos HTML (frontend)
+│   └── pom.xml                 # Configurações e dependências Maven
+└── README.md
+```
+
 ---
+
+## 🚀 Como Iniciar o Projeto
+
+### Pré-requisitos
+
+Certifique-se de ter instalado em sua máquina:
+
+- [Java JDK 17+](https://www.oracle.com/java/technologies/downloads/)
+- [Maven 3.8+](https://maven.apache.org/download.cgi)
+
+### Passos para execução
+
+**1. Clone o repositório:**
+```bash
+git clone https://github.com/danielProcopio15/GreenEden.git
+cd GreenEden
+```
+
+**2. Acesse a pasta do projeto:**
+```bash
+cd calculadora-sustentavel
+```
+
+**3. Instale as dependências e compile:**
+```bash
+mvn clean install
+```
+
+**4. Inicie a aplicação:**
+```bash
+./mvnw spring-boot:run
+```
+
+**5. Acesse no navegador:**
+http://localhost:8080
+
+---
+
 ## ENTREGA 1:
 ## 🎥 Screencast
 

@@ -159,29 +159,23 @@
             transacoes. Todos os valores sao lidos diretamente do calculo realizado.
         </p>
 
+
+
+
         <div class="chart-wrapper mb-4">
             <h6 class="fw-semibold mb-1">
                 <i class="fas fa-chart-bar me-1 text-danger"></i>
-                CO&#8322;e Total &mdash; Fisico vs Digital (escala logaritmica)
+                Impacto Ambiental &mdash; Transacoes Fisicas vs Digitais
             </h6>
             <p class="text-muted mb-3" style="font-size:0.78rem;">
-                Comparacao direta entre todos os componentes fisicos e digitais em kg CO&#8322;e.
-                Escala logaritmica usada para mostrar ambos os cenarios no mesmo grafico.
+                Comparacao direta entre emissoes de CO&#8322; e uso de materiais (plastico + papel)
+                para os dois tipos de transacao. O digital nao consome materiais fisicos.
             </p>
-            <canvas id="graficoComparativo"></canvas>
-            <p class="text-muted mt-2" style="font-size:0.75rem;">
-                <i class="fas fa-info-circle me-1"></i>
-                <strong>Fim de Vida</strong> pode nao aparecer no grafico quando o cenario de descarte e
-                <strong>Reciclagem</strong>, pois gera credito de CO&#8322; negativo (-0,003 kg/cartao),
-                que nao e representavel em escala logaritmica. Isso e positivo — significa reducao de emissoes!
-            </p>
+            <canvas id="graficoUnico"></canvas>
         </div>
 
-        <div class="chart-wrapper mb-4">
-            <h6 class="fw-semibold mb-1"><i class="fas fa-recycle me-1 text-primary"></i>Uso de Materiais &mdash; Cenario Fisico</h6>
-            <p class="text-muted mb-2" style="font-size:0.78rem;">Plastico (kg), Papel (kg), Agua (L) e Energia (kWh)</p>
-            <canvas id="graficoMateriais"></canvas>
-        </div>
+
+
 
     </div>
 
@@ -672,27 +666,28 @@
 
 
 
-    // Gráfico comparativo — escala logarítmica
-    new Chart(document.getElementById('graficoComparativo'), {
+  
+    // Gráfico único comparativo
+    new Chart(document.getElementById('graficoUnico'), {
         type: 'bar',
         data: {
-            labels: ['Producao', 'Embalagem', 'Logistica', 'Fim de Vida', 'Total'],
-datasets: [
-    {
-        label: 'Fisico (kg CO2e)',
-        data: [co2Producao, co2Embalagem, co2Logistica, co2FimDeVida, co2Total],
-        backgroundColor: 'rgba(220,53,69,0.85)',
-        borderColor: 'rgba(220,53,69,1)',
-        borderRadius: 6, borderWidth: 2
-    },
-    {
-        label: 'Digital / PIX (kg CO2e)',
-        data: [co2Servidor, co2Telecom, co2Dispositivo, 0.000001, co2Servidor + co2Telecom + co2Dispositivo],
-        backgroundColor: 'rgba(0,166,81,0.85)',
-        borderColor: 'rgba(0,166,81,1)',
-        borderRadius: 6, borderWidth: 2
-    }
-]
+            labels: ['Emissoes de CO2 (kg)', 'Uso de Materiais - Plastico + Papel (kg)'],
+            datasets: [
+                {
+                    label: 'Transacao Fisica',
+                    data: [co2Total, plastico + papel],
+                    backgroundColor: 'rgba(220,53,69,0.85)',
+                    borderColor: 'rgba(220,53,69,1)',
+                    borderRadius: 6, borderWidth: 2
+                },
+                {
+                    label: 'Transacao Digital (PIX)',
+                    data: [co2Servidor + co2Telecom + co2Dispositivo, 0.0001],
+                    backgroundColor: 'rgba(0,166,81,0.85)',
+                    borderColor: 'rgba(0,166,81,1)',
+                    borderRadius: 6, borderWidth: 2
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -700,46 +695,22 @@ datasets: [
                 legend: { position: 'top' },
                 tooltip: {
                     callbacks: {
-                        label: (c) => ` ${c.dataset.label}: ${fmt(c.raw)} kg CO2e`
+                        label: (c) => ` ${c.dataset.label}: ${fmt(c.raw)} kg`
                     }
                 }
             },
             scales: {
                 y: {
                     type: 'logarithmic',
-                    title: { display: true, text: 'kg CO2e (escala logaritmica)' },
+                    title: { display: true, text: 'Quantidade (kg) - escala logaritmica' },
                     ticks: {
                         callback: (v) => {
-                            if ([0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000].includes(v)) return v;
+                            if ([0.001, 0.01, 0.1, 1, 10, 100, 1000].includes(v)) return v;
                             return null;
                         }
                     }
                 },
                 x: { grid: { display: false } }
-            }
-        }
-    });
-
-
-
-    new Chart(document.getElementById('graficoMateriais'), {
-        type: 'bar',
-        data: {
-            labels: ['Plastico (kg)', 'Papel (kg)', 'Agua (L)', 'Energia (kWh)'],
-            datasets: [{
-                label: 'Consumo no Cenario Fisico',
-                data: [plastico, papel, agua, energia],
-                backgroundColor: ['rgba(111,66,193,0.85)','rgba(253,126,20,0.85)','rgba(13,202,240,0.85)','rgba(255,193,7,0.85)'],
-                borderRadius: 6, borderWidth: 2
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { beginAtZero: true, title: { display: true, text: 'Quantidade' } },
-                y: { grid: { display: false } }
             }
         }
     });

@@ -96,7 +96,7 @@ public class CalculadoraController {
 
             ImpactoAmbiental impacto = calculadoraService.calcularImpacto(entrada);
             model.addAttribute("impacto", impacto);
-            return "resultado";
+            return "beneficios";
 
         } catch (Exception e) {
             return erro(model, "Erro ao realizar o cálculo: " + e.getMessage());

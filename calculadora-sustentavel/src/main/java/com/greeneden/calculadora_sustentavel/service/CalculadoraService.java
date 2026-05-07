@@ -1,5 +1,6 @@
-package com.greeneden.calculadora_sustentavel.service;
+﻿package com.greeneden.calculadora_sustentavel.service;
 
+import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
 import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;
 import com.greeneden.calculadora_sustentavel.model.EmissoesCO2;
 import com.greeneden.calculadora_sustentavel.model.EntradaCalculo;
@@ -42,6 +43,10 @@ public class CalculadoraService implements CalculadoraServiceInterface {
     private static final double CO2_TELECOM_POR_TRANSACAO       = 0.00000067; // kg COâ‚‚e
     // Dispositivo do usuÃ¡rio: 0,000011 kWh/transaÃ§Ã£o Ã— 0,0839
     private static final double CO2_DISPOSITIVO_POR_TRANSACAO   = 0.00000092; // kg COâ‚‚e
+    private static final double ENERGIA_SERVIDOR_POR_TRANSACAO   = 0.000040; // kWh
+    private static final double ENERGIA_TELECOM_POR_TRANSACAO    = 0.000008; // kWh
+    private static final double ENERGIA_DISPOSITIVO_POR_TRANSACAO = 0.000011; // kWh
+    private static final double CUSTO_KWH_DIGITAL_ESTIMADO       = 0.80;    // R$ por kWh
 
     // â”€â”€â”€ EquivalÃªncias â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     private static final double CO2_POR_ARVORE_ANO = 22.0;  // kg COâ‚‚/Ã¡rvore/ano
@@ -141,7 +146,41 @@ public class CalculadoraService implements CalculadoraServiceInterface {
                 (int) (reducaoCO2Digital / CO2_POR_ARVORE_ANO),
                 (int) (reducaoCO2Digital / CO2_POR_KM_CARRO));
 
-        // â”€â”€ 11. Montar EmissoesCO2 e ImpactoAmbiental â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        int reposicoesEvitadas = Math.max(1, (int) Math.round(qtdCartoes * 0.05));
+        int etapasOperacionaisEvitadas = 5;
+        double kmLogisticaEvitados = qtdCartoesPorRemessa * distancia * frequencia;
+        double consumoEnergiaDigitalTotalKwh = qtdTransacoes * (ENERGIA_SERVIDOR_POR_TRANSACAO + ENERGIA_TELECOM_POR_TRANSACAO + ENERGIA_DISPOSITIVO_POR_TRANSACAO);
+        double gastoInfraDigitalEstimado = consumoEnergiaDigitalTotalKwh * CUSTO_KWH_DIGITAL_ESTIMADO;
+
+        int perdasEvitadasEstimadas = Math.max(1, (int) Math.round(qtdCartoes * 0.02));
+        int indiceReducaoPerdaRoubo = 90;
+        int indiceMenorRiscoClonagem = 80;
+        int indiceControleUsuario = 85;
+        int indiceAutenticacaoAdicional = 75;
+        String comparativoSeguranca = "Pagamentos digitais reduzem perda e roubo de cartões físicos, permitem bloqueio imediato e adicionam autenticação extra para proteger o usuário.";
+
+        BeneficiosOperacionais beneficiosOperacionais = new BeneficiosOperacionais();
+        beneficiosOperacionais.setKmLogisticaEvitados(kmLogisticaEvitados);
+        beneficiosOperacionais.setReducaoCO2Distribuicao(co2Logistica);
+        beneficiosOperacionais.setCartoesEvitados(qtdCartoes);
+        beneficiosOperacionais.setPlasticoEvitadoKg(recursos.getConsumoPlastico());
+        beneficiosOperacionais.setPapelEvitadoKg(recursos.getConsumoPapel());
+        beneficiosOperacionais.setAguaEvitadaL(recursos.getConsumoAgua());
+        beneficiosOperacionais.setEnergiaEvitadaKwh(recursos.getConsumoEnergia());
+        beneficiosOperacionais.setEtapasOperacionaisEvitadas(etapasOperacionaisEvitadas);
+        beneficiosOperacionais.setReposicoesEvitadas(reposicoesEvitadas);
+        beneficiosOperacionais.setConsumoEnergiaDigitalTotalKwh(consumoEnergiaDigitalTotalKwh);
+        beneficiosOperacionais.setEmissaoDigitalExclusivaKg(co2Digital);
+        beneficiosOperacionais.setGastoInfraDigitalEstimado(gastoInfraDigitalEstimado);
+        beneficiosOperacionais.setPerdasEvitadasEstimadas(perdasEvitadasEstimadas);
+        beneficiosOperacionais.setIndiceReducaoPerdaRoubo(indiceReducaoPerdaRoubo);
+        beneficiosOperacionais.setIndiceMenorRiscoClonagem(indiceMenorRiscoClonagem);
+        beneficiosOperacionais.setIndiceControleUsuario(indiceControleUsuario);
+        beneficiosOperacionais.setIndiceAutenticacaoAdicional(indiceAutenticacaoAdicional);
+        beneficiosOperacionais.setComparativoSeguranca(comparativoSeguranca);
+        beneficiosOperacionais.setDestaqueComparativo("O digital substitui a produção e a entrega de cartões físicos por servidores, rede e dispositivo do usuário.");
+
+        // ── 11. Montar EmissoesCO2 e ImpactoAmbiental ─────────────────────────────────
         EmissoesCO2 emissoes = new EmissoesCO2(
                 entrada,
                 co2Producao, co2Embalagem, co2Logistica, co2FimDeVida, co2Total,
@@ -149,7 +188,7 @@ public class CalculadoraService implements CalculadoraServiceInterface {
                 co2Servidor, co2Telecom, co2Dispositivo, co2Digital,
                 co2PorTransacaoDigital, reducaoCO2Digital);
 
-        return new ImpactoAmbiental(emissoes, recursos, equivalencias, METADADOS);
+        return new ImpactoAmbiental(emissoes, recursos, equivalencias, beneficiosOperacionais, METADADOS);
     }
 }
 

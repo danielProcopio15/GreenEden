@@ -1,5 +1,6 @@
 package com.greeneden.calculadora_sustentavel.model;
 
+import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,12 @@ public class ImpactoAmbiental extends EmissoesCO2 {
     private RecursosConsumidos recursos;
     private EquivalenciasAmbientais equivalencias;
     private MetadadosCalculo metadados;
+    private BeneficiosOperacionais beneficiosOperacionais;
 
     public ImpactoAmbiental(EmissoesCO2 emissoes,
                              RecursosConsumidos recursos,
                              EquivalenciasAmbientais equivalencias,
+                             BeneficiosOperacionais beneficiosOperacionais,
                              MetadadosCalculo metadados) {
         // propagate EmissoesCO2 (which already carries EntradaCalculo fields)
         setQuantidadeCartoes(emissoes.getQuantidadeCartoes());
@@ -47,6 +50,7 @@ public class ImpactoAmbiental extends EmissoesCO2 {
 
         this.recursos = recursos;
         this.equivalencias = equivalencias;
+        this.beneficiosOperacionais = beneficiosOperacionais;
         this.metadados = metadados;
     }
 }

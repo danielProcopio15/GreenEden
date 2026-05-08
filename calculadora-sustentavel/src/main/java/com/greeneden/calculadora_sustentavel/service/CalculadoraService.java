@@ -1,4 +1,4 @@
-﻿package com.greeneden.calculadora_sustentavel.service;
+package com.greeneden.calculadora_sustentavel.service;
 
 import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
 import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;

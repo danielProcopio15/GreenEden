@@ -148,34 +148,78 @@
 
     </div>
 
+ 
     <!-- HISTÓRIA 5: GRÁFICO COMPARATIVO -->
     <div class="result-card card p-4 mb-4">
         <h5 class="section-title">
-            <i class="fas fa-chart-bar me-2 text-success"></i>Grafico Comparativo de Emissoes de CO&#8322;
+            <i class="fas fa-chart-bar me-2 text-success"></i>Gráfico Comparativo de Emissões de CO&#8322;
         </h5>
         <p class="text-muted small mb-4">
-            Comparacao visual entre o cenario fisico e o digital (PIX) para as mesmas
+            Comparação visual entre o cenário físico e o digital (PIX) para as mesmas
             <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong>
-            transacoes. Todos os valores sao lidos diretamente do calculo realizado.
+            transações. Todos os valores são lidos diretamente do cálculo realizado.
         </p>
 
-
-
-
-        <div class="chart-wrapper mb-4">
-            <h6 class="fw-semibold mb-1">
-                <i class="fas fa-chart-bar me-1 text-danger"></i>
-                Impacto Ambiental &mdash; Transacoes Fisicas vs Digitais
-            </h6>
-            <p class="text-muted mb-3" style="font-size:0.78rem;">
-                Comparacao direta entre emissoes de CO&#8322; e uso de materiais (plastico + papel)
-                para os dois tipos de transacao. O digital nao consome materiais fisicos.
-            </p>
-            <canvas id="graficoUnico"></canvas>
+        <!-- Painel de destaque numérico -->
+        <div class="row g-3 mb-4 text-center">
+            <div class="col-md-4">
+                <div class="p-3 rounded-3" style="background:#fff0f0; border: 2px solid #dc3545;">
+                    <div class="text-muted small mb-1">CO&#8322; Cenário Físico</div>
+                    <div class="fw-bold fs-4 text-danger" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                    <div class="text-muted" style="font-size:0.78rem;">Produção + Embalagem + Logística + Descarte</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 rounded-3" style="background:#f0fff5; border: 2px solid #00a651;">
+                    <div class="text-muted small mb-1">CO&#8322; Cenário Digital (PIX)</div>
+                    <div class="fw-bold fs-4 text-success" th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital, 1, 'POINT', 4, 'COMMA')} + ' kg'"></div>
+                    <div class="text-muted" style="font-size:0.78rem;">Servidor + Telecom + Dispositivo</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 rounded-3" style="background:#f0f8ff; border: 2px solid #0d6efd;">
+                    <div class="text-muted small mb-1">Redução ao digitalizar</div>
+                    <div class="fw-bold fs-4 text-primary" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                    <div class="text-muted" style="font-size:0.78rem;">Emissões evitadas</div>
+                </div>
+            </div>
         </div>
 
+        <!-- Gráfico 1: CO2 físico vs digital -->
+        <div class="chart-wrapper mb-4">
+            <h6 class="fw-semibold mb-1">
+                <i class="fas fa-smog me-1 text-danger"></i>
+                Emissões de CO&#8322; — Físico vs Digital
+            </h6>
+            <p class="text-muted mb-3" style="font-size:0.78rem;">
+                O digital emite muito menos CO&#8322; por não envolver produção, logística ou descarte de material físico.
+            </p>
+            <canvas id="graficoCO2" height="100"></canvas>
+        </div>
 
+        <!-- Gráfico 2: Materiais físico vs digital -->
+        <div class="chart-wrapper mb-4">
+            <h6 class="fw-semibold mb-1">
+                <i class="fas fa-recycle me-1 text-warning"></i>
+                Uso de Materiais — Plástico e Papel
+            </h6>
+            <p class="text-muted mb-3" style="font-size:0.78rem;">
+                Transações digitais não consomem plástico nem papel. O valor físico representa o total dos cartões emitidos.
+            </p>
+            <canvas id="graficoMateriais" height="100"></canvas>
+        </div>
 
+        <!-- Gráfico 3: Detalhamento do CO2 físico por etapa -->
+        <div class="chart-wrapper mb-2">
+            <h6 class="fw-semibold mb-1">
+                <i class="fas fa-layer-group me-1 text-secondary"></i>
+                Detalhamento do CO&#8322; Físico por Etapa do Ciclo de Vida
+            </h6>
+            <p class="text-muted mb-3" style="font-size:0.78rem;">
+                Distribuição das emissões físicas: quais etapas contribuem mais para o impacto total.
+            </p>
+            <canvas id="graficoEtapas" height="100"></canvas>
+        </div>
 
     </div>
 
@@ -656,36 +700,95 @@
     const co2Servidor    = num('co2Servidor');
     const co2Telecom     = num('co2Telecom');
     const co2Dispositivo = num('co2Dispositivo');
+    const co2Digital     = co2Servidor + co2Telecom + co2Dispositivo;
     const plastico       = num('plastico');
     const papel          = num('papel');
-    const agua           = num('agua');
-    const energia        = num('energia');
 
-    const fmt = (v) => parseFloat(v.toFixed(4));
+    const fmt4 = (v) => parseFloat(v.toFixed(4));
 
 
-
-
-  
-    // Gráfico único comparativo
-    new Chart(document.getElementById('graficoUnico'), {
+    // Gráfico 1 — CO2 físico vs digital
+    new Chart(document.getElementById('graficoCO2'), {
         type: 'bar',
         data: {
-            labels: ['Emissoes de CO2 (kg)', 'Uso de Materiais - Plastico + Papel (kg)'],
+            labels: ['Cartão Físico', 'Digital (PIX)'],
+            datasets: [{
+                label: 'Emissões de CO₂ (kg)',
+                data: [fmt4(co2Total), fmt4(co2Digital)],
+                backgroundColor: ['rgba(220,53,69,0.85)', 'rgba(0,166,81,0.85)'],
+                borderColor:     ['rgba(220,53,69,1)',    'rgba(0,166,81,1)'],
+                borderRadius: 8,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                datalabels: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (c) => ` ${fmt4(c.raw)} kg CO₂`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'kg CO₂e' },
+                    ticks: { callback: (v) => v + ' kg' }
+                },
+                x: { grid: { display: false } }
+            },
+            animation: {
+                onComplete: function() {
+                    const chart = this;
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.font = 'bold 13px Segoe UI';
+                    ctx.fillStyle = '#333';
+                    ctx.textAlign = 'center';
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        meta.data.forEach((bar, index) => {
+                            const value = dataset.data[index];
+                            const label = value < 0.01
+                                ? value.toExponential(2) + ' kg'
+                                : fmt4(value) + ' kg';
+                            // posição: se barra muito pequena, mostra acima do eixo
+                            const yPos = bar.y < chart.scales.y.bottom - 25
+                                ? bar.y - 8
+                                : chart.scales.y.bottom - 8;
+                            ctx.fillText(label, bar.x, yPos);
+                        });
+                    });
+                    ctx.restore();
+                }
+            }
+        }
+    });
+
+
+    // Gráfico 2 — Materiais físico vs digital
+    new Chart(document.getElementById('graficoMateriais'), {
+        type: 'bar',
+        data: {
+            labels: ['Plástico (kg)', 'Papel (kg)'],
             datasets: [
                 {
-                    label: 'Transacao Fisica',
-                    data: [co2Total, plastico + papel],
+                    label: 'Cartão Físico',
+                    data: [fmt4(plastico), fmt4(papel)],
                     backgroundColor: 'rgba(220,53,69,0.85)',
                     borderColor: 'rgba(220,53,69,1)',
-                    borderRadius: 6, borderWidth: 2
+                    borderRadius: 8, borderWidth: 2
                 },
                 {
-                    label: 'Transacao Digital (PIX)',
-                    data: [co2Servidor + co2Telecom + co2Dispositivo, 0.0001],
-                    backgroundColor: 'rgba(0,166,81,0.85)',
+                    label: 'Digital (PIX) — zero consumo',
+                    data: [0, 0],
+                    backgroundColor: 'rgba(0,166,81,0.5)',
                     borderColor: 'rgba(0,166,81,1)',
-                    borderRadius: 6, borderWidth: 2
+                    borderRadius: 8, borderWidth: 2,
+                    barThickness: 30
                 }
             ]
         },
@@ -695,25 +798,90 @@
                 legend: { position: 'top' },
                 tooltip: {
                     callbacks: {
-                        label: (c) => ` ${c.dataset.label}: ${fmt(c.raw)} kg`
+                        label: (c) => c.raw === 0
+                            ? ` ${c.dataset.label}: 0 kg (sem consumo material)`
+                            : ` ${c.dataset.label}: ${fmt4(c.raw)} kg`
                     }
                 }
             },
             scales: {
                 y: {
-                    type: 'logarithmic',
-                    title: { display: true, text: 'Quantidade (kg) - escala logaritmica' },
-                    ticks: {
-                        callback: (v) => {
-                            if ([0.001, 0.01, 0.1, 1, 10, 100, 1000].includes(v)) return v;
-                            return null;
-                        }
+                    beginAtZero: true,
+                    title: { display: true, text: 'kg de material' },
+                    ticks: { callback: (v) => v + ' kg' }
+                },
+                x: { grid: { display: false } }
+            },
+            animation: {
+                onComplete: function() {
+                    const chart = this;
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.font = 'bold 12px Segoe UI';
+                    ctx.textAlign = 'center';
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        meta.data.forEach((bar, index) => {
+                            const value = dataset.data[index];
+                            if (value === 0) {
+                                ctx.fillStyle = 'rgba(0,166,81,1)';
+                                ctx.fillText('0 kg', bar.x, chart.scales.y.bottom - 8);
+                            } else {
+                                ctx.fillStyle = '#333';
+                                ctx.fillText(fmt4(value) + ' kg', bar.x, bar.y - 8);
+                            }
+                        });
+                    });
+                    ctx.restore();
+                }
+            }
+        }
+    });
+
+    // Gráfico 3 — Detalhamento CO2 físico por etapa
+    new Chart(document.getElementById('graficoEtapas'), {
+        type: 'bar',
+        data: {
+            labels: ['Produção', 'Embalagem', 'Logística', 'Fim de Vida'],
+            datasets: [{
+                label: 'CO₂ por etapa (kg)',
+                data: [fmt4(co2Producao), fmt4(co2Embalagem), fmt4(co2Logistica), fmt4(co2FimDeVida)],
+                backgroundColor: [
+                    'rgba(220,53,69,0.85)',
+                    'rgba(253,126,20,0.85)',
+                    'rgba(13,110,253,0.85)',
+                    'rgba(111,66,193,0.85)'
+                ],
+                borderColor: [
+                    'rgba(220,53,69,1)',
+                    'rgba(253,126,20,1)',
+                    'rgba(13,110,253,1)',
+                    'rgba(111,66,193,1)'
+                ],
+                borderRadius: 8, borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (c) => ` ${fmt4(c.raw)} kg CO₂e`
                     }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'kg CO₂e' },
+                    ticks: { callback: (v) => v + ' kg' }
                 },
                 x: { grid: { display: false } }
             }
         }
     });
+
 })();
 </script>
 </body>

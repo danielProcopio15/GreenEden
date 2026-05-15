@@ -473,23 +473,93 @@
         </div>
     </div>
 
-    <!-- SECAO 5: Equivalencias -->
-    <div class="result-card card p-5 text-center mb-4">
-        <h5 class="mb-4 fw-bold">A reducao de CO&#8322; com o uso do digital equivale a:</h5>
-        <div class="row justify-content-center g-3">
-            <div class="col-md-5">
-                <span class="badge bg-success fs-6 p-3 w-100">
-                    <i class="fas fa-tree me-2"></i>
-                    <strong th:text="${impacto.equivalencias.arvoresSalvas}"></strong> arvores absorvendo CO&#8322; por 1 ano
-                </span>
+
+    <!-- SECAO 5: Equivalencias - Historia 6 -->
+    <div class="result-card card p-4 mb-4">
+        <h5 class="section-title">
+            <i class="fas fa-globe-americas me-2 text-success"></i>Equivalencias Ambientais da Digitalizacao
+        </h5>
+        <p class="text-muted small mb-4">
+            Para tornar os resultados mais compreensíveis, a reducao de CO&#8322; obtida ao migrar para pagamentos digitais
+            é convertida em equivalencias do mundo real.
+        </p>
+
+        <!-- Destaque da reducao base -->
+        <div class="text-center mb-4 p-3 rounded-3" style="background: linear-gradient(135deg, #e9f5ee, #d1e7dd); border: 2px solid #00a651;">
+            <div class="text-muted small mb-1">Reducao total de CO&#8322; que gerou estas equivalencias</div>
+            <div class="fw-bold text-success" style="font-size: 2rem;"
+                 th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO₂ evitados'">
             </div>
-            <div class="col-md-5">
-                <span class="badge bg-success fs-6 p-3 w-100">
-                    <i class="fas fa-car me-2"></i>
-                    <strong th:text="${#numbers.formatInteger(impacto.equivalencias.kmCarroEvitado, 1, 'COMMA')}"></strong> km deixados de rodar de carro
-                </span>
+            <div class="text-muted small mt-1">ao substituir cartoes fisicos por pagamentos digitais</div>
+        </div>
+
+
+        
+        <!-- Cards de equivalencia -->
+        <div class="row g-3 mb-4">
+
+            <!-- Arvores -->
+            <div class="col-md-4">
+                <div class="h-100 p-4 text-center rounded-3" style="background:#f0fff5; border: 2px solid #00a651;">
+                    <div style="font-size: 2.5rem;">&#127795;</div>
+                    <div class="fw-bold text-success mt-2" style="font-size: 1.8rem;"
+                         th:text="${impacto.equivalencias.arvoresSalvas}"></div>
+                    <div class="fw-semibold">arvores preservadas</div>
+                    <div class="text-muted small mt-2">absorvendo CO&#8322; durante <strong>1 ano inteiro</strong></div>
+                    <div class="mt-2 p-2 rounded-2" style="background:#d1e7dd; font-size:0.78rem; color:#0a3622;">
+                        Base: 22 kg CO&#8322; absorvido por arvore/ano (FAO / IPCC AR5)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carro -->
+            <div class="col-md-4">
+                <div class="h-100 p-4 text-center rounded-3" style="background:#fff8f0; border: 2px solid #fd7e14;">
+                    <div style="font-size: 2.5rem;">&#128664;</div>
+                    <div class="fw-bold text-warning mt-2" style="font-size: 1.8rem;"
+                         th:text="${#numbers.formatInteger(impacto.equivalencias.kmCarroEvitado, 1, 'COMMA')}"></div>
+                    <div class="fw-semibold">km nao rodados de carro</div>
+                    <div class="text-muted small mt-2">equivalente a <strong>nao usar um carro a gasolina</strong> por essa distancia</div>
+                    <div class="mt-2 p-2 rounded-2" style="background:#ffe5d0; font-size:0.78rem; color:#7d3a00;">
+                        Base: 0,21 kg CO&#8322;/km — carro medio a gasolina (CETESB 2023)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smartphones carregados -->
+            <div class="col-md-4">
+                <div class="h-100 p-4 text-center rounded-3" style="background:#f0f4ff; border: 2px solid #0d6efd;">
+                    <div style="font-size: 2.5rem;">&#128241;</div>
+                    <div class="fw-bold text-primary mt-2" style="font-size: 1.8rem;"
+                         th:text="${#numbers.formatInteger(impacto.reducaoCO2Digital / 0.00836, 1, 'COMMA')}"></div>
+                    <div class="fw-semibold">cargas de smartphone</div>
+                    <div class="text-muted small mt-2">equivalente a <strong>carregar um celular</strong> esse numero de vezes</div>
+                    <div class="mt-2 p-2 rounded-2" style="background:#dce8ff; font-size:0.78rem; color:#0a2a6e;">
+                        Base: 0,00836 kg CO&#8322; por carga completa de smartphone (IEA 2023)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Barra de impacto visual -->
+        <div class="p-3 rounded-3 mb-2" style="background:#f8f9fa; border: 1px solid #dee2e6;">
+            <div class="fw-semibold small mb-2 text-muted">
+                <i class="fas fa-chart-pie me-1"></i>O quanto isso representa: CO&#8322; Fisico vs CO&#8322; Evitado
+            </div>
+            <div class="d-flex rounded-3 overflow-hidden" style="height: 28px;">
+                <div class="d-flex align-items-center justify-content-center text-white small fw-bold"
+                     style="background:#dc3545; width: 100%;"
+                     th:style="'background:#dc3545; width:' + ${impacto.co2Total > 0 ? #numbers.formatDecimal((impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA') : 100} + '%;'"
+                     th:text="${#numbers.formatDecimal((impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA')} + '% evitado'">
+                </div>
+                <div class="d-flex align-items-center justify-content-center small fw-bold"
+                     style="background:#e9ecef; color:#6c757d; flex:1;"
+                     th:text="${#numbers.formatDecimal(100 - (impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA')} + '% restante (digital)'">
+                </div>
             </div>
         </div>
+
     </div>
 
     <!-- SECAO 6: Metadados / Governanca -->

@@ -7,32 +7,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background: linear-gradient(135deg,#0f1e3d,#1a3c7c); min-height:100vh; font-family:'Segoe UI',sans-serif; }
-        .page-header { background: linear-gradient(135deg,#0a1628,#0f2044); color:#fff; border-bottom:1px solid rgba(255,255,255,.1); }
+        body { background: linear-gradient(135deg,#f8f9fa,#e6f4ea); min-height:100vh; font-family:'Segoe UI',sans-serif; }
+        .page-header { background-color:#e30613; color:#fff; }
         /* ── intro banner ── */
         .hero-banner { background:linear-gradient(135deg,#0f2044,#1a3c7c); border-radius:18px; padding:32px 36px; color:#fff; margin-bottom:28px; }
         .hero-banner .display-num { font-size:3rem; font-weight:800; color:#4da6ff; line-height:1; }
         .hero-banner .display-label { font-size:.85rem; color:rgba(255,255,255,.7); }
         /* ── section wrapper ── */
-        .sec-wrap { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:24px; margin-bottom:24px; }
-        .sec-wrap-title { font-size:1rem; font-weight:700; color:#7eb8ff; text-transform:uppercase; letter-spacing:.8px; margin-bottom:16px; border-bottom:1px solid rgba(126,184,255,.2); padding-bottom:10px; }
+        .sec-wrap { background:#fff; border:1px solid #e0e7ef; border-radius:16px; padding:24px; margin-bottom:24px; }
+        .sec-wrap-title { font-size:1rem; font-weight:700; color:#1a3c5e; text-transform:uppercase; letter-spacing:.8px; margin-bottom:16px; border-bottom:1px solid #e0eaf0; padding-bottom:10px; }
         /* ── security cards ── */
-        .sec-card { background:rgba(255,255,255,.06); border:1px solid rgba(126,184,255,.2); border-radius:14px; padding:16px 18px; height:100%; transition:background .2s; }
-        .sec-card:hover { background:rgba(255,255,255,.1); }
+        .sec-card { background:#f8faff; border:1px solid #dce8fb; border-radius:14px; padding:16px 18px; height:100%; transition:background .2s; }
+        .sec-card:hover { background:#eef4ff; }
         .sec-icon { width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem; }
-        .sec-title { font-weight:700; color:#e8f0fe; font-size:.95rem; margin-bottom:4px; }
-        .sec-text { color:rgba(255,255,255,.65); font-size:.82rem; line-height:1.5; }
-        .sec-mech { font-size:.68rem;font-weight:700;background:rgba(77,166,255,.2);color:#7eb8ff;border-radius:10px;padding:2px 9px;display:inline-block;margin-top:6px;letter-spacing:.3px;border:1px solid rgba(77,166,255,.3); }
+        .sec-title { font-weight:700; color:#1a3c5e; font-size:.95rem; margin-bottom:4px; }
+        .sec-text { color:#555; font-size:.82rem; line-height:1.5; }
+        .sec-mech { font-size:.68rem;font-weight:700;background:#e8f0fe;color:#1a56c4;border-radius:10px;padding:2px 9px;display:inline-block;margin-top:6px;letter-spacing:.3px;border:1px solid #c0d4f5; }
         /* ── comparison table ── */
         .cmp-table { width:100%; border-collapse:separate; border-spacing:0; }
-        .cmp-table th { font-size:.72rem; text-transform:uppercase; letter-spacing:.5px; color:rgba(255,255,255,.5); padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.1); }
-        .cmp-table td { padding:10px 14px; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.06); color:rgba(255,255,255,.8); vertical-align:middle; }
+        .cmp-table th { font-size:.72rem; text-transform:uppercase; letter-spacing:.5px; color:#666; padding:10px 14px; border-bottom:1px solid #dee2e6; }
+        .cmp-table td { padding:10px 14px; font-size:.85rem; border-bottom:1px solid #f0f0f0; color:#333; vertical-align:middle; }
         .cmp-table tr:last-child td { border-bottom:none; }
-        .tag-bad  { display:inline-block;background:rgba(220,53,69,.25);color:#f7a8b0;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
-        .tag-good { display:inline-block;background:rgba(25,200,100,.2);color:#6de8a8;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
-        /* ── back button ── */
-        .btn-back { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:10px; padding:8px 20px; font-size:.9rem; }
-        .btn-back:hover { background:rgba(255,255,255,.15); color:#fff; }
+        .tag-bad  { display:inline-block;background:#fde8ea;color:#b02030;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
+        .tag-good { display:inline-block;background:#d4edda;color:#155724;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
+        /* ── back button (no cabeçalho vermelho) ── */
+        .btn-back { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4); color:#fff; border-radius:10px; padding:8px 20px; font-size:.9rem; }
+        .btn-back:hover { background:rgba(255,255,255,.25); color:#fff; }
     </style>
 </head>
 <body>
@@ -90,7 +90,7 @@
                         <div>
                             <div class="sec-title">Tokenização de transações</div>
                             <div class="sec-text">
-                                O número real do cartão <strong style="color:#e8f0fe">jamais trafega pela rede</strong>.
+                                O número real do cartão <strong>jamais trafega pela rede</strong>.
                                 Cada operação utiliza um token único e descartável gerado pelo servidor —
                                 interceptar a comunicação não dá acesso a nenhum dado reutilizável.
                             </div>
@@ -190,7 +190,7 @@
                         <div>
                             <div class="sec-title">Credenciais em HSM criptografado</div>
                             <div class="sec-text">
-                                As credenciais ficam armazenadas em <strong style="color:#e8f0fe">Hardware Security Module</strong>
+                                As credenciais ficam armazenadas em <strong>Hardware Security Module</strong>
                                 no servidor, protegidas por AES-256. Nenhum dado sensível é gravado
                                 em texto claro no dispositivo do usuário.
                             </div>
@@ -232,7 +232,7 @@
                             <div class="sec-text">
                                 Compras com cartão físico exigem digitar número, validade e CVV —
                                 dados capturáveis por formulários falsos ou keyloggers.
-                                A E-wallet usa um <strong style="color:#e8f0fe">token virtual descartável</strong> por compra.
+                                A E-wallet usa um <strong>token virtual descartável</strong> por compra.
                             </div>
                             <span class="sec-mech">Token Virtual por Compra</span>
                         </div>
@@ -277,37 +277,37 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Skimming / clonagem de tarja</td>
+                        <td style="color:#1a3c5e;font-weight:600">Skimming / clonagem de tarja</td>
                         <td><span class="tag-bad">Vulnerável</span> — tarja magnética copiável em segundos</td>
                         <td><span class="tag-good">Imune</span> — sem tarja; token descartável por operação</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Roubo / extravio físico</td>
+                        <td style="color:#1a3c5e;font-weight:600">Roubo / extravio físico</td>
                         <td><span class="tag-bad">Uso imediato</span> — NFC ativa sem PIN até R$ 200</td>
                         <td><span class="tag-good">Bloqueado</span> — biometria obrigatória; bloqueio remoto em segundos</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Fraude em e-commerce</td>
+                        <td style="color:#1a3c5e;font-weight:600">Fraude em e-commerce</td>
                         <td><span class="tag-bad">PAN exposto</span> — número impresso no plástico</td>
                         <td><span class="tag-good">Token único</span> — dado real nunca enviado ao merchant</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Shoulder surfing (espionagem visual)</td>
+                        <td style="color:#1a3c5e;font-weight:600">Shoulder surfing (espionagem visual)</td>
                         <td><span class="tag-bad">Vulnerável</span> — número, validade e CVV visíveis</td>
                         <td><span class="tag-good">Inexistente</span> — sem dados gravados na superfície do cartão</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Uso fora de política corporativa</td>
+                        <td style="color:#1a3c5e;font-weight:600">Uso fora de política corporativa</td>
                         <td><span class="tag-bad">Incontrolável</span> — sem restrição de categoria ou valor</td>
                         <td><span class="tag-good">Bloqueado</span> — limites e categorias definidos pelo RH em tempo real</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Detecção tardia de fraude</td>
+                        <td style="color:#1a3c5e;font-weight:600">Detecção tardia de fraude</td>
                         <td><span class="tag-bad">Mensal</span> — detectado apenas no extrato</td>
                         <td><span class="tag-good">Imediato</span> — push notification em &lt; 500 ms por transação</td>
                     </tr>
                     <tr>
-                        <td style="color:#7eb8ff;font-weight:600">Vazamento de dados da cadeia</td>
+                        <td style="color:#1a3c5e;font-weight:600">Vazamento de dados da cadeia</td>
                         <td><span class="tag-bad">Múltiplos elos</span> — gráfica, courier, banco emissor</td>
                         <td><span class="tag-good">PCI-DSS único</span> — conformidade centralizada na plataforma</td>
                     </tr>
@@ -318,13 +318,13 @@
 
     <!-- Rodapé de navegação -->
     <div class="text-center pb-5">
-        <button class="btn btn-outline-light btn-lg px-5" onclick="history.back()">
+        <button class="btn btn-outline-secondary btn-lg px-5" onclick="history.back()">
             <i class="fas fa-arrow-left me-2"></i>Voltar
         </button>
         <a href="/beneficios" class="btn btn-primary btn-lg px-5 ms-3">
             <i class="fas fa-mobile-alt me-2"></i>Impacto ambiental
         </a>
-        <a href="/calculadora" class="btn btn-outline-light btn-lg px-5 ms-3">
+        <a href="/calculadora" class="btn btn-outline-secondary btn-lg px-5 ms-3">
             <i class="fas fa-redo me-2"></i>Nova simulação
         </a>
     </div>

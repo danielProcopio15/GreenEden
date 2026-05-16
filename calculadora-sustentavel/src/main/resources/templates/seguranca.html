@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segurança — E-wallet vs Cartão Físico — GreenEden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg,#0f1e3d,#1a3c7c); min-height:100vh; font-family:'Segoe UI',sans-serif; }
+        .page-header { background: linear-gradient(135deg,#0a1628,#0f2044); color:#fff; border-bottom:1px solid rgba(255,255,255,.1); }
+        /* ── intro banner ── */
+        .hero-banner { background:linear-gradient(135deg,#0f2044,#1a3c7c); border-radius:18px; padding:32px 36px; color:#fff; margin-bottom:28px; }
+        .hero-banner .display-num { font-size:3rem; font-weight:800; color:#4da6ff; line-height:1; }
+        .hero-banner .display-label { font-size:.85rem; color:rgba(255,255,255,.7); }
+        /* ── section wrapper ── */
+        .sec-wrap { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:24px; margin-bottom:24px; }
+        .sec-wrap-title { font-size:1rem; font-weight:700; color:#7eb8ff; text-transform:uppercase; letter-spacing:.8px; margin-bottom:16px; border-bottom:1px solid rgba(126,184,255,.2); padding-bottom:10px; }
+        /* ── security cards ── */
+        .sec-card { background:rgba(255,255,255,.06); border:1px solid rgba(126,184,255,.2); border-radius:14px; padding:16px 18px; height:100%; transition:background .2s; }
+        .sec-card:hover { background:rgba(255,255,255,.1); }
+        .sec-icon { width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem; }
+        .sec-title { font-weight:700; color:#e8f0fe; font-size:.95rem; margin-bottom:4px; }
+        .sec-text { color:rgba(255,255,255,.65); font-size:.82rem; line-height:1.5; }
+        .sec-mech { font-size:.68rem;font-weight:700;background:rgba(77,166,255,.2);color:#7eb8ff;border-radius:10px;padding:2px 9px;display:inline-block;margin-top:6px;letter-spacing:.3px;border:1px solid rgba(77,166,255,.3); }
+        /* ── comparison table ── */
+        .cmp-table { width:100%; border-collapse:separate; border-spacing:0; }
+        .cmp-table th { font-size:.72rem; text-transform:uppercase; letter-spacing:.5px; color:rgba(255,255,255,.5); padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.1); }
+        .cmp-table td { padding:10px 14px; font-size:.85rem; border-bottom:1px solid rgba(255,255,255,.06); color:rgba(255,255,255,.8); vertical-align:middle; }
+        .cmp-table tr:last-child td { border-bottom:none; }
+        .tag-bad  { display:inline-block;background:rgba(220,53,69,.25);color:#f7a8b0;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
+        .tag-good { display:inline-block;background:rgba(25,200,100,.2);color:#6de8a8;border-radius:10px;padding:1px 9px;font-size:.72rem;font-weight:600; }
+        /* ── back button ── */
+        .btn-back { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:10px; padding:8px 20px; font-size:.9rem; }
+        .btn-back:hover { background:rgba(255,255,255,.15); color:#fff; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="page-header py-3">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h1 class="h4 mb-0"><i class="fas fa-leaf me-2 text-success"></i>GreenEden</h1>
+            <small style="color:rgba(255,255,255,.6)">Segurança digital de benefícios ao colaborador</small>
+        </div>
+        <button class="btn-back btn" onclick="history.back()">
+            <i class="fas fa-arrow-left me-2"></i>Voltar
+        </button>
+    </div>
+</header>
+
+<div class="container py-5">
+
+    <!-- Hero banner -->
+    <div class="hero-banner">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h2 class="h3 fw-bold mb-2">
+                    <i class="fas fa-shield-alt me-2" style="color:#4da6ff"></i>
+                    Segurança: E-wallet vs Cartão Físico
+                </h2>
+                <p style="color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:0">
+                    Além de sustentável, o cartão digital de benefícios elimina camadas inteiras de
+                    vulnerabilidade que o cartão físico estruturalmente não consegue resolver.
+                    Cada ponto abaixo representa um mecanismo de segurança exclusivo da solução digital.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <div class="display-num" th:text="${impacto.beneficiosOperacionais.indiceMenorRiscoClonagem} + '%'">95%</div>
+                <div class="display-label">Redução de risco de clonagem</div>
+                <div class="display-num mt-2">9</div>
+                <div class="display-label">Camadas de proteção exclusivas</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de 9 cartões de segurança -->
+    <div class="sec-wrap">
+        <div class="sec-wrap-title"><i class="fas fa-lock me-2"></i>Mecanismos de proteção exclusivos da E-wallet</div>
+        <div class="row g-3">
+
+            <!-- 1 - Tokenização -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(26,86,196,.4);color:#7eb8ff">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Tokenização de transações</div>
+                            <div class="sec-text">
+                                O número real do cartão <strong style="color:#e8f0fe">jamais trafega pela rede</strong>.
+                                Cada operação utiliza um token único e descartável gerado pelo servidor —
+                                interceptar a comunicação não dá acesso a nenhum dado reutilizável.
+                            </div>
+                            <span class="sec-mech">Token Único por Operação</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 - MFA -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(10,102,64,.4);color:#6de8a8">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Autenticação multifator obrigatória</div>
+                            <div class="sec-text">
+                                Cada uso exige biometria, PIN ou reconhecimento facial do colaborador.
+                                Um cartão físico roubado pode ser usado imediatamente em qualquer
+                                terminal de aproximação sem nenhuma verificação de identidade.
+                            </div>
+                            <span class="sec-mech">Biometria / PIN / Face ID</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 - Controles RH -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(192,87,0,.4);color:#ffb366">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Controles granulares pelo RH</div>
+                            <div class="sec-text">
+                                A empresa define, em tempo real, limites por estabelecimento,
+                                categoria de despesa, horário de uso e valor máximo por transação.
+                                Com cartão físico, não há controle pós-emissão.
+                            </div>
+                            <span class="sec-mech">Políticas em Tempo Real</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 - Notificações -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(138,0,196,.4);color:#d88cff">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Notificações em tempo real</div>
+                            <div class="sec-text">
+                                O colaborador recebe um push notification em milissegundos para cada
+                                transação. Qualquer uso não reconhecido é detectado e reportado antes
+                                do fechamento do extrato — não após.
+                            </div>
+                            <span class="sec-mech">Alerta &lt; 500 ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 - Geolocalização -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(0,124,82,.4);color:#6de8a8">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Geolocalização e detecção de anomalias</div>
+                            <div class="sec-text">
+                                Uso em localização incompatível com o histórico do colaborador aciona
+                                alerta automático. O cartão físico não tem consciência espacial —
+                                pode ser clonado e usado em outro estado sem nenhum sinal.
+                            </div>
+                            <span class="sec-mech">Análise Comportamental</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 - Criptografia / HSM -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(0,85,165,.4);color:#7eb8ff">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Credenciais em HSM criptografado</div>
+                            <div class="sec-text">
+                                As credenciais ficam armazenadas em <strong style="color:#e8f0fe">Hardware Security Module</strong>
+                                no servidor, protegidas por AES-256. Nenhum dado sensível é gravado
+                                em texto claro no dispositivo do usuário.
+                            </div>
+                            <span class="sec-mech">AES-256 + HSM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 - PCI-DSS -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(176,96,0,.4);color:#ffb366">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Conformidade PCI-DSS nativa</div>
+                            <div class="sec-text">
+                                A plataforma de E-wallet mantém a certificação PCI-DSS centralizada.
+                                Com cartão físico, cada elo da cadeia (gráfica, banco emissor, courier)
+                                precisa de compliance próprio — multiplicando os pontos de falha.
+                            </div>
+                            <span class="sec-mech">PCI-DSS Centralizado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 - Online seguro -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(155,0,32,.4);color:#f7a8b0">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Compras online sem exposição de dados</div>
+                            <div class="sec-text">
+                                Compras com cartão físico exigem digitar número, validade e CVV —
+                                dados capturáveis por formulários falsos ou keyloggers.
+                                A E-wallet usa um <strong style="color:#e8f0fe">token virtual descartável</strong> por compra.
+                            </div>
+                            <span class="sec-mech">Token Virtual por Compra</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9 - Desativação -->
+            <div class="col-md-6 col-lg-4">
+                <div class="sec-card">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="sec-icon" style="background:rgba(26,86,196,.4);color:#7eb8ff">
+                            <i class="fas fa-power-off"></i>
+                        </div>
+                        <div>
+                            <div class="sec-title">Desativação e reativação instantânea</div>
+                            <div class="sec-text">
+                                O RH ou o próprio colaborador pode suspender o cartão em segundos
+                                pelo aplicativo — sem ligar para centrais, sem prazo de cancelamento.
+                                O cartão físico permanece ativo até o processamento da solicitação.
+                            </div>
+                            <span class="sec-mech">Controle Imediato pelo App</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /row -->
+    </div><!-- /sec-wrap -->
+
+    <!-- Tabela comparativa -->
+    <div class="sec-wrap">
+        <div class="sec-wrap-title"><i class="fas fa-table me-2"></i>Comparativo direto por vetor de ataque</div>
+        <div class="table-responsive">
+            <table class="cmp-table">
+                <thead>
+                    <tr>
+                        <th style="width:28%">Vetor de ataque / risco</th>
+                        <th style="width:36%">Cartão físico</th>
+                        <th style="width:36%">E-wallet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Skimming / clonagem de tarja</td>
+                        <td><span class="tag-bad">Vulnerável</span> — tarja magnética copiável em segundos</td>
+                        <td><span class="tag-good">Imune</span> — sem tarja; token descartável por operação</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Roubo / extravio físico</td>
+                        <td><span class="tag-bad">Uso imediato</span> — NFC ativa sem PIN até R$ 200</td>
+                        <td><span class="tag-good">Bloqueado</span> — biometria obrigatória; bloqueio remoto em segundos</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Fraude em e-commerce</td>
+                        <td><span class="tag-bad">PAN exposto</span> — número impresso no plástico</td>
+                        <td><span class="tag-good">Token único</span> — dado real nunca enviado ao merchant</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Shoulder surfing (espionagem visual)</td>
+                        <td><span class="tag-bad">Vulnerável</span> — número, validade e CVV visíveis</td>
+                        <td><span class="tag-good">Inexistente</span> — sem dados gravados na superfície do cartão</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Uso fora de política corporativa</td>
+                        <td><span class="tag-bad">Incontrolável</span> — sem restrição de categoria ou valor</td>
+                        <td><span class="tag-good">Bloqueado</span> — limites e categorias definidos pelo RH em tempo real</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Detecção tardia de fraude</td>
+                        <td><span class="tag-bad">Mensal</span> — detectado apenas no extrato</td>
+                        <td><span class="tag-good">Imediato</span> — push notification em &lt; 500 ms por transação</td>
+                    </tr>
+                    <tr>
+                        <td style="color:#7eb8ff;font-weight:600">Vazamento de dados da cadeia</td>
+                        <td><span class="tag-bad">Múltiplos elos</span> — gráfica, courier, banco emissor</td>
+                        <td><span class="tag-good">PCI-DSS único</span> — conformidade centralizada na plataforma</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Rodapé de navegação -->
+    <div class="text-center pb-5">
+        <button class="btn btn-outline-light btn-lg px-5" onclick="history.back()">
+            <i class="fas fa-arrow-left me-2"></i>Voltar
+        </button>
+        <a href="/beneficios" class="btn btn-primary btn-lg px-5 ms-3">
+            <i class="fas fa-mobile-alt me-2"></i>Impacto ambiental
+        </a>
+        <a href="/calculadora" class="btn btn-outline-light btn-lg px-5 ms-3">
+            <i class="fas fa-redo me-2"></i>Nova simulação
+        </a>
+    </div>
+
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -122,4 +122,14 @@ public class CalculadoraController {
         model.addAttribute("impacto", impacto);
         return "beneficios";
     }
+
+    @GetMapping("/seguranca")
+    public String mostrarSeguranca(HttpSession session, Model model) {
+        ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+        if (impacto == null) {
+            return "redirect:/calculadora";
+        }
+        model.addAttribute("impacto", impacto);
+        return "seguranca";
+    }
 }

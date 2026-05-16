@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E se fosse digital? — GreenEden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* ── base ── */
+        body { background: linear-gradient(135deg,#f0f8ff,#e6f4ea); font-family:'Segoe UI',sans-serif; }
+        .page-header { background: linear-gradient(135deg,#0d6efd,#00a651); color: #fff; }
+        .section-card { border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,.09); border:none; background:#fff; }
+        .section-title { font-size:1.1rem; font-weight:700; color:#1a3c5e; border-bottom:2px solid #e0eaf0; padding-bottom:8px; margin-bottom:14px; }
+        .chart-box { background:#fafafa; border-radius:12px; padding:14px; }
+        /* ── metrics ── */
+        .metric-big { font-size:2rem; font-weight:700; }
+        .metric-green { color:#00a651; } .metric-blue { color:#0d6efd; }
+        /* ── scorecard table ── */
+        .score-table th { font-size:.75rem; text-transform:uppercase; letter-spacing:.5px; color:#666; }
+        .score-table td { vertical-align:middle; font-size:.88rem; line-height:1.35; }
+        .stag { display:inline-block; border-radius:20px; padding:1px 9px; font-size:.75rem; font-weight:600; }
+        .stag-bad  { background:#fde8ea; color:#b02030; }
+        .stag-ok   { background:#fff3cd; color:#856404; }
+        .stag-good { background:#d4edda; color:#155724; }
+        .stag-best { background:#cff4fc; color:#055160; }
+        .stars     { color:#f4a700; letter-spacing:-2px; font-size:.95rem; }
+        .stars-off { color:#ddd;    letter-spacing:-2px; font-size:.95rem; }
+        /* ── benefit cards ── */
+        .benefit-num { width:34px;height:34px;border-radius:50%;background:#00a651;color:#fff;font-weight:700;font-size:.95rem;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+        .benefit-card { background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 3px 12px rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start; }
+        .notice-box { background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:14px 18px;color:#7d5c0a;font-size:.85rem; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="page-header py-3">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h1 class="h4 mb-0"><i class="fas fa-leaf me-2"></i>GreenEden</h1>
+            <small class="opacity-75">Infraestrutura digital vs cadeia física</small>
+        </div>
+        <div class="d-flex gap-2">
+            <button onclick="history.back()" class="btn btn-light btn-sm"><i class="fas fa-arrow-left me-1"></i>Voltar</button>
+            <a href="/calculadora" class="btn btn-outline-light btn-sm">Nova simulação</a>
+        </div>
+    </div>
+</header>
+
+<!-- Dados para JS (oculto) -->
+<div id="dadosBeneficios" style="display:none;"
+     th:data-co2-por-tx-fisico="${impacto.co2PorTransacaoFisico}"
+     th:data-co2-por-tx-digital="${impacto.co2PorTransacaoDigital}"
+     th:data-co2-producao="${impacto.co2Producao}"
+     th:data-co2-embalagem="${impacto.co2Embalagem}"
+     th:data-co2-logistica="${impacto.co2Logistica}"
+     th:data-co2-fim-vida="${impacto.co2FimDeVida}"
+     th:data-co2-servidor="${impacto.co2ServidorDigital}"
+     th:data-co2-telecom="${impacto.co2Telecomunicacoes}"
+     th:data-co2-dispositivo="${impacto.co2DispositivoUsuario}"
+     th:data-energia-fisica="${impacto.beneficiosOperacionais.energiaEvitadaKwh}"
+     th:data-energia-digital="${impacto.beneficiosOperacionais.consumoEnergiaDigitalTotalKwh}"
+     th:data-qtd-transacoes="${impacto.quantidadeTransacoes}">
+</div>
+
+<div class="container py-4">
+
+    <!-- ═══ DESTAQUE ═════════════════════════════════════════════════════════ -->
+    <div class="section-card p-4 mb-4">
+        <div class="row align-items-center g-3">
+            <div class="col-md-7">
+                <h2 class="h5 fw-bold mb-1">Infraestrutura digital vs cadeia física</h2>
+                <p class="text-muted mb-0 small">
+                    Com <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong>
+                    transações, a digitalização via E-wallet substitui toda a cadeia de fabricação,
+                    embalagem, logística e descarte por operações de servidor de impacto
+                    ambiental drasticamente inferior.
+                </p>
+            </div>
+            <div class="col-md-5">
+                <div class="row g-2 text-center">
+                    <div class="col-6">
+                        <div class="metric-big metric-green"
+                             th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital,1,'POINT',2,'COMMA')} + ' kg'"></div>
+                        <div class="small text-muted">CO₂ evitado</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="metric-big metric-blue"
+                             th:text="${impacto.co2PorTransacaoDigital > 0 ?
+                                #numbers.formatDecimal(impacto.co2PorTransacaoFisico / impacto.co2PorTransacaoDigital,1,'POINT',0,'COMMA') + 'x' :
+                                'N/D'}"></div>
+                        <div class="small text-muted">menos CO₂/transação</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ SCORECARD ESCRITO ════════════════════════════════════════════════ -->
+    <div class="section-card p-4 mb-4">
+        <div class="section-title"><i class="fas fa-table me-2 text-primary"></i>Pontuação comparativa por dimensão</div>
+        <div class="table-responsive">
+            <table class="table score-table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:26%">Dimensão</th>
+                        <th style="width:8%" class="text-center">Score</th>
+                        <th style="width:28%">Cartão físico</th>
+                        <th style="width:8%" class="text-center">Score</th>
+                        <th style="width:30%">E-wallet / Digital</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-semibold">Velocidade de processamento</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td><span class="stag stag-bad">5–7 dias</span> Fab. + entrega logística</td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td><span class="stag stag-best">&lt; 2 s</span> Processado por servidor 24/7</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">CO₂ por transação</td>
+                        <td class="text-center"><span class="stars">★</span><span class="stars-off">★★★★</span></td>
+                        <td>
+                            <span class="stag stag-bad"
+                                  th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoFisico * 1000,1,'POINT',3,'COMMA')} + ' g/tx'">
+                            </span> Inclui ciclo completo
+                        </td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td>
+                            <span class="stag stag-best"
+                                  th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoDigital * 1000000,1,'POINT',3,'COMMA')} + ' mg/tx'">
+                            </span> Apenas servidor + rede
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Escalabilidade operacional</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td><span class="stag stag-bad">Linear</span> Mais transações = mais cartões = mais CO₂</td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td><span class="stag stag-best">Sub-linear</span> Servidor atende milhões sem material adicional</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Eficiência energética</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td>
+                            <span class="stag stag-bad"
+                                  th:text="${#numbers.formatDecimal(impacto.beneficiosOperacionais.energiaEvitadaKwh,1,'POINT',2,'COMMA')} + ' kWh'">
+                            </span> Produção + logística
+                        </td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td>
+                            <span class="stag stag-best"
+                                  th:text="${#numbers.formatDecimal(impacto.beneficiosOperacionais.consumoEnergiaDigitalTotalKwh,1,'POINT',4,'COMMA')} + ' kWh'">
+                            </span> Datacenter eficiente (PUE ≈ 1,2)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Segurança anti-clonagem</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td><span class="stag stag-bad">Risco médio</span> Suscetível a skimming e extravio</td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td>
+                            <span class="stag stag-best"
+                                  th:text="${impacto.beneficiosOperacionais.indiceMenorRiscoClonagem} + '% redução'">
+                            </span> E-wallet + autenticação adicional
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Disponibilidade do serviço</td>
+                        <td class="text-center"><span class="stars">★★★</span><span class="stars-off">★★</span></td>
+                        <td><span class="stag stag-ok">Horário comercial</span> Limitado pelo banco emissor</td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td><span class="stag stag-best">24/7 — 365 dias</span> SLA datacenter ≥ 99,9%</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Custo de reposição</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td>
+                            <span class="stag stag-bad"
+                                  th:text="${impacto.beneficiosOperacionais.reposicoesEvitadas} + ' reposições/ano'">
+                            </span> Novo cartão + nova emissão
+                        </td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td><span class="stag stag-best">Zero</span> Cartão E-wallet não se desgasta</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Rastreabilidade</td>
+                        <td class="text-center"><span class="stars">★★</span><span class="stars-off">★★★</span></td>
+                        <td><span class="stag stag-ok">Parcial</span> Log de transações limitado</td>
+                        <td class="text-center"><span class="stars">★★★★★</span></td>
+                        <td><span class="stag stag-best">Total</span> Comprovante instantâneo + audit trail completo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ═══ GRÁFICOS (server-focused, únicos) ════════════════════════════════ -->
+    <h3 class="h6 text-muted text-uppercase fw-bold mb-3" style="letter-spacing:1px">
+        <i class="fas fa-server me-2"></i>Métricas de infraestrutura — gráficos únicos
+    </h3>
+    <div class="row g-3 mb-4">
+
+        <!-- Chart 1: Escalabilidade (linha + log) -->
+        <div class="col-lg-6">
+            <div class="section-card p-4 h-100">
+                <div class="section-title"><i class="fas fa-chart-line me-2 text-success"></i>Crescimento do CO₂ conforme volume</div>
+                <p class="text-muted small mb-2">
+                    À medida que o volume de transações cresce, o impacto do cartão físico escala
+                    linearmente (mais cartões = mais produção). O digital permanece praticamente
+                    estável — o servidor já está rodando. <em>Escala logarítmica.</em>
+                </p>
+                <div class="chart-box">
+                    <canvas id="graficoEscalabilidade" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart 2: Composição da pegada digital (donut) -->
+        <div class="col-lg-6">
+            <div class="section-card p-4 h-100">
+                <div class="section-title"><i class="fas fa-server me-2 text-info"></i>Composição da pegada do servidor digital</div>
+                <p class="text-muted small mb-2">
+                    Do total de CO₂ digital, a maior parcela vem do datacenter.
+                    Infraestruturas com energia renovável e PUE ≈ 1,2 reduzem
+                    continuamente essa fração.
+                </p>
+                <div class="chart-box">
+                    <canvas id="graficoInfraDigital" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <!-- Chart 3: Energia por 1000 transações -->
+        <div class="col-lg-6">
+            <div class="section-card p-4 h-100">
+                <div class="section-title"><i class="fas fa-bolt me-2 text-warning"></i>Energia por 1 000 transações (kWh)</div>
+                <p class="text-muted small mb-2">
+                    Energia total necessária para processar cada lote de 1.000 transações.
+                    O digital aproveita infraestrutura de servidor já ativa; o físico precisa de
+                    energia industrial para fabricar e distribuir cada lote de cartões.
+                </p>
+                <div class="chart-box">
+                    <canvas id="graficoEnergia" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart 4: Etapas da cadeia (stacked bar) -->
+        <div class="col-lg-6">
+            <div class="section-card p-4 h-100">
+                <div class="section-title"><i class="fas fa-layer-group me-2 text-danger"></i>CO₂ por etapa da cadeia (kg)</div>
+                <p class="text-muted small mb-2">
+                    O físico distribui emissões por 4 etapas industriais; o digital concentra
+                    tudo em 3 camadas de TI, ordens de grandeza menores.
+                    Cada barra empilhada mostra a contribuição de cada etapa.
+                </p>
+                <div class="chart-box">
+                    <canvas id="graficoEtapasCadeia" height="220"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ VANTAGENS ESCRITAS ════════════════════════════════════════════════ -->
+    <div class="section-card p-4 mb-4">
+        <div class="section-title"><i class="fas fa-list-ol me-2 text-success"></i>Vantagens operacionais — explicadas</div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">1</div>
+                    <div>
+                        <div class="fw-semibold mb-1">Servidor escala sem custo marginal de material</div>
+                        <div class="text-muted small">Um servidor de pagamentos processa milhões de transações via E-wallet por dia
+                        sem consumir plástico adicional. No modelo físico, cada novo usuário exige um novo cartão —
+                        plástico, papel, embalagem e logística.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">2</div>
+                    <div>
+                        <div class="fw-semibold mb-1">PUE ≈ 1,2 — eficiência de datacenter moderno</div>
+                        <div class="text-muted small">Datacenters de grande porte operam com PUE (Power Usage Effectiveness)
+                        próximo a 1,2 — apenas 20% de energia extra para refrigeração. Isso torna cada transação digital
+                        muito mais eficiente do que qualquer etapa industrial.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">3</div>
+                    <div>
+                        <div class="fw-semibold mb-1">
+                            <span th:text="${impacto.beneficiosOperacionais.etapasOperacionaisEvitadas}">6</span>
+                            etapas operacionais eliminadas
+                        </div>
+                        <div class="text-muted small">Fabricação do substrato, impressão, personalização, embalagem,
+                        distribuição logística e descarte final — cada etapa gera CO₂, resíduos sólidos e custo de
+                        mão-de-obra. No digital, todas são substituídas por uma chamada ao servidor.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">4</div>
+                    <div>
+                        <div class="fw-semibold mb-1">Zero logística de distribuição</div>
+                        <div class="text-muted small">
+                            <strong th:text="${#numbers.formatDecimal(impacto.beneficiosOperacionais.kmLogisticaEvitados,1,'POINT',0,'COMMA')}">0</strong>
+                            km de frete evitados por ano. A E-wallet é entregue via rede de telecomunicações
+                            em milissegundos, sem caminhão, avião ou motoboy — e sem emissão de CO₂ de transporte.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">5</div>
+                    <div>
+                        <div class="fw-semibold mb-1">Recuperação instantânea vs. reemissão física</div>
+                        <div class="text-muted small">Um cartão físico roubado ou danificado exige nova produção e envio
+                        (mais CO₂, mais plástico). Um cartão E-wallet bloqueado é substituído em segundos pelo aplicativo,
+                        sem nenhum impacto ambiental adicional.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="benefit-card">
+                    <div class="benefit-num">6</div>
+                    <div>
+                        <div class="fw-semibold mb-1">Eliminação de
+                            <span th:text="${#numbers.formatDecimal(impacto.beneficiosOperacionais.plasticoEvitadoKg,1,'POINT',3,'COMMA')}">0</span>
+                            kg de plástico PVC
+                        </div>
+                        <div class="text-muted small">PVC e policarbonato são polímeros de difícil reciclagem. Ao migrar
+                        para o digital, esse volume simplesmente não é produzido — evitando microplásticos e resíduo
+                        de alto custo de gestão.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ NOTA DE TRANSPARÊNCIA ═════════════════════════════════════════════ -->
+    <div class="notice-box mb-5">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Transparência sobre a pegada digital:</strong>
+        este comparativo considera o custo real de infraestrutura digital —
+        <strong th:text="${#numbers.formatDecimal(impacto.beneficiosOperacionais.consumoEnergiaDigitalTotalKwh,1,'POINT',4,'COMMA')} + ' kWh'"></strong>
+        de energia e
+        <strong th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital,1,'POINT',4,'COMMA')} + ' kg CO₂'"></strong>
+        atribuídos ao cenário digital. O modelo físico emite
+        <strong th:text="${#numbers.formatDecimal(impacto.co2Total,1,'POINT',2,'COMMA')} + ' kg CO₂'"></strong>
+        — diferença de
+        <strong th:text="${impacto.co2CenarioDigital > 0 ?
+            #numbers.formatDecimal(impacto.co2Total / impacto.co2CenarioDigital,1,'POINT',0,'COMMA') + 'x' :
+            'N/D'}"></strong>.
+    </div>
+
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+    'use strict';
+    var el = document.getElementById('dadosBeneficios');
+    if (!el) return;
+
+    var co2PerTxF = parseFloat(el.getAttribute('data-co2-por-tx-fisico'))  || 0;
+    var co2PerTxD = parseFloat(el.getAttribute('data-co2-por-tx-digital')) || 0;
+    var co2Prod   = parseFloat(el.getAttribute('data-co2-producao'))       || 0;
+    var co2Emb    = parseFloat(el.getAttribute('data-co2-embalagem'))      || 0;
+    var co2Log    = parseFloat(el.getAttribute('data-co2-logistica'))      || 0;
+    var co2Fim    = parseFloat(el.getAttribute('data-co2-fim-vida'))       || 0;
+    var co2Srv    = parseFloat(el.getAttribute('data-co2-servidor'))       || 0;
+    var co2Tel    = parseFloat(el.getAttribute('data-co2-telecom'))        || 0;
+    var co2Disp   = parseFloat(el.getAttribute('data-co2-dispositivo'))    || 0;
+    var enFis     = parseFloat(el.getAttribute('data-energia-fisica'))     || 0;
+    var enDig     = parseFloat(el.getAttribute('data-energia-digital'))    || 0;
+    var qtdTx     = parseFloat(el.getAttribute('data-qtd-transacoes'))     || 1;
+
+    var font = { family: "'Segoe UI', sans-serif", size: 12 };
+
+    /* ── 1. Escalabilidade ── */
+    var vols = [1000, 5000, 10000, 50000, 100000];
+    var physScale = vols.map(function(n){ return Math.max(n * co2PerTxF, 1e-9); });
+    var digScale  = vols.map(function(n){ return Math.max(n * co2PerTxD, 1e-9); });
+    new Chart(document.getElementById('graficoEscalabilidade'), {
+        type: 'line',
+        data: {
+            labels: ['1.000','5.000','10.000','50.000','100.000'],
+            datasets: [
+                { label: 'Físico (kg CO₂)', data: physScale,
+                  borderColor:'#dc3545', backgroundColor:'rgba(220,53,69,.1)',
+                  fill: true, tension: 0.3, pointRadius: 4 },
+                { label: 'Digital (kg CO₂)', data: digScale,
+                  borderColor:'#00a651', backgroundColor:'rgba(0,166,81,.1)',
+                  fill: true, tension: 0.3, pointRadius: 4 }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position:'bottom', labels:{ font:font, boxWidth:12 } } },
+            scales: {
+                y: { type:'logarithmic',
+                     title:{ display:true, text:'CO₂ (kg) — escala log', font:font } },
+                x: { title:{ display:true, text:'Volume de transações', font:font } }
+            }
+        }
+    });
+
+    /* ── 2. Composição pegada digital (donut) ── */
+    var totalDig = (co2Srv + co2Tel + co2Disp) || 1;
+    new Chart(document.getElementById('graficoInfraDigital'), {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Servidor/Datacenter (' + ((co2Srv/totalDig*100)|0) + '%)',
+                'Telecomunicações ('    + ((co2Tel/totalDig*100)|0) + '%)',
+                'Dispositivo do usuário ('+ ((co2Disp/totalDig*100)|0) + '%)'
+            ],
+            datasets: [{
+                data: [co2Srv, co2Tel, co2Disp],
+                backgroundColor: ['#0d6efd','#20c997','#fd7e14'],
+                borderColor:     ['#0a53be','#0ca678','#dc6902'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend:{ position:'bottom', labels:{ font:font, boxWidth:12 } } }
+        }
+    });
+
+    /* ── 3. Energia por 1 000 transações (horizontal bar) ── */
+    var eFis1k = qtdTx > 0 ? (enFis / qtdTx * 1000) : 0;
+    var eDig1k = qtdTx > 0 ? (enDig / qtdTx * 1000) : 0;
+    new Chart(document.getElementById('graficoEnergia'), {
+        type: 'bar',
+        data: {
+            labels: ['Cartão físico','E-wallet'],
+            datasets: [{
+                label: 'kWh / 1.000 transações',
+                data: [eFis1k, eDig1k],
+                backgroundColor: ['rgba(220,53,69,.7)','rgba(0,166,81,.7)'],
+                borderColor:     ['#dc3545','#00a651'],
+                borderWidth: 2, borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y', responsive: true,
+            plugins: { legend:{ display:false } },
+            scales: {
+                x: { title:{ display:true, text:'kWh', font:font }, beginAtZero:true },
+                y: { ticks:{ font:font } }
+            }
+        }
+    });
+
+    /* ── 4. Etapas da cadeia (stacked horizontal bar) ── */
+    new Chart(document.getElementById('graficoEtapasCadeia'), {
+        type: 'bar',
+        data: {
+            labels: ['Cadeia física','Infraestrutura digital'],
+            datasets: [
+                { label:'Fabricação / Servidor', data:[co2Prod, co2Srv],
+                  backgroundColor:['rgba(220,53,69,.7)','rgba(13,110,253,.7)'],
+                  borderColor:['#dc3545','#0d6efd'], borderWidth:2, borderRadius:4 },
+                { label:'Embalagem / Telecom', data:[co2Emb, co2Tel],
+                  backgroundColor:['rgba(253,126,20,.7)','rgba(32,201,151,.7)'],
+                  borderColor:['#fd7e14','#20c997'], borderWidth:2, borderRadius:4 },
+                { label:'Logística / Dispositivo', data:[co2Log, co2Disp],
+                  backgroundColor:['rgba(13,110,253,.7)','rgba(253,193,7,.7)'],
+                  borderColor:['#0d6efd','#ffc107'], borderWidth:2, borderRadius:4 },
+                { label:'Descarte',  data:[co2Fim, 0],
+                  backgroundColor:['rgba(111,66,193,.7)','transparent'],
+                  borderColor:['#6f42c1','transparent'], borderWidth:2, borderRadius:4 }
+            ]
+        },
+        options: {
+            indexAxis: 'y', responsive: true,
+            plugins: { legend:{ position:'bottom', labels:{ font:font, boxWidth:12 } } },
+            scales: {
+                x: { stacked:true, title:{ display:true, text:'kg CO₂', font:font }, beginAtZero:true },
+                y: { stacked:true, ticks:{ font:font } }
+            }
+        }
+    });
+
+})();
+</script>
+</body>
+</html>

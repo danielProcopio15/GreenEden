@@ -1,5 +1,6 @@
 package com.greeneden.calculadora_sustentavel.service;
 
+import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
 import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;
 import com.greeneden.calculadora_sustentavel.model.EmissoesCO2;
 import com.greeneden.calculadora_sustentavel.model.EntradaCalculo;
@@ -142,6 +143,30 @@ public class CalculadoraService implements CalculadoraServiceInterface {
                 (int) (reducaoCO2Digital / CO2_POR_KM_CARRO));
 
         // â”€â”€ 11. Montar EmissoesCO2 e ImpactoAmbiental â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // Beneficios operacionais
+        double fatorEmissaoBrasil    = 0.0839; // kg CO2e/kWh (MCTI 2023)
+        double tarifaKwhBrasil       = 0.75;   // R$/kWh estimado
+        double consumoEnergiaDigital = co2Digital / fatorEmissaoBrasil;
+
+        BeneficiosOperacionais beneficios = new BeneficiosOperacionais(
+                distancia * frequencia,
+                co2Logistica,
+                qtdCartoes,
+                (int) Math.round(qtdCartoes * 0.20),
+                recursos.getConsumoPlastico(),
+                recursos.getConsumoPapel(),
+                recursos.getConsumoAgua(),
+                recursos.getConsumoEnergia(),
+                6,
+                consumoEnergiaDigital,
+                co2Digital,
+                consumoEnergiaDigital * tarifaKwhBrasil,
+                90, 95, 98, 85,
+                (int) Math.round(qtdCartoes * 0.02),
+                "Transacoes digitais via PIX eliminam a necessidade de cartao fisico, "
+                + "reduzindo em ate 95% o risco de clonagem e fraude por extravio."
+        );
+
         EmissoesCO2 emissoes = new EmissoesCO2(
                 entrada,
                 co2Producao, co2Embalagem, co2Logistica, co2FimDeVida, co2Total,
@@ -149,7 +174,7 @@ public class CalculadoraService implements CalculadoraServiceInterface {
                 co2Servidor, co2Telecom, co2Dispositivo, co2Digital,
                 co2PorTransacaoDigital, reducaoCO2Digital);
 
-        return new ImpactoAmbiental(emissoes, recursos, equivalencias, METADADOS);
+        return new ImpactoAmbiental(emissoes, recursos, equivalencias, METADADOS, beneficios);
     }
 }
 

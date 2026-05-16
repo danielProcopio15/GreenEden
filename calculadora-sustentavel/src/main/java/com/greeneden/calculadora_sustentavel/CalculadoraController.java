@@ -8,6 +8,7 @@ import com.greeneden.calculadora_sustentavel.model.TipoMaterial;
 import com.greeneden.calculadora_sustentavel.model.TipoTransacaoDigital;
 import com.greeneden.calculadora_sustentavel.service.CalculadoraServiceInterface;
 import com.greeneden.calculadora_sustentavel.service.GeolocalizacaoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class CalculadoraController {
             @RequestParam("cepDestino") String cepDestino,
             @RequestParam("tipoTransporte") String tipoTransporte,
             @RequestParam("cenarioDescarte") String cenarioDescarteStr,
+            HttpSession session,
             Model model) {
 
         // Validações de entrada
@@ -95,6 +97,7 @@ public class CalculadoraController {
             entrada.setCenarioDescarte(CenarioDescarte.valueOf(cenarioDescarteStr));
 
             ImpactoAmbiental impacto = calculadoraService.calcularImpacto(entrada);
+            session.setAttribute("ultimoImpacto", impacto);
             model.addAttribute("impacto", impacto);
             return "resultado";
 
@@ -108,5 +111,15 @@ public class CalculadoraController {
         model.addAttribute("cenarioDescarte", CenarioDescarte.values());
         model.addAttribute("origemFabrica", OrigemFabrica.values());
         return "calculadora";
+    }
+
+    @GetMapping("/beneficios")
+    public String mostrarBeneficios(HttpSession session, Model model) {
+        ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+        if (impacto == null) {
+            return "redirect:/calculadora";
+        }
+        model.addAttribute("impacto", impacto);
+        return "beneficios";
     }
 }

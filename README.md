@@ -159,3 +159,24 @@ http://localhost:8080
 
 [VÍDEO DE HISTÓRIAS 3 E 4](https://youtu.be/YY-lYN32ajc)
 
+
+---
+
+## ENTREGA 3:
+
+### Issues:
+
+**Fechados:**
+
+
+### Screencast Histórias 5 à 10:
+
+- História do usuário 5: Exibir gráfico comparativo de emissões
+- História do usuário 6: Exibir equivalência ambiental
+- História do usuário 7: Estimativa de benefícios adicionais da digitalização
+- História do usuário 8: Estimativa de benefícios de segurança nas transações digitais
+- História do usuário 9: Botão de redirecionamento de calculo final para compra do digital
+- História do usuário 10: Página de Compra com opção para digital
+
+[VÍDEO DE HISTÓRIAS 5 À 10](https://youtu.be/1VJKZM58rHU)
+

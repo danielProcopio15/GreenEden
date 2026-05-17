@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Contato - GreenEden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #f8f9fa 0%, #e6f4ea 100%); font-family: 'Segoe UI', system-ui, sans-serif; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
+
+        /* ── Resumo do pedido ── */
+        .resumo-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #dee2e6;
+            padding: 20px 24px;
+        }
+        .resumo-label { font-size: .75rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .5px; }
+        .resumo-value { font-size: 1rem; font-weight: 700; color: #333; margin-top: 2px; }
+        .resumo-tag {
+            display: inline-block;
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 3px;
+        }
+        .tag-digital { background: #e6f4ea; color: #00a651; }
+        .tag-fisico  { background: #fdecea; color: #e30613; }
+
+        /* ── Formulário ── */
+        .form-label { font-size: .9rem; }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1.5px solid #dee2e6;
+            padding: 10px 14px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #00a651;
+            box-shadow: 0 0 0 3px rgba(0,166,81,.15);
+        }
+        .form-control.is-invalid:focus { border-color: #dc3545; box-shadow: 0 0 0 3px rgba(220,53,69,.15); }
+
+        /* ── Botão enviar ── */
+        .btn-submit {
+            background: #00a651; color: white; border: none;
+            padding: 13px 36px; font-size: 1rem; font-weight: 600;
+            border-radius: 50px; cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+        .btn-submit:hover { background: #008c44; transform: translateY(-2px); color: white; }
+
+        /* ── Trust signals ── */
+        .trust-row {
+            display: flex; flex-wrap: wrap; gap: 20px;
+            justify-content: center; font-size: .82rem; color: #888;
+        }
+
+        /* ── Disclaimer ── */
+        .disclaimer { font-size: 0.78rem; color: #999; }
+    </style>
+</head>
+<body>
+
+<header class="header-edenred">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
+        <a href="/compra" class="hd-btn"><i class="fas fa-arrow-left"></i>Planos</a>
+    </div>
+</header>
+
+<div class="container py-5" style="max-width: 800px;">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="/calculadora" class="text-success text-decoration-none">Calculadora</a></li>
+            <li class="breadcrumb-item"><a href="/resultado" class="text-success text-decoration-none">Resultados</a></li>
+            <li class="breadcrumb-item"><a href="/compra" class="text-success text-decoration-none">Planos</a></li>
+            <li class="breadcrumb-item active text-muted">Solicitacao de Contato</li>
+        </ol>
+    </nav>
+
+    <!-- Título -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1">Solicitar Contato Comercial</h2>
+        <p class="text-muted">Preencha seus dados e nossa equipe entrara em contato em ate <strong>1 dia util</strong>.</p>
+    </div>
+
+    <!-- ══ Resumo do pedido ══ -->
+    <div class="resumo-card mb-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <i class="fas fa-receipt text-success"></i>
+            <span class="fw-bold">Resumo do Pedido</span>
+            <span class="resumo-tag ms-1"
+                  th:classappend="${tipo == 'digital'} ? 'tag-digital' : 'tag-fisico'"
+                  th:text="${tipo == 'digital'} ? '&#127807; E-Wallet Digital' : '&#128179; Cartao Fisico'">
+            </span>
+        </div>
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <div class="resumo-label">Plano</div>
+                <div class="resumo-value" th:text="${plano != null && !plano.isEmpty() ? plano : '—'}">—</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumo-label">Quantidade / ano</div>
+                <div class="resumo-value" th:text="${#numbers.formatInteger(quantidade, 1, 'COMMA')} + ' unid.'">—</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumo-label">Valor estimado</div>
+                <div class="resumo-value text-success fw-bold"
+                     th:text="'R$ ' + ${#numbers.formatDecimal(precoTotal, 1, 'POINT', 2, 'COMMA')}">—</div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumo-label">CO&#8322; evitado/ano</div>
+                <div class="resumo-value text-success"
+                     th:text="${tipo == 'digital'} ? ${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg' : '—'">—</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ Formulário ══ -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+        <h5 class="fw-bold mb-1"><i class="fas fa-user-tie me-2 text-success"></i>Dados do Responsavel</h5>
+        <p class="text-muted small mb-4">Todos os campos marcados com <span class="text-danger">*</span> sao obrigatorios.</p>
+
+        <form id="contatoForm" th:action="@{/contato}" method="post" novalidate class="needs-validation">
+
+            <!-- Campos ocultos: resumo do pedido -->
+            <input type="hidden" name="plano"       th:value="${plano}">
+            <input type="hidden" name="quantidade"  th:value="${quantidade}">
+            <input type="hidden" name="tipo"        th:value="${tipo}">
+            <input type="hidden" name="precoTotal"  th:value="${precoTotal}">
+
+            <div class="row g-3">
+
+                <!-- Nome -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Nome completo <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="nome" required
+                           placeholder="Ex: Ana Paula Silva" autocomplete="name">
+                    <div class="invalid-feedback">Informe seu nome completo.</div>
+                </div>
+
+                <!-- Cargo -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Cargo / Funcao <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="cargo" required
+                           placeholder="Ex: Gerente de Beneficios" autocomplete="organization-title">
+                    <div class="invalid-feedback">Informe seu cargo ou funcao.</div>
+                </div>
+
+                <!-- Empresa -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Empresa <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="empresa" required
+                           placeholder="Razao social ou nome fantasia" autocomplete="organization">
+                    <div class="invalid-feedback">Informe o nome da empresa.</div>
+                </div>
+
+                <!-- CNPJ -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">CNPJ <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="cnpj" id="cnpjInput" required
+                           placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric">
+                    <div class="invalid-feedback">Informe um CNPJ valido (14 digitos).</div>
+                </div>
+
+                <!-- E-mail -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">E-mail corporativo <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" name="email" required
+                           placeholder="voce@empresa.com.br" autocomplete="email">
+                    <div class="invalid-feedback">Informe um e-mail valido.</div>
+                </div>
+
+                <!-- Telefone -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Telefone / WhatsApp <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="telefone" id="telefoneInput" required
+                           placeholder="(11) 9 0000-0000" maxlength="16" inputmode="numeric">
+                    <div class="invalid-feedback">Informe um telefone valido.</div>
+                </div>
+
+                <!-- Prazo desejado -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Prazo desejado para implantacao</label>
+                    <select class="form-select" name="prazo">
+                        <option value="">Sem preferencia</option>
+                        <option value="imediato">O mais rapido possivel</option>
+                        <option value="30dias">Ate 30 dias</option>
+                        <option value="60dias">30 a 60 dias</option>
+                        <option value="90dias">60 a 90 dias</option>
+                        <option value="planejamento">Estou em fase de planejamento</option>
+                    </select>
+                </div>
+
+                <!-- Como nos conheceu -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Como nos conheceu?</label>
+                    <select class="form-select" name="origem">
+                        <option value="">Selecione</option>
+                        <option value="google">Busca no Google</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="indicacao">Indicacao</option>
+                        <option value="evento">Evento / Feira</option>
+                        <option value="edenred">Ja sou cliente EdenRed</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <!-- Observacoes -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Observacoes
+                        <span class="text-muted fw-normal">(opcional)</span>
+                    </label>
+                    <textarea class="form-control" name="observacoes" rows="3"
+                              placeholder="Prazo, integracao de sistemas, volume variavel por remessa, outras necessidades..."></textarea>
+                </div>
+
+                <!-- LGPD -->
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="lgpdCheck" name="lgpd" required>
+                        <label class="form-check-label small" for="lgpdCheck">
+                            Concordo com os <a href="#" class="text-success">Termos de Uso</a>
+                            e a <a href="#" class="text-success">Politica de Privacidade (LGPD)</a>.
+                            Meus dados serao utilizados exclusivamente para fins comerciais.
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="invalid-feedback">Voce precisa aceitar os termos para continuar.</div>
+                    </div>
+                </div>
+
+            </div><!-- /row -->
+
+            <!-- Botoes -->
+            <div class="mt-4 d-flex gap-3 flex-wrap align-items-center">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane me-2"></i>Enviar Solicitacao
+                </button>
+                <a href="/compra" class="btn btn-outline-secondary px-4 rounded-pill">
+                    <i class="fas fa-arrow-left me-1"></i>Voltar
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Trust signals -->
+    <div class="trust-row mt-4 mb-3">
+        <span><i class="fas fa-lock me-1 text-success"></i>Dados protegidos conforme a LGPD</span>
+        <span><i class="fas fa-shield-alt me-1 text-success"></i>Conexao segura SSL</span>
+        <span><i class="fas fa-clock me-1 text-success"></i>Resposta em ate 1 dia util</span>
+        <span><i class="fas fa-user-tie me-1 text-success"></i>Consultor dedicado</span>
+    </div>
+
+    <p class="disclaimer text-center">
+        Seus dados nao serao compartilhados com terceiros. Proposta sem compromisso.
+    </p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Mascara CNPJ: 00.000.000/0000-00 ──
+document.getElementById('cnpjInput').addEventListener('input', function () {
+    let v = this.value.replace(/\D/g, '').slice(0, 14);
+    if (v.length > 12) v = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8,12)+'-'+v.slice(12);
+    else if (v.length > 8) v = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5,8)+'/'+v.slice(8);
+    else if (v.length > 5) v = v.slice(0,2)+'.'+v.slice(2,5)+'.'+v.slice(5);
+    else if (v.length > 2) v = v.slice(0,2)+'.'+v.slice(2);
+    this.value = v;
+});
+
+// ── Mascara Telefone: (11) 9 0000-0000 ──
+document.getElementById('telefoneInput').addEventListener('input', function () {
+    let v = this.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) v = '('+v.slice(0,2)+') '+v.slice(2,3)+' '+v.slice(3,7)+'-'+v.slice(7);
+    else if (v.length > 6) v = '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
+    else if (v.length > 2) v = '('+v.slice(0,2)+') '+v.slice(2);
+    else if (v.length > 0) v = '('+v;
+    this.value = v;
+});
+
+// ── Validacao Bootstrap ──
+document.getElementById('contatoForm').addEventListener('submit', function (e) {
+    if (!this.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+        const first = this.querySelector(':invalid');
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    this.classList.add('was-validated');
+});
+</script>
+</body>
+</html>

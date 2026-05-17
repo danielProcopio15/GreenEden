@@ -8,8 +8,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg, #f8f9fa 0%, #e6f4ea 100%); font-family: 'Segoe UI', system-ui, sans-serif; }
-        .header-edenred { background-color: #e30613; color: white; padding: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .logo { font-size: 32px; font-weight: 700; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
         .main-card { border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.12); border: none; }
         .form-label { font-weight: 600; color: #333; }
         .form-control, .form-select { padding: 12px 16px; font-size: 1rem; border-radius: 10px; border: 2px solid #e0e0e0; }
@@ -26,8 +44,14 @@
 
 <header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
-        <h1 class="logo mb-0">&#127807; GreenEden</h1>
-        <a href="/" class="btn btn-light">&#8592; Voltar ao Inicio</a>
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
+        <a href="/" class="hd-btn"><i class="fas fa-home"></i>Inicio</a>
     </div>
 </header>
 
@@ -49,18 +73,21 @@
                             <label class="form-label">Cartoes por remessa</label>
                             <input type="number" name="quantidadeCartoes" class="form-control"
                                    placeholder="Ex: 10.000" min="1" required>
+                            <div class="invalid-feedback">Por favor, preencha a quantidade de cartoes por remessa.</div>
                             <div class="form-text">Quantidade de cartoes em cada pedido/emissao.</div>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Remessas por ano</label>
                             <input type="number" name="frequenciaRemessasAno" class="form-control"
                                    placeholder="Ex: 4" min="1" required>
+                            <div class="invalid-feedback">Por favor, preencha o numero de remessas por ano.</div>
                             <div class="form-text">Quantas vezes por ano a empresa solicita cartoes? Ex: 1, 2, 4 ou 12.</div>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Vida util estimada (transacoes/cartao)</label>
                             <input type="number" name="vidaUtilTransacoesPorCartao" class="form-control"
                                    placeholder="Ex: 1.500" min="1" value="1500" required>
+                            <div class="invalid-feedback">Por favor, preencha a vida util estimada por cartao.</div>
                             <div class="form-text">Faixa tipica: 500 a 3.000 transacoes por cartao.</div>
                         </div>
                     </div>
@@ -73,6 +100,7 @@
                                 <label class="form-label">Total de transacoes realizadas com cartao fisico</label>
                                 <input type="number" name="quantidadeTransacoes" class="form-control"
                                        placeholder="Ex: 150.000" min="0" required>
+                                <div class="invalid-feedback">Por favor, preencha o total de transacoes realizadas.</div>
                                 <div class="form-text">
                                     Soma de todos os usos dos cartoes no periodo avaliado.
                                 </div>
@@ -98,6 +126,7 @@
                                             th:value="${o.name()}"
                                             th:text="${o.descricao}"></option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione a fabrica de origem.</div>
                                 <div class="form-text">Fabrica de origem dos cartoes.</div>
                             </div>
                             <div class="col-md-4">
@@ -105,6 +134,7 @@
                                 <input type="text" name="cepDestino" class="form-control"
                                        placeholder="Ex: 01310-100" maxlength="9"
                                        pattern="[0-9]{5}-?[0-9]{3}" required>
+                                <div class="invalid-feedback">Por favor, informe um CEP valido (ex: 01310-100).</div>
                                 <div class="form-text">CEP do local de entrega dos cartoes. A distancia sera calculada automaticamente.</div>
                             </div>
                             <div class="col-md-4">
@@ -114,6 +144,7 @@
                                     <option value="RODOVIARIO">Rodoviario (caminhao)</option>
                                     <option value="AEREO">Aereo (aviao de carga)</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione o modal de transporte.</div>
                             </div>
                         </div>
                     </div>
@@ -132,6 +163,7 @@
                                                        c.name() == 'INCINERACAO' ? 'Incineracao' :
                                                        'Reciclagem (credito de carbono)'}"></option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione o cenario de descarte.</div>
                                 <div class="form-text">Destino predominante dos cartoes ao fim da vida util.</div>
                             </div>
                         </div>
@@ -153,7 +185,7 @@
                 <h6 class="fw-bold text-success"><i class="fas fa-lightbulb"></i> O que voce vai ver no resultado?</h6>
                 <p class="mb-0 text-muted small">
                     O impacto real dos seus cartoes fisicos (Cradle-to-Grave) e, ao final, um comparativo hipotetico:
-                    <em>e se essas mesmas transacoes fossem feitas via PIX?</em> — baseado em
+                    <em>e se essas mesmas transacoes fossem feitas via E-wallet?</em> — baseado em
                     <strong>GHG Protocol</strong>, <strong>IPCC AR6</strong>, <strong>MCTI 2023</strong> e <strong>DEFRA 2023</strong>.
                 </p>
             </div>
@@ -166,9 +198,31 @@
     const origemSelect = document.querySelector('select[name="origemFabrica"]');
     const distanciaInput = document.querySelector('input[name="distanciaLogistica"]');
     const distancias = { 'COLOMBO_PR': 410, 'SAO_BERNARDO_SP': 35, 'COTIA_SP': 28 };
-    origemSelect.addEventListener('change', function () {
-        distanciaInput.value = distancias[this.value] || 0;
-    });
+    if (origemSelect && distanciaInput) {
+        origemSelect.addEventListener('change', function () {
+            distanciaInput.value = distancias[this.value] || 0;
+        });
+    }
+
+    // Validacao do formulario
+    (function () {
+        'use strict';
+        const form = document.querySelector('form.needs-validation');
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Rola ate o primeiro campo invalido
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            }
+            form.classList.add('was-validated');
+        }, false);
+    })();
 </script>
 </body>
 </html>

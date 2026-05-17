@@ -14,11 +14,13 @@ public class ImpactoAmbiental extends EmissoesCO2 {
     private RecursosConsumidos recursos;
     private EquivalenciasAmbientais equivalencias;
     private MetadadosCalculo metadados;
+    private BeneficiosOperacionais beneficiosOperacionais;
 
     public ImpactoAmbiental(EmissoesCO2 emissoes,
                              RecursosConsumidos recursos,
                              EquivalenciasAmbientais equivalencias,
-                             MetadadosCalculo metadados) {
+                             MetadadosCalculo metadados,
+                             BeneficiosOperacionais beneficiosOperacionais) {
         // propagate EmissoesCO2 (which already carries EntradaCalculo fields)
         setQuantidadeCartoes(emissoes.getQuantidadeCartoes());
         setFrequenciaRemessasAno(emissoes.getFrequenciaRemessasAno());
@@ -48,5 +50,6 @@ public class ImpactoAmbiental extends EmissoesCO2 {
         this.recursos = recursos;
         this.equivalencias = equivalencias;
         this.metadados = metadados;
+        this.beneficiosOperacionais = beneficiosOperacionais;
     }
 }

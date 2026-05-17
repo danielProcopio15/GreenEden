@@ -49,18 +49,21 @@
                             <label class="form-label">Cartoes por remessa</label>
                             <input type="number" name="quantidadeCartoes" class="form-control"
                                    placeholder="Ex: 10.000" min="1" required>
+                            <div class="invalid-feedback">Por favor, preencha a quantidade de cartoes por remessa.</div>
                             <div class="form-text">Quantidade de cartoes em cada pedido/emissao.</div>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Remessas por ano</label>
                             <input type="number" name="frequenciaRemessasAno" class="form-control"
                                    placeholder="Ex: 4" min="1" required>
+                            <div class="invalid-feedback">Por favor, preencha o numero de remessas por ano.</div>
                             <div class="form-text">Quantas vezes por ano a empresa solicita cartoes? Ex: 1, 2, 4 ou 12.</div>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Vida util estimada (transacoes/cartao)</label>
                             <input type="number" name="vidaUtilTransacoesPorCartao" class="form-control"
                                    placeholder="Ex: 1.500" min="1" value="1500" required>
+                            <div class="invalid-feedback">Por favor, preencha a vida util estimada por cartao.</div>
                             <div class="form-text">Faixa tipica: 500 a 3.000 transacoes por cartao.</div>
                         </div>
                     </div>
@@ -73,6 +76,7 @@
                                 <label class="form-label">Total de transacoes realizadas com cartao fisico</label>
                                 <input type="number" name="quantidadeTransacoes" class="form-control"
                                        placeholder="Ex: 150.000" min="0" required>
+                                <div class="invalid-feedback">Por favor, preencha o total de transacoes realizadas.</div>
                                 <div class="form-text">
                                     Soma de todos os usos dos cartoes no periodo avaliado.
                                 </div>
@@ -98,6 +102,7 @@
                                             th:value="${o.name()}"
                                             th:text="${o.descricao}"></option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione a fabrica de origem.</div>
                                 <div class="form-text">Fabrica de origem dos cartoes.</div>
                             </div>
                             <div class="col-md-4">
@@ -105,6 +110,7 @@
                                 <input type="text" name="cepDestino" class="form-control"
                                        placeholder="Ex: 01310-100" maxlength="9"
                                        pattern="[0-9]{5}-?[0-9]{3}" required>
+                                <div class="invalid-feedback">Por favor, informe um CEP valido (ex: 01310-100).</div>
                                 <div class="form-text">CEP do local de entrega dos cartoes. A distancia sera calculada automaticamente.</div>
                             </div>
                             <div class="col-md-4">
@@ -114,6 +120,7 @@
                                     <option value="RODOVIARIO">Rodoviario (caminhao)</option>
                                     <option value="AEREO">Aereo (aviao de carga)</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione o modal de transporte.</div>
                             </div>
                         </div>
                     </div>
@@ -132,6 +139,7 @@
                                                        c.name() == 'INCINERACAO' ? 'Incineracao' :
                                                        'Reciclagem (credito de carbono)'}"></option>
                                 </select>
+                                <div class="invalid-feedback">Por favor, selecione o cenario de descarte.</div>
                                 <div class="form-text">Destino predominante dos cartoes ao fim da vida util.</div>
                             </div>
                         </div>
@@ -166,9 +174,31 @@
     const origemSelect = document.querySelector('select[name="origemFabrica"]');
     const distanciaInput = document.querySelector('input[name="distanciaLogistica"]');
     const distancias = { 'COLOMBO_PR': 410, 'SAO_BERNARDO_SP': 35, 'COTIA_SP': 28 };
-    origemSelect.addEventListener('change', function () {
-        distanciaInput.value = distancias[this.value] || 0;
-    });
+    if (origemSelect && distanciaInput) {
+        origemSelect.addEventListener('change', function () {
+            distanciaInput.value = distancias[this.value] || 0;
+        });
+    }
+
+    // Validacao do formulario
+    (function () {
+        'use strict';
+        const form = document.querySelector('form.needs-validation');
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Rola ate o primeiro campo invalido
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            }
+            form.classList.add('was-validated');
+        }, false);
+    })();
 </script>
 </body>
 </html>

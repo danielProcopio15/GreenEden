@@ -167,6 +167,7 @@ http://localhost:8080
 ### Issues:
 
 **Fechados:**
+<img width="1260" height="837" alt="image" src="https://github.com/user-attachments/assets/3391328e-f3b6-4c20-80f5-e127176ce9e2" />
 
 
 ### Screencast Histórias 5 à 10:

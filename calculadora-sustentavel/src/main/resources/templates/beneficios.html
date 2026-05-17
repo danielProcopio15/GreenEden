@@ -10,7 +10,26 @@
     <style>
         /* ── base ── */
         body { background: linear-gradient(135deg,#f8f9fa,#e6f4ea); font-family:'Segoe UI',sans-serif; }
-        .page-header { background-color: #e30613; color: #fff; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
         .section-card { border-radius:16px; box-shadow:0 6px 24px rgba(0,0,0,.09); border:none; background:#fff; }
         .section-title { font-size:1.1rem; font-weight:700; color:#1a3c5e; border-bottom:2px solid #e0eaf0; padding-bottom:8px; margin-bottom:14px; }
         .chart-box { background:#fafafa; border-radius:12px; padding:14px; }
@@ -36,16 +55,18 @@
 </head>
 <body>
 
-<!-- Header -->
-<header class="page-header py-3">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <div>
-            <h1 class="h4 mb-0"><i class="fas fa-leaf me-2"></i>GreenEden</h1>
-            <small class="opacity-75">Infraestrutura digital vs cadeia física</small>
-        </div>
+<header class="header-edenred">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
         <div class="d-flex gap-2">
-            <button onclick="history.back()" class="btn btn-light btn-sm"><i class="fas fa-arrow-left me-1"></i>Voltar</button>
-            <a href="/calculadora" class="btn btn-outline-light btn-sm">Nova simulação</a>
+            <button onclick="history.back()" class="hd-btn"><i class="fas fa-arrow-left"></i>Voltar</button>
+            <a href="/calculadora" class="hd-btn"><i class="fas fa-redo"></i>Nova Simulacao</a>
         </div>
     </div>
 </header>

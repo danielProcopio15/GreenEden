@@ -12,7 +12,26 @@
         .impact-number { font-size: 2.2rem; font-weight: 700; color: #00a651; }
         .impact-number-sm { font-size: 1.6rem; font-weight: 700; color: #00a651; }
         .impact-number-xs { font-size: 1.2rem; font-weight: 700; color: #00a651; }
-        .header-edenred { background-color: #e30613; color: white; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
         .stage-card { border-left: 5px solid #00a651; border-radius: 12px; background: white; }
         .stage-card.logistica { border-left-color: #007bff; }
         .stage-card.embalagem { border-left-color: #fd7e14; }
@@ -41,10 +60,19 @@
 </head>
 <body>
 
-<header class="header-edenred py-3">
+<header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
-        <h1 class="logo text-white mb-0">&#127807; GreenEden</h1>
-        <a href="/calculadora" class="btn btn-light btn-sm">&#8592; Nova simulação</a>
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
+        <div class="d-flex gap-2">
+            <a href="/calculadora" class="hd-btn"><i class="fas fa-redo"></i>Nova Simulacao</a>
+            <a href="/compra" class="hd-btn"><i class="fas fa-shopping-cart"></i>Comprar</a>
+        </div>
     </div>
 </header>
 
@@ -148,6 +176,7 @@
     <div class="text-center mb-5">
         <a href="/beneficios" class="btn btn-primary btn-lg px-4"><i class="fas fa-mobile-alt me-2"></i>E se fosse digital?</a>
         <a href="/seguranca" class="btn btn-danger btn-lg px-4 ms-2"><i class="fas fa-shield-alt me-2"></i>Segurança</a>
+        <a href="/compra" class="btn btn-success btn-lg px-4 ms-2"><i class="fas fa-shopping-cart me-2"></i>Comprar</a>
         <a href="/calculadora" class="btn btn-outline-success btn-lg px-4 ms-2"><i class="fas fa-redo me-2"></i>Nova simulação</a>
         <a href="/" class="btn btn-outline-secondary btn-lg px-4 ms-2"><i class="fas fa-home me-2"></i>Início</a>
     </div>

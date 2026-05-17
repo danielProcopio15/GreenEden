@@ -8,7 +8,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg,#f8f9fa,#e6f4ea); min-height:100vh; font-family:'Segoe UI',sans-serif; }
-        .page-header { background-color:#e30613; color:#fff; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
         /* ── intro banner ── */
         .hero-banner { background:linear-gradient(135deg,#0f2044,#1a3c7c); border-radius:18px; padding:32px 36px; color:#fff; margin-bottom:28px; }
         .hero-banner .display-num { font-size:3rem; font-weight:800; color:#4da6ff; line-height:1; }
@@ -37,16 +56,16 @@
 </head>
 <body>
 
-<!-- Header -->
-<header class="page-header py-3">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <div>
-            <h1 class="h4 mb-0"><i class="fas fa-leaf me-2 text-success"></i>GreenEden</h1>
-            <small style="color:rgba(255,255,255,.6)">Segurança digital de benefícios ao colaborador</small>
-        </div>
-        <button class="btn-back btn" onclick="history.back()">
-            <i class="fas fa-arrow-left me-2"></i>Voltar
-        </button>
+<header class="header-edenred">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
+        <button onclick="history.back()" class="hd-btn"><i class="fas fa-arrow-left"></i>Voltar</button>
     </div>
 </header>
 

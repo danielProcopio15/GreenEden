@@ -8,8 +8,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background: linear-gradient(135deg, #f8f9fa 0%, #e6f4ea 100%); font-family: 'Segoe UI', system-ui, sans-serif; }
-        .header-edenred { background-color: #e30613; color: white; padding: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .logo { font-size: 32px; font-weight: 700; }
+        /* ── Header ── */
+        .header-edenred {
+            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            color: white; padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
+        .hd-logo-green { color:#5ce89a; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-btn {
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            color: white; padding: 6px 18px; border-radius: 50px;
+            font-size: .85rem; font-weight: 500; text-decoration: none;
+            cursor: pointer; font-family: inherit; transition: background .2s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
         .main-card { border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.12); border: none; }
         .form-label { font-weight: 600; color: #333; }
         .form-control, .form-select { padding: 12px 16px; font-size: 1rem; border-radius: 10px; border: 2px solid #e0e0e0; }
@@ -26,8 +44,14 @@
 
 <header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
-        <h1 class="logo mb-0">&#127807; GreenEden</h1>
-        <a href="/" class="btn btn-light">&#8592; Voltar ao Inicio</a>
+        <a href="/" class="hd-logo">
+            <span class="hd-logo-icon">&#127807;</span>
+            <div>
+                <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
+                <div class="hd-logo-sub">Impacto Ambiental</div>
+            </div>
+        </a>
+        <a href="/" class="hd-btn"><i class="fas fa-home"></i>Inicio</a>
     </div>
 </header>
 

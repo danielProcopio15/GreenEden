@@ -113,6 +113,16 @@ public class CalculadoraController {
         return "calculadora";
     }
 
+    @GetMapping("/resultado")
+    public String mostrarResultado(HttpSession session, Model model) {
+        ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+        if (impacto == null) {
+            return "redirect:/calculadora";
+        }
+        model.addAttribute("impacto", impacto);
+        return "resultado";
+    }
+
     @GetMapping("/beneficios")
     public String mostrarBeneficios(HttpSession session, Model model) {
         ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
@@ -131,5 +141,59 @@ public class CalculadoraController {
         }
         model.addAttribute("impacto", impacto);
         return "seguranca";
+    }
+
+    @GetMapping("/compra")
+    public String mostrarCompra(HttpSession session, Model model) {
+        ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+        if (impacto == null) {
+            return "redirect:/calculadora";
+        }
+        model.addAttribute("impacto", impacto);
+        return "compra";
+    }
+
+    @GetMapping("/contato")
+    public String mostrarContato(
+            @RequestParam(defaultValue = "") String plano,
+            @RequestParam(defaultValue = "0") int quantidade,
+            @RequestParam(defaultValue = "digital") String tipo,
+            @RequestParam(defaultValue = "0") double precoTotal,
+            HttpSession session, Model model) {
+        ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+        if (impacto == null) {
+            return "redirect:/calculadora";
+        }
+        model.addAttribute("impacto", impacto);
+        model.addAttribute("plano", plano);
+        model.addAttribute("quantidade", quantidade);
+        model.addAttribute("tipo", tipo);
+        model.addAttribute("precoTotal", precoTotal);
+        return "contato";
+    }
+
+    @PostMapping("/contato")
+    public String enviarContato(
+            @RequestParam String nome,
+            @RequestParam String cargo,
+            @RequestParam String empresa,
+            @RequestParam String cnpj,
+            @RequestParam String email,
+            @RequestParam String telefone,
+            @RequestParam(defaultValue = "") String observacoes,
+            @RequestParam(defaultValue = "") String plano,
+            @RequestParam(defaultValue = "0") int quantidade,
+            @RequestParam(defaultValue = "digital") String tipo,
+            @RequestParam(defaultValue = "0") double precoTotal,
+            Model model) {
+        String protocolo = "GE-" + (100000 + (int)(Math.random() * 899999));
+        model.addAttribute("protocolo", protocolo);
+        model.addAttribute("nome", nome);
+        model.addAttribute("empresa", empresa);
+        model.addAttribute("plano", plano);
+        model.addAttribute("quantidade", quantidade);
+        model.addAttribute("tipo", tipo);
+        model.addAttribute("precoTotal", precoTotal);
+        return "confirmacao";
     }
 }

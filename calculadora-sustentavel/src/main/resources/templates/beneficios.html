@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         /* ── base ── */
-        body { background: linear-gradient(135deg,#f8f9fa,#e6f4ea); font-family:'Segoe UI',sans-serif; }
+        body { background-color: #fff0f0; font-family:'Segoe UI',sans-serif; }
         /* ── Header ── */
         .header-edenred {
             background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
@@ -18,7 +18,7 @@
             border-bottom: 1px solid rgba(255,255,255,.06);
         }
         .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-        .hd-logo-icon { font-size:1.6rem; }
+        .hd-logo-icon { height: 52px; width: auto; }
         .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
         .hd-logo-green { color:#5ce89a; }
         .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
@@ -58,7 +58,7 @@
 <header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
         <a href="/" class="hd-logo">
-            <span class="hd-logo-icon">&#127807;</span>
+            <img th:src="@{/logo.png}" src="/logo.png" alt="GreenEden Logo" class="hd-logo-icon">
             <div>
                 <div class="hd-logo-name"><span class="hd-logo-green">Green</span>Eden</div>
                 <div class="hd-logo-sub">Impacto Ambiental</div>

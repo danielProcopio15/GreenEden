@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal - GreenEden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #fff5f4; font-family: 'Segoe UI', sans-serif; }
+        .header-portal { background: #E63312; color: white; padding: 14px 0; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+        .header-portal .container { display: flex; justify-content: space-between; align-items: center; }
+        .portal-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .portal-logo img { height: 40px; }
+        .portal-logo-text { font-size: 1.1rem; font-weight: 800; }
+        .portal-logo-green { color: #ffe0a0; }
+        .header-user { display: flex; align-items: center; gap: 16px; }
+        .user-greeting { font-size: 0.95rem; }
+        .btn-logout { background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.3); color: white; padding: 6px 16px; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: background 0.2s; }
+        .btn-logout:hover { background: rgba(255,255,255,.3); color: white; }
+        .sidebar-portal { background: white; border-right: 1px solid #ffe0d9; padding: 24px 0; min-height: calc(100vh - 60px); position: sticky; top: 60px; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 0; }
+        .sidebar-item { padding: 12px 24px; border-left: 3px solid transparent; color: #666; text-decoration: none; font-weight: 500; transition: all 0.2s; display: flex; align-items: center; gap: 12px; }
+        .sidebar-item:hover { background: #fff5f4; color: #E63312; }
+        .sidebar-item.active { background: #fff5f4; color: #E63312; border-left-color: #E63312; font-weight: 700; }
+        .sidebar-item i { width: 20px; text-align: center; }
+        .main-portal { padding: 32px; }
+        .portal-title { font-size: 2rem; font-weight: 800; color: #333; margin-bottom: 24px; }
+        .metric-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .metric-icon { font-size: 2rem; margin-bottom: 12px; }
+        .metric-value { font-size: 1.8rem; font-weight: 800; color: #00a651; margin: 8px 0; }
+        .metric-label { font-size: 0.9rem; color: #666; }
+        .pedido-card { background: white; border-radius: 12px; padding: 16px; border-left: 4px solid #E63312; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; transition: box-shadow 0.2s; }
+        .pedido-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+        .badge-status { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .badge-ativo { background: #d1e7dd; color: #0a3622; }
+        .badge-pendente { background: #fff3cd; color: #664d03; }
+        .badge-cancelado { background: #f8d7da; color: #842029; }
+        @media (max-width: 768px) { .sidebar-portal { display: none; } .main-portal { padding: 16px; } }
+        @media (max-width: 576px) { .user-greeting { font-size: 0.8rem; } .portal-logo-text { font-size: 0.95rem; } }
+    </style>
+</head>
+<body>
+
+<header class="header-portal">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <a href="/portal" class="portal-logo">
+            <img src="/logo.png" alt="GreenEden">
+            <span class="portal-logo-text"><span class="portal-logo-green">Green</span>Eden</span>
+        </a>
+        <div class="header-user">
+            <div class="user-greeting">Olá, <strong th:text="${usuarioNome}"></strong>!</div>
+            <a href="/auth/logout" class="btn-logout"><i class="fas fa-sign-out-alt me-1"></i>Sair</a>
+        </div>
+    </div>
+</header>
+
+<div class="d-flex">
+    <div class="sidebar-portal" style="width: 220px;">
+        <div class="sidebar-nav">
+            <a href="/portal" class="sidebar-item active"><i class="fas fa-chart-line"></i>Dashboard</a>
+            <a href="/portal/pedidos" class="sidebar-item"><i class="fas fa-shopping-cart"></i>Pedidos</a>
+            <a href="/portal/configuracoes" class="sidebar-item"><i class="fas fa-cog"></i>Configurações</a>
+        </div>
+    </div>
+
+    <div class="main-portal" style="flex: 1;">
+        <h2 class="portal-title"><i class="fas fa-chart-pie me-2" style="color: #E63312;"></i>Dashboard</h2>
+
+        <!-- Métricas -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon"><i class="fas fa-cloud-upload-alt" style="color: #00a651;"></i></div>
+                    <div class="metric-label">CO₂ Evitado</div>
+                    <div class="metric-value" th:text="${totalCO2Evitado} + ' kg'"></div>
+                    <small class="text-muted">Acumulado</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon"><i class="fas fa-tree" style="color: #00a651;"></i></div>
+                    <div class="metric-label">Árvores Equivalentes</div>
+                    <div class="metric-value" th:text="${totalArvoresEquivalentes}"></div>
+                    <small class="text-muted">Plantadas</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon"><i class="fas fa-file-invoice" style="color: #0d6efd;"></i></div>
+                    <div class="metric-label">Pedidos</div>
+                    <div class="metric-value" th:text="${totalPedidos}"></div>
+                    <small class="text-muted">Total</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon"><i class="fas fa-check-circle" style="color: #00a651;"></i></div>
+                    <div class="metric-label">Ativos</div>
+                    <div class="metric-value" th:text="${pedidosAtivos}"></div>
+                    <small class="text-muted">Agora</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investimento Total -->
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <div class="metric-card d-flex align-items-center gap-4" style="border-left: 4px solid #E63312;">
+                    <div style="font-size: 2.5rem;"><i class="fas fa-dollar-sign" style="color: #E63312;"></i></div>
+                    <div>
+                        <div class="metric-label">Investimento Total em Planos</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #E63312;" th:text="'R$ ' + ${totalInvestimento}"></div>
+                        <small class="text-muted">Soma de todos os pedidos realizados</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Últimos Pedidos -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.08);">
+                    <h5 class="mb-3"><i class="fas fa-history me-2"></i>Últimos Pedidos</h5>
+                    <div th:if="${ultimosPedidos.isEmpty()}" class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-3x mb-3" style="opacity: 0.5;"></i>
+                        <p>Nenhum pedido ainda. <a href="/calculadora" class="text-decoration-none">Faça sua primeira simulação</a></p>
+                    </div>
+                    <div th:unless="${ultimosPedidos.isEmpty()}">
+                        <div th:each="pedido : ${ultimosPedidos}" class="pedido-card">
+                            <div class="pedido-info">
+                                <h6 class="mb-1">#<span th:text="${pedido.id}"></span> - <span th:text="${pedido.tipoPlano}"></span></h6>
+                                <small class="text-muted" th:text="${pedido.criadoEm?.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm'))}"></small>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="badge-status"
+                                      th:classappend="${pedido.status == 'Ativo' ? 'badge-ativo' : pedido.status == 'Cancelado' ? 'badge-cancelado' : 'badge-pendente'}"
+                                      th:text="${pedido.status}"></span>
+                                <a th:href="@{/portal/pedido/{id}(id=${pedido.id})}" class="btn btn-sm btn-outline-primary" style="border-radius: 20px;"><i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="/calculadora" class="btn btn-primary" style="border-radius: 20px; padding: 10px 24px;"><i class="fas fa-calculator me-2"></i>Nova Simulação</a>
+                <a href="/portal/pedidos" class="btn btn-outline-secondary ms-2" style="border-radius: 20px; padding: 10px 24px;"><i class="fas fa-list me-2"></i>Ver Todos os Pedidos</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

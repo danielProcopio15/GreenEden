@@ -8,23 +8,33 @@ import com.greeneden.calculadora_sustentavel.model.TipoMaterial;
 import com.greeneden.calculadora_sustentavel.model.TipoTransacaoDigital;
 import com.greeneden.calculadora_sustentavel.service.CalculadoraServiceInterface;
 import com.greeneden.calculadora_sustentavel.service.GeolocalizacaoService;
+import com.greeneden.calculadora_sustentavel.service.AutenticacaoService;
+import com.greeneden.calculadora_sustentavel.service.PedidoService;
+import com.greeneden.calculadora_sustentavel.model.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Optional;
 
 @Controller
 public class CalculadoraController {
 
     private final CalculadoraServiceInterface calculadoraService;
     private final GeolocalizacaoService geolocalizacaoService;
+    private final AutenticacaoService autenticacaoService;
+    private final PedidoService pedidoService;
 
     public CalculadoraController(CalculadoraServiceInterface calculadoraService,
-                                  GeolocalizacaoService geolocalizacaoService) {
-        this.calculadoraService   = calculadoraService;
+                                  GeolocalizacaoService geolocalizacaoService,
+                                  AutenticacaoService autenticacaoService,
+                                  PedidoService pedidoService) {
+        this.calculadoraService    = calculadoraService;
         this.geolocalizacaoService = geolocalizacaoService;
+        this.autenticacaoService   = autenticacaoService;
+        this.pedidoService         = pedidoService;
     }
 
     @GetMapping("/")
@@ -52,7 +62,6 @@ public class CalculadoraController {
             HttpSession session,
             Model model) {
 
-        // Validações de entrada
         if (quantidadeCartoes == null || quantidadeCartoes < 1) {
             return erro(model, "A quantidade de cartões deve ser maior que zero.");
         }
@@ -78,17 +87,14 @@ public class CalculadoraController {
         }
 
         try {
-            // Calcula a distância via API de mapas antes do cálculo de impacto
             double distanciaKm = geolocalizacaoService.calcularDistancia(cepLimpo, origem, tipoTransporte);
 
             EntradaCalculo entrada = new EntradaCalculo();
             entrada.setQuantidadeCartoes(quantidadeCartoes);
             entrada.setFrequenciaRemessasAno(frequenciaRemessasAno);
-            // Material fixo: PVC Reciclado (composição padrão de todos os cartões)
             entrada.setTipoMaterial(TipoMaterial.PVC_RECICLADO);
             entrada.setVidaUtilTransacoesPorCartao(vidaUtil);
             entrada.setQuantidadeTransacoes(quantidadeTransacoes);
-            // Comparativo digital sempre via PIX (menor emissão — caso mais favorável ao digital)
             entrada.setTipoTransacaoDigital(TipoTransacaoDigital.PIX);
             entrada.setOrigemFabrica(origem);
             entrada.setCepDestino(cepLimpo);
@@ -144,12 +150,14 @@ public class CalculadoraController {
     }
 
     @GetMapping("/compra")
-    public String mostrarCompra(HttpSession session, Model model) {
+    public String mostrarCompra(
+            @RequestParam(defaultValue = "resultado") String from,
+            HttpSession session, Model model) {
         ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
-        if (impacto == null) {
-            return "redirect:/calculadora";
-        }
         model.addAttribute("impacto", impacto);
+        model.addAttribute("temImpacto", impacto != null);
+        model.addAttribute("from", from);
+        model.addAttribute("fromHome", Boolean.valueOf("home".equals(from)));
         return "compra";
     }
 
@@ -159,16 +167,19 @@ public class CalculadoraController {
             @RequestParam(defaultValue = "0") int quantidade,
             @RequestParam(defaultValue = "digital") String tipo,
             @RequestParam(defaultValue = "0") double precoTotal,
+            @RequestParam(defaultValue = "0") double co2Evitado,
+            @RequestParam(defaultValue = "0") double arvores,
+            @RequestParam(defaultValue = "false") boolean fromHome,
             HttpSession session, Model model) {
         ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
-        if (impacto == null) {
-            return "redirect:/calculadora";
-        }
         model.addAttribute("impacto", impacto);
         model.addAttribute("plano", plano);
         model.addAttribute("quantidade", quantidade);
         model.addAttribute("tipo", tipo);
         model.addAttribute("precoTotal", precoTotal);
+        model.addAttribute("co2Evitado", co2Evitado);
+        model.addAttribute("arvores", arvores);
+        model.addAttribute("fromHome", fromHome);
         return "contato";
     }
 
@@ -185,15 +196,106 @@ public class CalculadoraController {
             @RequestParam(defaultValue = "0") int quantidade,
             @RequestParam(defaultValue = "digital") String tipo,
             @RequestParam(defaultValue = "0") double precoTotal,
+            @RequestParam(defaultValue = "0") double co2Evitado,
+            @RequestParam(defaultValue = "0") double arvores,
+            @RequestParam(defaultValue = "") String senha,
+            HttpSession session,
             Model model) {
-        String protocolo = "GE-" + (100000 + (int)(Math.random() * 899999));
-        model.addAttribute("protocolo", protocolo);
-        model.addAttribute("nome", nome);
-        model.addAttribute("empresa", empresa);
-        model.addAttribute("plano", plano);
-        model.addAttribute("quantidade", quantidade);
-        model.addAttribute("tipo", tipo);
-        model.addAttribute("precoTotal", precoTotal);
-        return "confirmacao";
+
+        try {
+            // Gerar protocolo único
+            String protocolo = "GE-" + (100000 + (int)(Math.random() * 899999));
+
+            // Verificar se já existe conta com esse email
+            Optional<Usuario> usuarioOpt = autenticacaoService.buscarPorEmail(email);
+            boolean jaTemConta = usuarioOpt.isPresent();
+            Long usuarioId = null;
+
+            if (jaTemConta) {
+                // Usuário já tem conta: associar o pedido à conta existente
+                usuarioId = usuarioOpt.get().getId();
+                session.setAttribute("usuarioId", usuarioId);
+                session.setAttribute("usuarioNome", usuarioOpt.get().getNome());
+                session.setAttribute("usuarioEmail", email);
+            } else if (senha != null && !senha.trim().isEmpty()) {
+                // Usuário não tem conta MAS escolheu criar uma senha: criar conta
+                Usuario novoUsuario = autenticacaoService.registrarUsuario(
+                        nome, email, empresa, cnpj, telefone, cargo, senha);
+                usuarioId = novoUsuario.getId();
+                jaTemConta = true; // conta criada agora
+                session.setAttribute("usuarioId", usuarioId);
+                session.setAttribute("usuarioNome", novoUsuario.getNome());
+                session.setAttribute("usuarioEmail", email);
+            }
+            // Se não tem conta e não colocou senha: usuarioId permanece null
+            // O pedido será salvo sem vínculo de conta
+
+            ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
+
+            if (impacto != null) {
+                // Fluxo calculadora: usa dados reais do impacto calculado
+                pedidoService.criarPedido(
+                        usuarioId,
+                        impacto.getQuantidadeCartoes(),
+                        impacto.getFrequenciaRemessasAno(),
+                        impacto.getVidaUtilTransacoesPorCartao(),
+                        impacto.getQuantidadeTransacoes(),
+                        impacto.getOrigemFabrica().toString(),
+                        impacto.getCepDestino(),
+                        impacto.getTipoTransporte(),
+                        impacto.getCenarioDescarte().toString(),
+                        impacto.getDistanciaLogistica(),
+                        impacto.getCo2Total(),
+                        impacto.getCo2CenarioDigital(),
+                        impacto.getReducaoCO2Digital(),
+                        (double) impacto.getEquivalencias().getArvoresSalvas(),
+                        precoTotal,
+                        plano.isEmpty() ? "Padrão" : plano,
+                        protocolo,
+                        nome, email, empresa, cnpj, telefone, cargo
+                );
+            } else {
+                // Fluxo home: usa co2Evitado e arvores calculados pela tela de compra
+                pedidoService.criarPedido(
+                        usuarioId,
+                        quantidade > 0 ? quantidade : 1000,
+                        12,
+                        50,
+                        150000,
+                        "BRASIL",
+                        "00000000",
+                        "RODOVIARIO",
+                        "ATERRO",
+                        0.0,
+                        0.0,
+                        0.0,
+                        co2Evitado,
+                        arvores,
+                        precoTotal,
+                        plano.isEmpty() ? "Consulta Especialista" : plano,
+                        protocolo,
+                        nome, email, empresa, cnpj, telefone, cargo
+                );
+            }
+
+            // Passar dados para a tela de confirmação
+            model.addAttribute("protocolo", protocolo);
+            model.addAttribute("nome", nome);
+            model.addAttribute("empresa", empresa);
+            model.addAttribute("plano", plano);
+            model.addAttribute("quantidade", quantidade);
+            model.addAttribute("tipo", tipo);
+            model.addAttribute("precoTotal", precoTotal);
+            model.addAttribute("emailContato", email);
+
+            // Flag para mostrar modal de "quer criar conta?" apenas se não tem conta
+            model.addAttribute("mostrarModalConta", !jaTemConta);
+
+            return "confirmacao";
+
+        } catch (Exception e) {
+            model.addAttribute("erro", "Erro ao processar: " + e.getMessage());
+            return "contato";
+        }
     }
 }

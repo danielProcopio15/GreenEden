@@ -10,90 +10,323 @@
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
-            background-color: #fff0f0;
+            background-color: #f9f9f9;
         }
-        
-        /* ── Header ── */
+
+        /* ── Header Edenred ── */
         .header-edenred {
-            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
-            color: white; padding: 14px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,.22);
-            border-bottom: 1px solid rgba(255,255,255,.06);
+            background: #E63312;
+            color: white;
+            padding: 14px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,.18);
+            border-bottom: 3px solid #C0280F;
         }
         .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-        .hd-logo-icon { height: 52px; width: auto; }
+        .hd-logo-icon { height: 48px; width: auto; }
         .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
-        .hd-logo-green { color:#5ce89a; }
-        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-logo-green { color:#ffe0a0; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.65); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
         .hd-btn {
-            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
-            color: white; padding: 6px 18px; border-radius: 50px;
+            background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+            color: white; padding: 7px 18px; border-radius: 50px;
             font-size: .85rem; font-weight: 500; text-decoration: none;
             cursor: pointer; font-family: inherit; transition: background .2s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
+        .hd-btn:hover { background: rgba(255,255,255,.28); color: white; }
+        .hd-btn-login {
+            background: white; border: 2px solid white;
+            color: #C0280F; padding: 7px 20px; border-radius: 50px;
+            font-size: .85rem; font-weight: 700; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: all .2s;
+        }
+        .hd-btn-login:hover { background: #fff3f0; color: #9e2008; border-color: #fff3f0; }
 
+        /* ── Hero ── */
         .hero {
-            background: linear-gradient(135deg, #0f3d2a 0%, #1a5c42 100%);
+            background: linear-gradient(135deg, #C0280F 0%, #E63312 55%, #d43010 100%);
             color: white;
-            padding: 140px 0 100px;
+            padding: 100px 0;
             position: relative;
             overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
         .hero::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://via.placeholder.com/1920x1080/00a651/ffffff?text=🌱') center/cover no-repeat;
-            opacity: 0.15;
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,.08) 0%, transparent 60%);
         }
-
-        .hero-content {
+        .hero-content { 
+            position: relative; 
+            z-index: 2; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 3D Card simulado */
+        .hero-3d-card {
+            perspective: 1200px;
+            margin-bottom: 40px;
+        }
+        
+        .card-3d {
+            width: 320px;
+            height: 480px;
+            background: linear-gradient(145deg, rgba(255,255,255,.15), rgba(255,255,255,.05));
+            border: 2px solid rgba(255,255,255,.25);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,.3),
+                inset 0 1px 0 rgba(255,255,255,.2);
+            position: relative;
+            overflow: hidden;
+            transform: rotateX(5deg) rotateY(-8deg);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .hero:hover .card-3d {
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+        
+        .card-3d::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255,255,255,.1) 50%,
+                transparent 70%
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .card-content {
             position: relative;
             z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-
-        .btn-primary-eden {
-            background-color: #00a651;
-            color: white;
-            padding: 16px 45px;
-            font-size: 1.25rem;
+        
+        .card-chip {
+            width: 56px;
+            height: 44px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+        
+        .card-chip::before,
+        .card-chip::after {
+            content: '';
+            position: absolute;
+            background: #ccc;
+        }
+        
+        .card-chip::before {
+            width: 100%;
+            height: 2px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+        
+        .card-chip::after {
+            width: 2px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .card-logo {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        
+        .card-text {
+            font-size: 0.7rem;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+            margin-bottom: 16px;
+        }
+        
+        .card-number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            letter-spacing: 0.2rem;
             font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s;
+            margin: 24px 0 8px 0;
+            word-spacing: 1rem;
         }
         
-        .btn-primary-eden:hover {
-            background-color: #008c44;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 166, 81, 0.4);
+        .card-holder {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+            letter-spacing: 0.05rem;
+            margin-bottom: 16px;
         }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        
+        .card-expiry {
+            text-align: left;
+        }
+        
+        .card-expiry-label {
+            font-size: 0.6rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+        
+        .card-expiry-date {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .card-cvv {
+            background: rgba(0,0,0,.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+        }
+        
+        .hero h1 { 
+            font-size: clamp(2rem, 4vw, 3rem); 
+            font-weight: 800; 
+            line-height: 1.15;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .hero .lead { 
+            font-size: clamp(0.95rem, 2vw, 1.1rem); 
+            opacity: .9; 
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+            padding: 6px 16px; border-radius: 50px; font-size: .82rem; font-weight: 500;
+            margin-bottom: 20px;
+        }
+        .hero-badge span { color: #ffe0a0; }
 
+        /* ── Botões Hero ── */
+        .btn-cta-primary {
+            background: white; color: #C0280F;
+            padding: 14px 36px; font-size: 1.05rem; font-weight: 700;
+            border-radius: 50px; border: none; transition: all .3s;
+            display: inline-flex; align-items: center; gap: 8px;
+            text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,.15);
+        }
+        .btn-cta-primary:hover { background: #fff3f0; color: #9e2008; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.2); }
+        .btn-cta-secondary {
+            background: rgba(255,255,255,.12); color: white;
+            padding: 14px 32px; font-size: 1rem; font-weight: 600;
+            border-radius: 50px; border: 2px solid rgba(255,255,255,.35);
+            transition: all .3s; display: inline-flex; align-items: center; gap: 8px;
+            text-decoration: none;
+        }
+        .btn-cta-secondary:hover { background: rgba(255,255,255,.22); color: white; transform: translateY(-2px); }
+
+        /* ── Stats strip ── */
+        .stats-strip {
+            background: white;
+            box-shadow: 0 4px 24px rgba(0,0,0,.07);
+            padding: 28px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item { text-align: center; padding: 0 20px; }
+        .stat-item + .stat-item { border-left: 1px solid #eee; }
+        .stat-number { font-size: 2rem; font-weight: 800; color: #E63312; line-height: 1; }
+        .stat-label { font-size: .8rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+        /* ── Feature cards ── */
+        .features-section { padding: 70px 0; }
         .feature-card {
-            border: none;
-            border-radius: 16px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee; border-radius: 16px;
+            background: white; padding: 32px 28px;
+            transition: transform .3s, box-shadow .3s;
+            height: 100%;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,.09); }
+        .feature-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: #fff0ee; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 18px; color: #E63312;
         }
+        .feature-card h5 { font-weight: 700; color: #222; margin-bottom: 10px; }
+        .feature-card p { color: #666; font-size: .92rem; margin: 0; }
 
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #00a651;
+        /* ── Como funciona ── */
+        .how-section { background: #fff5f4; padding: 70px 0; }
+        .step-num {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: #E63312; color: white;
+            font-size: 1.1rem; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
+        .step-connector { width: 2px; background: #f3c6c0; height: 32px; margin-left: 21px; }
+
+        /* ── CTA final ── */
+        .cta-section {
+            background: #222; color: white; padding: 70px 0; text-align: center;
+        }
+        .cta-section h2 { font-size: 2rem; font-weight: 800; }
+        .cta-section p { color: rgba(255,255,255,.7); max-width: 500px; margin: 0 auto 28px; }
+        .btn-cta-final {
+            background: #E63312; color: white;
+            padding: 14px 40px; font-size: 1.05rem; font-weight: 700;
+            border-radius: 50px; border: none; transition: all .3s;
+            display: inline-flex; align-items: center; gap: 8px;
+            text-decoration: none;
+        }
+        .btn-cta-final:hover { background: #C0280F; color: white; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(230,51,18,.35); }
+        .btn-outline-final {
+            background: transparent; color: white;
+            padding: 14px 36px; font-size: 1rem; font-weight: 600;
+            border-radius: 50px; border: 2px solid rgba(255,255,255,.3);
+            transition: all .3s; display: inline-flex; align-items: center; gap: 8px;
+            text-decoration: none;
+        }
+        .btn-outline-final:hover { border-color: white; color: white; background: rgba(255,255,255,.08); }
+
+        /* ── Footer ── */
+        .footer { background: #111; color: rgba(255,255,255,.5); padding: 24px 0; font-size: .82rem; text-align: center; }
     </style>
 </head>
 <body>
 
+<!-- Header -->
 <header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
         <a href="/" class="hd-logo">
@@ -103,70 +336,242 @@
                 <div class="hd-logo-sub">Impacto Ambiental</div>
             </div>
         </a>
-        <nav class="d-flex gap-2 flex-wrap">
-            <a href="/" class="hd-btn"><i class="fas fa-home"></i>Inicio</a>
+        <nav class="d-flex gap-2 flex-wrap align-items-center">
             <a href="/calculadora" class="hd-btn"><i class="fas fa-calculator"></i>Calculadora</a>
+            <a href="/compra?from=home" class="hd-btn"><i class="fas fa-headset"></i>Falar com especialista</a>
+            <a href="/auth/login" class="hd-btn-login"><i class="fas fa-user"></i>Entrar</a>
         </nav>
     </div>
 </header>
 
-    <!-- Hero Section -->
-    <section class="hero text-center">
-        <div class="container hero-content">
-            <h1 class="display-3 fw-bold mb-4">
-                Transforme suas transações<br>em impacto positivo
-            </h1>
-            <p class="lead fs-3 mb-5 opacity-90" style="max-width: 850px; margin-left: auto; margin-right: auto;">
-                Descubra o quanto você pode reduzir emissões de CO₂, plástico e papel 
-                ao migrar para soluções digitais da Edenred.
-            </p>
-            <a href="/calculadora" class="btn btn-primary-eden btn-lg px-5 py-3">
-                <i class="fas fa-leaf me-2"></i>
-                Calcular meu impacto ambiental agora
-            </a>
-        </div>
-    </section>
-
-    <!-- Seção de Destaques -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row g-4 text-center">
-                <div class="col-md-4">
-                    <div class="feature-card card h-100 p-4">
-                        <i class="fas fa-cloud-sun fa-3x text-success mb-3"></i>
-                        <h4 class="fw-bold">Redução de CO₂</h4>
-                        <p class="text-muted">Evite emissões desnecessárias com a digitalização de benefícios.</p>
+<!-- Hero -->
+<section class="hero">
+    <div class="container hero-content">
+        <!-- Card 3D -->
+        <div class="hero-3d-card">
+            <div class="card-3d">
+                <div class="card-content">
+                    <div>
+                        <div class="card-chip"></div>
+                        <div class="card-logo">🌿</div>
+                        <div class="card-text">E-Wallet Digital</div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card card h-100 p-4">
-                        <i class="fas fa-recycle fa-3x text-success mb-3"></i>
-                        <h4 class="fw-bold">Economia de Plástico</h4>
-                        <p class="text-muted">Reduza a produção de cartões físicos e resíduos plásticos.</p>
+                    
+                    <div>
+                        <div class="card-number">•••• •••• •••• 2026</div>
+                        <div class="card-holder">GreenEden Benefícios</div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card card h-100 p-4">
-                        <i class="fas fa-file-alt fa-3x text-success mb-3"></i>
-                        <h4 class="fw-bold">Menos Papel</h4>
-                        <p class="text-muted">Elimine impressões, envelopes e logística desnecessária.</p>
+                    
+                    <div class="card-footer">
+                        <div class="card-expiry">
+                            <div class="card-expiry-label">Válido até</div>
+                            <div class="card-expiry-date">12/28</div>
+                        </div>
+                        <div class="card-cvv">CVV: •••</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Chamada Final -->
-    <section class="py-5 text-center bg-white">
-        <div class="container">
-            <h2 class="mb-4 fw-bold">Pronto para ver o impacto real?</h2>
-            <p class="lead text-muted mb-4">Informe a quantidade de transações e descubra quanto sua empresa pode contribuir com o meio ambiente.</p>
-            <a href="/calculadora" class="btn btn-primary-eden btn-lg">
-                Acessar Calculadora
+        
+        <!-- Textos -->
+        <div class="hero-badge">
+            <i class="fas fa-leaf"></i>
+            <span>Edenred &times; Sustentabilidade</span>
+        </div>
+        
+        <h1 class="mb-4">
+            Seus cartões físicos têm um custo que você ainda não viu
+        </h1>
+        
+        <p class="lead mb-5">
+            Calcule o impacto real de CO₂, plástico e papel dos seus cartões de benefícios
+            e descubra quanto sua empresa economiza ao migrar para o e-wallet digital.
+        </p>
+        
+        <!-- Botões Centralizados -->
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="/calculadora" class="btn-cta-primary">
+                <i class="fas fa-leaf"></i>Calcular impacto agora
+            </a>
+            <a href="/compra?from=home" class="btn-cta-secondary">
+                <i class="fas fa-headset"></i>Falar com especialista
             </a>
         </div>
-    </section>
+    </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Stats strip -->
+<div class="stats-strip">
+    <div class="container">
+        <div class="row justify-content-center g-0">
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">redução de CO₂ com e-wallet</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number">439×</div>
+                <div class="stat-label">menos emissão por transação</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number">0 g</div>
+                <div class="stat-label">de plástico no modelo digital</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-number">ISO</div>
+                <div class="stat-label">14064 · GHG Protocol</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<section class="features-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold" style="color:#222;">Por que calcular agora?</h2>
+            <p class="text-muted" style="max-width:520px;margin:0 auto;">Empresas com metas ESG precisam de dados reais. Nossa calculadora usa fontes científicas reconhecidas internacionalmente.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-cloud"></i></div>
+                    <h5>Redução de CO₂</h5>
+                    <p>Veja exatamente quanto CO₂ sua empresa emite com cartões físicos e quanto economizaria no modelo digital — com base em GHG Protocol e IPCC AR6.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-recycle"></i></div>
+                    <h5>Economia de Plástico e Papel</h5>
+                    <p>Cada remessa de cartões consome plástico PVC, papel para envelopes e energia industrial. Descubra o total real do seu ciclo de produção.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                    <h5>Relatório para ESG</h5>
+                    <p>Gere dados baseados em fontes científicas (Ecoinvent, MCTI, CETESB) para compor seu inventário de GEE e relatórios de sustentabilidade.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-route"></i></div>
+                    <h5>Logística Real</h5>
+                    <p>Calculamos a distância real entre a fábrica e o destino via CEP, considerando modal rodoviário ou aéreo com fatores DEFRA 2023.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h5>Segurança no Digital</h5>
+                    <p>O e-wallet elimina risco de clonagem e extravio de cartões físicos. Veja o comparativo completo de segurança operacional.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h5>Portal do Cliente</h5>
+                    <p>Acompanhe o histórico de emissões evitadas, relatórios por pedido e o progresso das suas metas de sustentabilidade direto no portal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Como funciona -->
+<section class="how-section">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <h2 class="fw-bold mb-2" style="color:#222;">Como funciona?</h2>
+                <p class="text-muted mb-4">Em 3 passos você tem o impacto real dos seus cartões e a comparação com o modelo digital.</p>
+                <div class="d-flex flex-column">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="step-num">1</div>
+                        <div>
+                            <div class="fw-bold" style="color:#222;">Preencha os dados da sua remessa</div>
+                            <div class="text-muted" style="font-size:.9rem;">Quantidade de cartões, frequência, CEP de entrega e modal de transporte.</div>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="step-num">2</div>
+                        <div>
+                            <div class="fw-bold" style="color:#222;">Veja o impacto ambiental real</div>
+                            <div class="text-muted" style="font-size:.9rem;">CO₂, plástico, papel, água e energia — com equivalências em árvores e km de carro.</div>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="step-num">3</div>
+                        <div>
+                            <div class="fw-bold" style="color:#222;">Compare com o modelo digital</div>
+                            <div class="text-muted" style="font-size:.9rem;">Simule o que aconteceria se essas mesmas transações fossem via e-wallet Edenred.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="/calculadora" class="btn-cta-final" style="display:inline-flex;">
+                        <i class="fas fa-calculator"></i>Começar agora
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div style="background:white;border:1px solid #eee;border-radius:16px;padding:24px;text-align:center;">
+                            <div style="font-size:2.2rem;font-weight:800;color:#E63312;">4.810</div>
+                            <div style="font-size:.82rem;color:#888;margin-top:4px;">kg CO₂ — cenário físico</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="background:white;border:1px solid #eee;border-radius:16px;padding:24px;text-align:center;">
+                            <div style="font-size:2.2rem;font-weight:800;color:#00a651;">0,0006</div>
+                            <div style="font-size:.82rem;color:#888;margin-top:4px;">kg CO₂ — e-wallet digital</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="background:white;border:1px solid #eee;border-radius:16px;padding:24px;text-align:center;">
+                            <div style="font-size:2.2rem;font-weight:800;color:#0d6efd;">218</div>
+                            <div style="font-size:.82rem;color:#888;margin-top:4px;">árvores equivalentes</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="background:white;border:1px solid #eee;border-radius:16px;padding:24px;text-align:center;">
+                            <div style="font-size:2.2rem;font-weight:800;color:#fd7e14;">22.908</div>
+                            <div style="font-size:.82rem;color:#888;margin-top:4px;">km de carro não rodados</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-2" style="font-size:.78rem;color:#aaa;">* Valores baseados em simulação real com 1.476 cartões/ano · modal aéreo · 2.137 km</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA final -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Pronto para ver o impacto real?</h2>
+        <p>Calcule agora ou fale com um especialista Edenred. Sem compromisso, com dados científicos.</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/calculadora" class="btn-cta-final">
+                <i class="fas fa-leaf"></i>Acessar Calculadora
+            </a>
+            <a href="/compra?from=home" class="btn-outline-final">
+                <i class="fas fa-headset"></i>Falar com especialista
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="container">
+        <span>© 2026 GreenEden · Edenred Brasil · Dados baseados em GHG Protocol, IPCC AR6, MCTI 2023 e DEFRA 2023</span>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

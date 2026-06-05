@@ -7,7 +7,6 @@ import com.greeneden.calculadora_sustentavel.model.EntradaCalculo;
 import com.greeneden.calculadora_sustentavel.model.EquivalenciasAmbientais;
 import com.greeneden.calculadora_sustentavel.model.ImpactoAmbiental;
 import com.greeneden.calculadora_sustentavel.model.MetadadosCalculo;
-import com.greeneden.calculadora_sustentavel.model.OrigemFabrica;
 import com.greeneden.calculadora_sustentavel.model.RecursosConsumidos;
 import com.greeneden.calculadora_sustentavel.model.TipoMaterial;
 import com.greeneden.calculadora_sustentavel.model.TipoTransacaoDigital;

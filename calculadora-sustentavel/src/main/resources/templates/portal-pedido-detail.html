@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Pedido - GreenEden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #fff5f4; font-family: 'Segoe UI', sans-serif; }
+        .header-portal { background: #E63312; color: white; padding: 14px 0; }
+        .portal-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .portal-logo img { height: 40px; }
+        .sidebar-portal { background: white; border-right: 1px solid #ffe0d9; padding: 24px 0; }
+        .sidebar-item { padding: 12px 24px; border-left: 3px solid transparent; color: #666; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        .sidebar-item.active { background: #fff5f4; color: #E63312; border-left-color: #E63312; font-weight: 700; }
+        .main-portal { padding: 32px; }
+        .card-detail { background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .metric-box { text-align: center; padding: 20px 16px; background: #fff5f4; border-radius: 8px; height: 100%; }
+        .metric-label { font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-value { font-size: 1.6rem; font-weight: 800; color: #00a651; }
+        .badge-cancelado-lg { background: #f8d7da; color: #842029; padding: 8px 20px; border-radius: 20px; font-size: 1rem; font-weight: 700; display: inline-block; }
+        .badge-ativo-lg { background: #d1e7dd; color: #0a3622; padding: 8px 20px; border-radius: 20px; font-size: 1rem; font-weight: 700; display: inline-block; }
+        .detalhe-linha { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .detalhe-linha:last-child { border-bottom: none; }
+        .detalhe-label { color: #888; font-size: 0.9rem; }
+        .detalhe-valor { font-weight: 600; color: #333; }
+        .beneficio-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .beneficio-item:last-child { border-bottom: none; }
+        @media (max-width: 576px) { .user-greeting { font-size: 0.8rem; } }
+    </style>
+</head>
+<body>
+
+<header class="header-portal">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <a href="/portal" class="portal-logo">
+            <img src="/logo.png" alt="GreenEden">
+            <span style="font-weight: 800;"><span style="color: #ffe0a0;">Green</span>Eden</span>
+        </a>
+        <div style="display: flex; gap: 16px; align-items: center;">
+            <div class="user-greeting" style="font-size: 0.95rem;">Olá, <strong th:text="${usuarioNome}"></strong>!</div>
+            <a href="/auth/logout" style="background: rgba(255,255,255,.2); color: white; padding: 6px 16px; border-radius: 20px; text-decoration: none; font-size: 0.85rem;"><i class="fas fa-sign-out-alt me-1"></i>Sair</a>
+        </div>
+    </div>
+</header>
+
+<div class="d-flex">
+    <div class="sidebar-portal" style="width: 220px; min-height: calc(100vh - 60px);">
+        <div style="display: flex; flex-direction: column;">
+            <a href="/portal" class="sidebar-item"><i class="fas fa-chart-line"></i>Dashboard</a>
+            <a href="/portal/pedidos" class="sidebar-item active"><i class="fas fa-shopping-cart"></i>Pedidos</a>
+            <a href="/portal/configuracoes" class="sidebar-item"><i class="fas fa-cog"></i>Configurações</a>
+        </div>
+    </div>
+
+    <div class="main-portal" style="flex: 1;">
+
+        <!-- Topo -->
+        <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
+            <a href="/portal/pedidos" class="btn btn-outline-secondary btn-sm"><i class="fas fa-arrow-left me-1"></i>Voltar</a>
+            <h2 class="mb-0"><i class="fas fa-file-invoice me-2" style="color: #E63312;"></i>Pedido #<span th:text="${pedido.id}"></span></h2>
+            <span th:if="${pedido.status == 'Cancelado'}" class="badge-cancelado-lg"><i class="fas fa-times-circle me-1"></i>Cancelado</span>
+            <span th:if="${pedido.status == 'Ativo'}" class="badge-ativo-lg"><i class="fas fa-check-circle me-1"></i>Ativo</span>
+        </div>
+
+        <!-- Aviso se cancelado -->
+        <div th:if="${pedido.status == 'Cancelado'}" class="alert alert-danger mb-3" style="border-radius: 10px;">
+            <i class="fas fa-exclamation-triangle me-2"></i>Este pedido foi <strong>cancelado</strong> e não está mais ativo.
+        </div>
+
+        <!-- Métricas principais -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-3">
+                <div class="metric-box">
+                    <div class="metric-label">CO₂ Evitado</div>
+                    <div class="metric-value" th:text="${#numbers.formatDecimal(pedido.co2Evitado ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-box">
+                    <div class="metric-label">Árvores Equiv.</div>
+                    <div class="metric-value" th:text="${#numbers.formatDecimal(pedido.arvoresEquivalentes ?: 0, 1, 'POINT', 0, 'COMMA')}"></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-box" th:if="${isDigital}">
+                    <div class="metric-label">Redução CO₂</div>
+                    <div class="metric-value" th:text="${reducaoPercentual} + '%'"></div>
+                </div>
+                <div class="metric-box" th:unless="${isDigital}">
+                    <div class="metric-label">Status</div>
+                    <div style="font-size: 1.3rem; font-weight: 700; margin-top: 4px;"
+                         th:style="${pedido.status == 'Ativo'} ? 'color: #00a651;' : 'color: #dc3545;'"
+                         th:text="${pedido.status}"></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-box">
+                    <div class="metric-label">Valor do Pedido</div>
+                    <div style="font-size: 1.5rem; font-weight: 800; color: #E63312;"
+                         th:text="'R$ ' + ${#numbers.formatDecimal(pedido.precoTotal ?: 0, 1, 'POINT', 2, 'COMMA')}"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informações do Pedido -->
+        <div class="card-detail">
+            <h5 class="mb-4"><i class="fas fa-info-circle me-2" style="color: #E63312;"></i>Informações do Pedido</h5>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-tag me-1"></i>Plano Contratado</span>
+                        <span class="detalhe-valor" style="color: #E63312;" th:text="${pedido.tipoPlano}"></span>
+                    </div>
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-dollar-sign me-1"></i>Valor Total</span>
+                        <span class="detalhe-valor" style="color: #E63312;"
+                              th:text="'R$ ' + ${#numbers.formatDecimal(pedido.precoTotal ?: 0, 1, 'POINT', 2, 'COMMA')}"></span>
+                    </div>
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-boxes me-1"></i>Qtd. por Remessa</span>
+                        <span class="detalhe-valor" th:text="${pedido.quantidadeCartoes} + ' unidades'"></span>
+                    </div>
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-shipping-fast me-1"></i>Remessas/ano</span>
+                        <span class="detalhe-valor" th:text="${pedido.remessasPorAno} + ' remessas'"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-calculator me-1"></i>Total por Ano</span>
+                        <span class="detalhe-valor"
+                              th:text="${pedido.quantidadeCartoes != null and pedido.remessasPorAno != null}
+                                        ? (${pedido.quantidadeCartoes * pedido.remessasPorAno} + ' unidades/ano')
+                                        : '—'"></span>
+                    </div>
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-info-circle me-1"></i>Status</span>
+                        <span class="detalhe-valor"
+                              th:style="${pedido.status == 'Ativo'} ? 'color: #00a651;' : 'color: #dc3545;'"
+                              th:text="${pedido.status}"></span>
+                    </div>
+                    <div class="detalhe-linha">
+                        <span class="detalhe-label"><i class="fas fa-calendar me-1"></i>Data do Pedido</span>
+                        <span class="detalhe-valor"
+                              th:text="${pedido.criadoEm?.format(T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy HH:mm'))}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Benefícios do Plano -->
+        <div class="card-detail">
+            <h5 class="mb-4"><i class="fas fa-star me-2" style="color: #E63312;"></i>Benefícios do Plano</h5>
+            <div class="row g-3">
+
+                <!-- Plano Essencial -->
+                <div th:if="${#strings.containsIgnoreCase(pedido.tipoPlano, 'Essencial')}" class="col-12">
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> E-Wallets digitais</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Emissão instantânea</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Suporte por e-mail</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Dashboard de impacto básico</div>
+                    <div class="beneficio-item"><i class="fas fa-times-circle" style="color:#ccc;"></i> Relatório de sustentabilidade</div>
+                    <div class="beneficio-item"><i class="fas fa-times-circle" style="color:#ccc;"></i> API de integração</div>
+                    <div class="beneficio-item"><i class="fas fa-times-circle" style="color:#ccc;"></i> SLA garantido</div>
+                </div>
+
+                <!-- Plano Recomendado -->
+                <div th:if="${#strings.containsIgnoreCase(pedido.tipoPlano, 'Recomendado')}" class="col-12">
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> E-Wallets digitais</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Emissão instantânea</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Suporte prioritário 24/7</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Dashboard de impacto avançado</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Relatório de sustentabilidade</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> API de integração inclusa</div>
+                    <div class="beneficio-item"><i class="fas fa-times-circle" style="color:#ccc;"></i> SLA garantido</div>
+                </div>
+
+                <!-- Plano Escala -->
+                <div th:if="${#strings.containsIgnoreCase(pedido.tipoPlano, 'Escala')}" class="col-12">
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> E-Wallets digitais</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Emissão instantânea</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Suporte dedicado (gerente)</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Dashboard enterprise</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Relatórios personalizados</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> API + webhooks avançados</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> SLA garantido</div>
+                </div>
+
+                <!-- Cartão Físico -->
+                <div th:if="${#strings.containsIgnoreCase(pedido.tipoPlano, 'Fisico') or #strings.containsIgnoreCase(pedido.tipoPlano, 'Físico') or #strings.containsIgnoreCase(pedido.tipoPlano, 'Personalizado')}" class="col-12">
+                    <div class="beneficio-item"><i class="fas fa-credit-card" style="color:#E63312;"></i> Cartão físico personalizado</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Produção sob demanda</div>
+                    <div class="beneficio-item"><i class="fas fa-check-circle" style="color:#00a651;"></i> Logística de entrega inclusa</div>
+                    <div class="beneficio-item"><i class="fas fa-info-circle" style="color:#E63312;"></i> Maior impacto ambiental vs. digital</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Relatório de Emissões -->
+        <div class="card-detail">
+            <h5 class="mb-4"><i class="fas fa-cloud me-2" style="color: #E63312;"></i>Relatório de Emissões</h5>
+
+            <!-- Total geral destacado -->
+            <div class="mb-4 p-3" style="background: #f8f9fa; border-radius: 10px; border-left: 4px solid #E63312;">
+                <div style="font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 4px;">Total de CO₂ gerado pelo processo</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: #E63312;"
+                     th:text="${#numbers.formatDecimal((pedido.co2Fisico ?: 0) + (pedido.co2Digital ?: 0), 1, 'POINT', 2, 'COMMA')} + ' kg de CO₂'"></div>
+                <small class="text-muted">Soma das emissões físicas e digitais do processo completo</small>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div style="background: #fff5f4; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #dc3545;">
+                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">CO₂ Físico</div>
+                        <div style="font-size: 1.6rem; font-weight: 800; color: #dc3545;"
+                             th:text="${#numbers.formatDecimal(pedido.co2Fisico ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                        <small class="text-muted">Emissão do cartão físico</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="background: #f0faf4; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #00a651;">
+                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">CO₂ Digital</div>
+                        <div style="font-size: 1.6rem; font-weight: 800; color: #00a651;"
+                             th:text="${#numbers.formatDecimal(pedido.co2Digital ?: 0, 1, 'POINT', 4, 'COMMA')} + ' kg'"></div>
+                        <small class="text-muted">Emissão do e-wallet</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div style="background: #f0f4ff; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #0d6efd;">
+                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">Economia</div>
+                        <div style="font-size: 1.6rem; font-weight: 800; color: #0d6efd;"
+                             th:text="${#numbers.formatDecimal(pedido.co2Evitado ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                        <small class="text-muted">CO₂ deixado de emitir</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de ação -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/portal/pedidos" class="btn btn-outline-secondary" style="border-radius: 20px; padding: 10px 24px;">
+                <i class="fas fa-arrow-left me-1"></i>Voltar à Lista
+            </a>
+            <button th:if="${pedido.status == 'Ativo'}"
+                    class="btn btn-danger"
+                    style="border-radius: 20px; padding: 10px 24px;"
+                    data-bs-toggle="modal" data-bs-target="#modalCancelamento">
+                <i class="fas fa-times me-1"></i>Cancelar este Pedido
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Cancelamento -->
+<div class="modal fade" id="modalCancelamento" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 12px; overflow: hidden;">
+            <div class="modal-header" style="background: #dc3545; color: white; border: none;">
+                <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Cancelar Pedido</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="padding: 24px;">
+                <p>Tem certeza que deseja cancelar o pedido <strong>#<span th:text="${pedido.id}"></span> - <span th:text="${pedido.tipoPlano}"></span></strong>?</p>
+                <p class="text-muted" style="font-size: 0.9rem;">Esta ação não pode ser desfeita. O pedido passará para o status <strong>Cancelado</strong>.</p>
+            </div>
+            <div class="modal-footer" style="border: none; padding: 16px 24px;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-arrow-left me-1"></i>Voltar
+                </button>
+                <form th:action="@{/portal/pedido/{id}/cancelar(id=${pedido.id})}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-times me-1"></i>Confirmar Cancelamento
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

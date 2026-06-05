@@ -7,55 +7,170 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #fff0f0; font-family: 'Segoe UI', sans-serif; }
-        .result-card { border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.12); border: none; }
-        .impact-number { font-size: 2.2rem; font-weight: 700; color: #00a651; }
-        .impact-number-sm { font-size: 1.6rem; font-weight: 700; color: #00a651; }
-        .impact-number-xs { font-size: 1.2rem; font-weight: 700; color: #00a651; }
+        body { background-color: #fff5f4; font-family: 'Segoe UI', sans-serif; }
+
         /* ── Header ── */
         .header-edenred {
-            background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
+            background: #E63312;
             color: white; padding: 14px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,.22);
-            border-bottom: 1px solid rgba(255,255,255,.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,.18);
+            border-bottom: 3px solid #C0280F;
         }
         .hd-logo { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-        .hd-logo-icon { height: 52px; width: auto; }
+        .hd-logo-icon { height: 48px; width: auto; }
         .hd-logo-name { font-size:1.15rem; font-weight:800; letter-spacing:-.2px; line-height:1.1; }
-        .hd-logo-green { color:#5ce89a; }
-        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.5); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
+        .hd-logo-green { color:#ffe0a0; }
+        .hd-logo-sub { font-size:.68rem; color:rgba(255,255,255,.65); letter-spacing:.6px; text-transform:uppercase; margin-top:1px; }
         .hd-btn {
-            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+            background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
             color: white; padding: 6px 18px; border-radius: 50px;
             font-size: .85rem; font-weight: 500; text-decoration: none;
             cursor: pointer; font-family: inherit; transition: background .2s;
             display: inline-flex; align-items: center; gap: 6px;
         }
-        .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
+        .hd-btn:hover { background: rgba(255,255,255,.28); color: white; }
+
+        /* ── Métricas hero ── */
+        .hero-metric { border-radius: 18px; padding: 20px; text-align: center; }
+        .hero-num { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
+        .hero-sub { font-size: 0.72rem; margin-top: 4px; opacity: .75; }
+        .params-strip {
+            background: white; border-radius: 14px; border: 1px solid #ffe0d9;
+            padding: 10px 18px; font-size: 0.82rem; color: #555;
+        }
+        .params-strip .sep { color: #ccc; margin: 0 8px; }
+        .tag { font-size: 0.82rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+        .tag-green { background: #e9f5ee; color: #00a651; }
+        .tag-blue  { background: #e8f0fe; color: #1a73e8; }
+
+        /* ── Layout de abas tipo Chrome ── */
+        .tabs-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 28px;
+        }
+
+        /* Abas horizontais (tipo Chrome) */
+        .tabs-sidebar {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            background: transparent;
+            border-bottom: 2px solid #ffe0d9;
+            overflow-x: auto;
+            overflow-y: hidden;
+            position: relative;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+        }
+        .tabs-sidebar-header {
+            display: none;
+        }
+        .tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: .9rem;
+            font-weight: 500;
+            color: #666;
+            text-align: center;
+            cursor: pointer;
+            border-left: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 8px 8px 0 0;
+            transition: all .25s ease;
+            margin-right: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .tab-btn:hover {
+            background: transparent;
+            color: #E63312;
+            border-bottom-color: #E63312;
+        }
+        .tab-btn.active {
+            background: white;
+            color: #E63312;
+            border-bottom-color: #E63312;
+            font-weight: 700;
+            box-shadow: inset 0 -3px 0 #E63312;
+            border-left-color: transparent;
+        }
+        .tab-btn + .tab-btn {
+            border-top: none;
+            border-left: none;
+        }
+        .tab-btn i { width: 16px; text-align: center; font-size: .95rem; flex-shrink: 0; }
+
+        /* Painel de conteúdo */
+        .tabs-content {
+            flex: 1;
+            min-width: 0;
+            margin-left: 0;
+            margin-top: 0;
+            background: white;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08);
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Cards internos */
+        .result-card { border-radius: 16px; box-shadow: 0 4px 18px rgba(0,0,0,.08); border: none; background: white; }
+        .section-title { font-size: 1.15rem; font-weight: 700; color: #333; border-bottom: 2px solid #ffe0d9; padding-bottom: 10px; margin-bottom: 18px; }
+        .impact-number    { font-size: 2.2rem; font-weight: 700; color: #00a651; }
+        .impact-number-sm { font-size: 1.6rem; font-weight: 700; color: #00a651; }
+        .impact-number-xs { font-size: 1.2rem; font-weight: 700; color: #00a651; }
         .stage-card { border-left: 5px solid #00a651; border-radius: 12px; background: white; }
         .stage-card.logistica { border-left-color: #007bff; }
         .stage-card.embalagem { border-left-color: #fd7e14; }
         .stage-card.producao  { border-left-color: #dc3545; }
         .stage-card.fimdevida { border-left-color: #6f42c1; }
-        .section-title { font-size: 1.3rem; font-weight: 700; color: #333; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
-        .digital-card { background: linear-gradient(135deg, #00a651, #008c44); color: white; border-radius: 20px; }
-        .tag { font-size: 0.82rem; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
-        .tag-green { background: #e9f5ee; color: #00a651; }
-        .tag-blue  { background: #e8f0fe; color: #1a73e8; }
+        .digital-card { background: linear-gradient(135deg, #00a651, #008c44); color: white; border-radius: 16px; }
         .meta-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 12px; font-size: 0.82rem; color: #6c757d; }
         .unit-badge { background: #fff3cd; color: #856404; border-radius: 8px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
         .hypothetical-banner { background: #fff8e1; border: 2px dashed #ffc107; border-radius: 14px; padding: 10px 18px; font-size: 0.88rem; color: #856404; }
-        .chart-wrapper { background: white; border-radius: 16px; padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-        /* ── Hero ── */
-        .hero-metric { border-radius: 18px; padding: 20px; text-align: center; }
-        .hero-num { font-size: 2.4rem; font-weight: 800; line-height: 1.1; }
-        .hero-sub { font-size: 0.72rem; margin-top: 4px; opacity: .75; }
-        /* ── Params strip ── */
-        .params-strip { background: white; border-radius: 14px; border: 1px solid #dee2e6; padding: 10px 18px; font-size: 0.82rem; color: #555; }
-        .params-strip .sep { color: #ccc; margin: 0 8px; }
-        /* ── Accordion ── */
-        .accordion-button { font-weight: 600; font-size: .95rem; }
-        .accordion-button:not(.collapsed) { background: #f0f8f3; color: #006633; }
+        .chart-wrapper { background: white; border-radius: 16px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+        /* Botões de ação */
+        .btn-acao { padding: 11px 22px; font-size: .9rem; font-weight: 600; border-radius: 50px; }
+
+        /* Mobile: abas horizontais com scroll */
+        @media (max-width: 767px) {
+            .tabs-layout { flex-direction: column; }
+            .tabs-sidebar {
+                width: 100%;
+                position: static;
+                border-radius: 0;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .tabs-sidebar .tab-btn {
+                display: inline-flex;
+                width: auto;
+                padding: 10px 12px;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                font-size: .8rem;
+            }
+            .tabs-sidebar .tab-btn.active {
+                border-bottom-color: #E63312;
+                border-left-color: transparent;
+            }
+            .tabs-sidebar .tab-btn + .tab-btn {
+                border-top: none;
+                border-left: none;
+            }
+            .tabs-content { margin-left: 0; margin-top: 0; }
+        }
     </style>
 </head>
 <body>
@@ -70,7 +185,8 @@
             </div>
         </a>
         <div class="d-flex gap-2">
-            <a href="/calculadora" class="hd-btn"><i class="fas fa-redo"></i>Nova Simulacao</a>
+            <a href="/calculadora" class="hd-btn"><i class="fas fa-redo"></i>Nova Simulação</a>
+            <a href="/portal" class="hd-btn"><i class="fas fa-chart-line"></i>Meu Portal</a>
             <a href="/compra" class="hd-btn"><i class="fas fa-shopping-cart"></i>Comprar</a>
         </div>
     </div>
@@ -95,12 +211,12 @@
          th:data-energia="${impacto.recursos.consumoEnergia}">
     </div>
 
-    <!-- HERO — resumo visível sempre -->
+    <!-- TÍTULO -->
     <div class="text-center mb-3">
         <h2 class="display-6 fw-bold">Impacto Ambiental Estimado</h2>
     </div>
 
-    <!-- Faixa de parâmetros compacta -->
+    <!-- Faixa de parâmetros -->
     <div class="params-strip mb-4 d-flex flex-wrap align-items-center gap-1">
         <i class="fas fa-credit-card text-muted me-1"></i>
         <strong th:text="${#numbers.formatInteger(impacto.quantidadeCartoes, 1, 'COMMA')}"></strong> cartões/remessa
@@ -147,7 +263,7 @@
         </div>
     </div>
 
-    <!-- 3 equivalências resumidas -->
+    <!-- 3 equivalências -->
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <div class="hero-metric h-100" style="background:#f8f9fa;border:1px solid #dee2e6;">
@@ -173,805 +289,517 @@
     </div>
 
     <!-- BOTÕES DE AÇÃO -->
-    <div class="text-center mb-5">
-        <a href="/beneficios" class="btn btn-primary btn-lg px-4"><i class="fas fa-mobile-alt me-2"></i>E se fosse digital?</a>
-        <a href="/seguranca" class="btn btn-danger btn-lg px-4 ms-2"><i class="fas fa-shield-alt me-2"></i>Segurança</a>
-        <a href="/compra" class="btn btn-success btn-lg px-4 ms-2"><i class="fas fa-shopping-cart me-2"></i>Comprar</a>
-        <a href="/calculadora" class="btn btn-outline-success btn-lg px-4 ms-2"><i class="fas fa-redo me-2"></i>Nova simulação</a>
-        <a href="/" class="btn btn-outline-secondary btn-lg px-4 ms-2"><i class="fas fa-home me-2"></i>Início</a>
+    <div class="text-center mb-4">
+        <a href="/beneficios" class="btn btn-primary btn-acao px-4"><i class="fas fa-mobile-alt me-2"></i>E se fosse digital?</a>
+        <a href="/seguranca" class="btn btn-danger btn-acao px-4 ms-2"><i class="fas fa-shield-alt me-2"></i>Segurança</a>
+        <a href="/compra" class="btn btn-success btn-acao px-4 ms-2"><i class="fas fa-shopping-cart me-2"></i>Comprar</a>
+        <a href="/calculadora" class="btn btn-outline-secondary btn-acao px-4 ms-2"><i class="fas fa-redo me-2"></i>Nova simulação</a>
+        <a href="/" class="btn btn-outline-secondary btn-acao px-4 ms-2"><i class="fas fa-home me-2"></i>Início</a>
     </div>
 
-    <!-- ══ ACCORDION DE DETALHES ══ -->
-    <div class="accordion" id="accordionDetalhes">
+    <!-- ══ LAYOUT DE ABAS ══ -->
+    <div class="tabs-layout">
 
-        <!-- 1. Parâmetros da Simulação (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colParams">
-                    <i class="fas fa-sliders-h me-2 text-secondary"></i>Parâmetros da Simulação
+        <!-- Sidebar -->
+        <nav class="tabs-sidebar" aria-label="Seções do resultado">
+            <div class="tabs-sidebar-header"><i class="fas fa-list me-2"></i>Detalhes</div>
+            <div>
+                <button class="tab-btn active" data-tab="parametros">
+                    <i class="fas fa-chart-bar"></i>Análise Gráfica
                 </button>
-            </h2>
-            <div id="colParams" class="accordion-collapse collapse">
-                <div class="accordion-body">
-
-    <div class="row g-3 mb-4">
-
-        <!-- Cartoes por remessa -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-box me-1"></i>Cartoes / remessa</div>
-                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.quantidadeCartoes, 1, 'COMMA')}"></div>
-            </div>
-        </div>
-
-        <!-- Frequencia -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-calendar-alt me-1"></i>Remessas / ano</div>
-                <div class="fw-bold fs-5" th:text="${impacto.frequenciaRemessasAno}"></div>
-            </div>
-        </div>
-
-        <!-- Total anual -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3" style="border-top: 3px solid #00a651;">
-                <div class="text-muted small mb-1"><i class="fas fa-layer-group me-1"></i>Total anual emitido</div>
-                <div class="fw-bold fs-5 text-success" th:text="${#numbers.formatInteger(impacto.quantidadeCartoes * impacto.frequenciaRemessasAno, 1, 'COMMA')} + ' cartoes'"></div>
-            </div>
-        </div>
-
-        <!-- Material -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-leaf me-1"></i>Material</div>
-                <span class="tag tag-green">PVC Reciclado</span>
-            </div>
-        </div>
-
-        <!-- Vida util -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-exchange-alt me-1"></i>Vida util / cartao</div>
-                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.vidaUtilTransacoesPorCartao, 1, 'COMMA')} + ' tx'"></div>
-            </div>
-        </div>
-
-        <!-- Descarte -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-trash-alt me-1"></i>Descarte</div>
-                <span class="tag tag-blue" th:text="${impacto.cenarioDescarte}"></span>
-            </div>
-        </div>
-
-        <!-- Transacoes fisicas -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-hand-holding-usd me-1"></i>Transacoes fisicas</div>
-                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></div>
-            </div>
-        </div>
-
-        <!-- CEP destino -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-map-marker-alt me-1"></i>CEP destino</div>
-                <div class="fw-bold fs-5" th:text="${impacto.cepDestino}"></div>
-            </div>
-        </div>
-
-        <!-- Distancia -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-route me-1"></i>Distancia calculada</div>
-                <div class="fw-bold fs-5" th:text="${#numbers.formatDecimal(impacto.distanciaLogistica, 1, 'POINT', 1, 'COMMA')} + ' km'"></div>
-            </div>
-        </div>
-
-        <!-- Modal de transporte -->
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="result-card card h-100 text-center p-3">
-                <div class="text-muted small mb-1"><i class="fas fa-truck me-1"></i>Modal de entrega</div>
-                <span class="tag tag-blue" th:text="${impacto.tipoTransporte}"></span>
-            </div>
-        </div>
-
-    </div>
-                </div><!-- /accordion-body item1 -->
-            </div><!-- /collapse item1 -->
-        </div><!-- /accordion-item 1: Parâmetros -->
-
-        <!-- 2. Gráficos Comparativos (aberto por padrão) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colGraficos">
-                    <i class="fas fa-chart-bar me-2 text-success"></i>Gráficos Comparativos de Emissões
+                <button class="tab-btn" data-tab="graficos">
+                    <i class="fas fa-sliders-h"></i>Detalhes da Simulação
                 </button>
-            </h2>
-            <div id="colGraficos" class="accordion-collapse collapse show">
-                <div class="accordion-body">
-    <!-- HISTÓRIA 5: GRÁFICO COMPARATIVO -->
-    <div class="result-card card p-4 mb-4">
-        <h5 class="section-title">
-            <i class="fas fa-chart-bar me-2 text-success"></i>Gráfico Comparativo de Emissões de CO&#8322;
-        </h5>
-        <p class="text-muted small mb-4">
-            Comparação visual entre o cenário físico e o digital (E-wallet) para as mesmas
-            <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong>
-            transações. Todos os valores são lidos diretamente do cálculo realizado.
-        </p>
+                <button class="tab-btn" data-tab="unidade">
+                    <i class="fas fa-balance-scale"></i>Impacto por Transação
+                </button>
+                <button class="tab-btn" data-tab="ciclovida">
+                    <i class="fas fa-credit-card"></i>Ciclo de Vida do Cartão
+                </button>
+                <button class="tab-btn" data-tab="digital">
+                    <i class="fas fa-mobile-alt"></i>E-Wallet Digital
+                </button>
+                <button class="tab-btn" data-tab="equivalencias">
+                    <i class="fas fa-globe-americas"></i>Impacto Ambiental
+                </button>
+                <button class="tab-btn" data-tab="fontes">
+                    <i class="fas fa-file-alt"></i>Referências
+                </button>
+            </div>
+        </nav>
 
-        <!-- Painel de destaque numérico -->
-        <div class="row g-3 mb-4 text-center">
-            <div class="col-md-4">
-                <div class="p-3 rounded-3" style="background:#fff0f0; border: 2px solid #dc3545;">
-                    <div class="text-muted small mb-1">CO&#8322; Cenário Físico</div>
-                    <div class="fw-bold fs-4 text-danger" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
-                    <div class="text-muted" style="font-size:0.78rem;">Produção + Embalagem + Logística + Descarte</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 rounded-3" style="background:#f0fff5; border: 2px solid #00a651;">
-                    <div class="text-muted small mb-1">CO&#8322; Cenário Digital (E-wallet)</div>
-                    <div class="fw-bold fs-4 text-success" th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital, 1, 'POINT', 4, 'COMMA')} + ' kg'"></div>
-                    <div class="text-muted" style="font-size:0.78rem;">Servidor + Telecom + Dispositivo</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-3 rounded-3" style="background:#f0f8ff; border: 2px solid #0d6efd;">
-                    <div class="text-muted small mb-1">Redução ao digitalizar</div>
-                    <div class="fw-bold fs-4 text-primary" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
-                    <div class="text-muted" style="font-size:0.78rem;">Emissões evitadas</div>
-                </div>
-            </div>
-        </div>
+        <!-- Conteúdo das abas -->
+        <div class="tabs-content">
 
-        <div class="row g-3 mb-3">
-            <!-- Gráfico 1: CO2 físico vs digital -->
-            <div class="col-md-6">
-                <div class="chart-wrapper h-100">
-                    <h6 class="fw-semibold mb-1">
-                        <i class="fas fa-smog me-1 text-danger"></i>
-                        Emissões de CO&#8322; — Físico vs Digital
-                    </h6>
-                    <p class="text-muted mb-3" style="font-size:0.78rem;">
-                        O digital emite muito menos CO&#8322; por não envolver produção, logística ou descarte de material físico.
+            <!-- ── ABA 1: Gráficos ── -->
+            <div class="tab-panel" id="tab-graficos">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-sliders-h me-2 text-secondary"></i>Parâmetros da Simulação</h5>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-box me-1"></i>Cartões / remessa</div>
+                                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.quantidadeCartoes, 1, 'COMMA')}"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-calendar-alt me-1"></i>Remessas / ano</div>
+                                <div class="fw-bold fs-5" th:text="${impacto.frequenciaRemessasAno}"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3" style="border-top:3px solid #00a651;">
+                                <div class="text-muted small mb-1"><i class="fas fa-layer-group me-1"></i>Total anual</div>
+                                <div class="fw-bold fs-5 text-success" th:text="${#numbers.formatInteger(impacto.quantidadeCartoes * impacto.frequenciaRemessasAno, 1, 'COMMA')} + ' cartões'"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-leaf me-1"></i>Material</div>
+                                <span class="tag tag-green">PVC Reciclado</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-exchange-alt me-1"></i>Vida útil / cartão</div>
+                                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.vidaUtilTransacoesPorCartao, 1, 'COMMA')} + ' tx'"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-trash-alt me-1"></i>Descarte</div>
+                                <span class="tag tag-blue" th:text="${impacto.cenarioDescarte}"></span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-hand-holding-usd me-1"></i>Transações físicas</div>
+                                <div class="fw-bold fs-5" th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-map-marker-alt me-1"></i>CEP destino</div>
+                                <div class="fw-bold fs-5" th:text="${impacto.cepDestino}"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-route me-1"></i>Distância</div>
+                                <div class="fw-bold fs-5" th:text="${#numbers.formatDecimal(impacto.distanciaLogistica, 1, 'POINT', 1, 'COMMA')} + ' km'"></div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="result-card card h-100 text-center p-3">
+                                <div class="text-muted small mb-1"><i class="fas fa-truck me-1"></i>Modal de entrega</div>
+                                <span class="tag tag-blue" th:text="${impacto.tipoTransporte}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── ABA 2: Parâmetros ── -->
+            <div class="tab-panel active" id="tab-parametros">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-chart-bar me-2 text-success"></i>Gráficos Comparativos de Emissões</h5>
+                    <p class="text-muted small mb-4">
+                        Comparação visual entre o cenário físico e o digital para as mesmas
+                        <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong> transações.
                     </p>
-                    <canvas id="graficoCO2" height="80"></canvas>
+                    <div class="row g-3 mb-4 text-center">
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background:#fff0f0;border:2px solid #dc3545;">
+                                <div class="text-muted small mb-1">CO&#8322; Cenário Físico</div>
+                                <div class="fw-bold fs-4 text-danger" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background:#f0fff5;border:2px solid #00a651;">
+                                <div class="text-muted small mb-1">CO&#8322; Digital (E-wallet)</div>
+                                <div class="fw-bold fs-4 text-success" th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital, 1, 'POINT', 4, 'COMMA')} + ' kg'"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background:#f0f8ff;border:2px solid #0d6efd;">
+                                <div class="text-muted small mb-1">Redução</div>
+                                <div class="fw-bold fs-4 text-primary" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="chart-wrapper h-100">
+                                <h6 class="fw-semibold mb-1"><i class="fas fa-smog me-1 text-danger"></i>CO&#8322; Físico vs Digital</h6>
+                                <p class="text-muted mb-3" style="font-size:.78rem;">O digital emite muito menos CO&#8322; por não envolver produção, logística ou descarte de material físico.</p>
+                                <canvas id="graficoCO2" height="80"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="chart-wrapper h-100">
+                                <h6 class="fw-semibold mb-1"><i class="fas fa-recycle me-1 text-warning"></i>Uso de Materiais — Plástico e Papel</h6>
+                                <p class="text-muted mb-3" style="font-size:.78rem;">Transações digitais não consomem plástico nem papel.</p>
+                                <canvas id="graficoMateriais" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h6 class="fw-semibold mb-1"><i class="fas fa-layer-group me-1 text-secondary"></i>CO&#8322; Físico por Etapa do Ciclo de Vida</h6>
+                        <canvas id="graficoEtapas" height="80"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <!-- Gráfico 2: Materiais físico vs digital -->
-            <div class="col-md-6">
-                <div class="chart-wrapper h-100">
-                    <h6 class="fw-semibold mb-1">
-                        <i class="fas fa-recycle me-1 text-warning"></i>
-                        Uso de Materiais — Plástico e Papel
-                    </h6>
-                    <p class="text-muted mb-3" style="font-size:0.78rem;">
-                        Transações digitais não consomem plástico nem papel. O valor físico representa o total dos cartões emitidos.
+            <!-- ── ABA 3: CO2 por Transação ── -->
+            <div class="tab-panel" id="tab-unidade">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-balance-scale me-2 text-warning"></i>Unidade Funcional — CO&#8322; por Transação</h5>
+                    <p class="text-muted small mb-3">
+                        A <strong>unidade funcional</strong> é a base de comparação justa: quanto CO&#8322;e é emitido para realizar
+                        <strong>uma única transação</strong>, independente do volume total.
                     </p>
-                    <canvas id="graficoMateriais" height="80"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Gráfico 3: Detalhamento do CO2 físico por etapa -->
-        <div class="chart-wrapper mb-2">
-            <h6 class="fw-semibold mb-1">
-                <i class="fas fa-layer-group me-1 text-secondary"></i>
-                Detalhamento do CO&#8322; Físico por Etapa do Ciclo de Vida
-            </h6>
-            <p class="text-muted mb-3" style="font-size:0.78rem;">
-                Distribuição das emissões físicas: quais etapas contribuem mais para o impacto total.
-            </p>
-            <canvas id="graficoEtapas" height="80"></canvas>
-        </div>
-
-    </div>
-                </div><!-- /accordion-body item2 -->
-            </div><!-- /collapse item2 -->
-        </div><!-- /accordion-item 2: Gráficos -->
-
-        <!-- 3. Unidade Funcional — CO&#8322; por Transação (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colUFuncional">
-                    <i class="fas fa-balance-scale me-2 text-warning"></i>Unidade Funcional &mdash; CO&#8322; por Transação
-                </button>
-            </h2>
-            <div id="colUFuncional" class="accordion-collapse collapse">
-                <div class="accordion-body">
-    <!-- UNIDADE FUNCIONAL -->
-    <div class="result-card card p-4 mb-4">
-        <h5 class="section-title mb-1">
-            <i class="fas fa-balance-scale me-2 text-warning"></i>Comparativo por Transacao &mdash; Unidade Funcional
-        </h5>
-        <p class="text-muted small mb-3">
-            A <strong>unidade funcional</strong> e a base de comparacao justa entre o cartao fisico e o pagamento digital:
-            quanto CO&#8322;e e emitido para realizar <strong>uma unica transacao</strong>, independentemente do volume total.
-            Isso permite comparar tecnologias diferentes em pe de igualdade.
-        </p>
-
-        <!-- Formula visual -->
-        <div class="bg-light rounded-3 px-4 py-2 mb-4 text-center text-muted small">
-            <i class="fas fa-calculator me-1"></i>
-            CO&#8322;e por transacao (fisico) &nbsp;=&nbsp;
-            <strong>CO&#8322; total do ciclo de vida</strong> &divide; (<strong>cartoes emitidos</strong> &times; <strong>vida util por cartao</strong>)
-        </div>
-
-        <div class="row g-3 text-center">
-
-            <!-- Cartao fisico -->
-            <div class="col-md-4">
-                <div class="border rounded-3 p-3 h-100" style="border-color:#fd7e14 !important; border-width:2px !important;">
-                    <div class="mb-2">
-                        <i class="fas fa-credit-card fa-lg text-warning"></i>
+                    <div class="bg-light rounded-3 px-4 py-2 mb-4 text-center text-muted small">
+                        <i class="fas fa-calculator me-1"></i>
+                        CO&#8322;e / transação (físico) = <strong>CO&#8322; total do ciclo de vida</strong> ÷ (<strong>cartões emitidos</strong> × <strong>vida útil por cartão</strong>)
                     </div>
-                    <p class="fw-semibold mb-1">Cartao Fisico</p>
-                    <span class="unit-badge fs-5"
-                          th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoFisico, 1, 'POINT', 6, 'COMMA')} + ' kg CO&#8322;e'"></span>
-                    <div class="text-muted small mt-2">
-                        por transacao realizada com o cartao<br>
-                        <span class="text-secondary">Ciclo completo: producao &#8594; descarte</span><br>
-                        Vida util de <strong th:text="${#numbers.formatInteger(impacto.vidaUtilTransacoesPorCartao, 1, 'COMMA')}"></strong> transacoes / cartao
+                    <div class="row g-3 text-center">
+                        <div class="col-md-4">
+                            <div class="border rounded-3 p-3 h-100" style="border-color:#fd7e14!important;border-width:2px!important;">
+                                <div class="mb-2"><i class="fas fa-credit-card fa-lg text-warning"></i></div>
+                                <p class="fw-semibold mb-1">Cartão Físico</p>
+                                <span class="unit-badge fs-5" th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoFisico, 1, 'POINT', 6, 'COMMA')} + ' kg CO&#8322;e'"></span>
+                                <div class="text-muted small mt-2">
+                                    por transação realizada<br>
+                                    Vida útil de <strong th:text="${#numbers.formatInteger(impacto.vidaUtilTransacoesPorCartao, 1, 'COMMA')}"></strong> tx/cartão
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
+                            <div class="mb-2 text-muted small fw-semibold">O cartão físico emite</div>
+                            <span class="unit-badge fs-3" style="background:#cff4fc;color:#055160;"
+                                  th:text="${impacto.co2PorTransacaoDigital > 0 ?
+                                    #numbers.formatDecimal(impacto.co2PorTransacaoFisico / impacto.co2PorTransacaoDigital, 1, 'POINT', 0, 'COMMA') + 'x mais' :
+                                    'N/D'}"></span>
+                            <div class="text-muted small mt-2">CO&#8322;e por transação do que a E-wallet</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="border rounded-3 p-3 h-100" style="border-color:#00a651!important;border-width:2px!important;">
+                                <div class="mb-2"><i class="fas fa-mobile-alt fa-lg text-success"></i></div>
+                                <p class="fw-semibold mb-1">E-Wallet <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem;">Simulação</span></p>
+                                <span class="unit-badge fs-5" style="background:#d1e7dd;color:#0a3622;"
+                                      th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoDigital, 1, 'POINT', 8, 'COMMA')} + ' kg CO&#8322;e'"></span>
+                                <div class="text-muted small mt-2">por transação digital equivalente</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Seta comparativa -->
-            <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
-                <div class="mb-2 text-muted small fw-semibold">O cartao fisico emite</div>
-                <span class="unit-badge fs-3" style="background:#cff4fc;color:#055160;"
-                      th:text="${impacto.co2PorTransacaoDigital > 0 ?
-                        #numbers.formatDecimal(impacto.co2PorTransacaoFisico / impacto.co2PorTransacaoDigital, 1, 'POINT', 0, 'COMMA') + 'x mais' :
-                        'N/D'}"></span>
-                <div class="text-muted small mt-2">CO&#8322;e por transacao<br>do que a E-wallet</div>
-                <div class="mt-3">
-                    <i class="fas fa-arrow-left text-muted me-1"></i>
-                    <span class="text-muted small">fisico vs. digital</span>
-                    <i class="fas fa-arrow-right text-muted ms-1"></i>
-                </div>
-            </div>
-
-            <!-- Digital Simulacao -->
-            <div class="col-md-4">
-                <div class="border rounded-3 p-3 h-100" style="border-color:#00a651 !important; border-width:2px !important;">
-                    <div class="mb-2">
-                        <i class="fas fa-mobile-alt fa-lg text-success"></i>
+            <!-- ── ABA 4: Ciclo de Vida Físico ── -->
+            <div class="tab-panel" id="tab-ciclovida">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-credit-card me-2 text-danger"></i>Ciclo de Vida Físico — Recursos e Emissões</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-cloud fa-2x text-danger mb-3"></i>
+                                <h6 class="text-muted mb-1">CO&#8322; Total</h6>
+                                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
+                                <small class="text-muted">Ciclo completo</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-recycle fa-2x text-primary mb-3"></i>
+                                <h6 class="text-muted mb-1">Plástico</h6>
+                                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoPlastico, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
+                                <small class="text-muted">Cartões + embalagens</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-file-alt fa-2x text-warning mb-3"></i>
+                                <h6 class="text-muted mb-1">Papel e Papelão</h6>
+                                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoPapel, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
+                                <small class="text-muted">Cartas e envelopes</small>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-tint fa-2x text-info mb-3"></i>
+                                <h6 class="text-muted mb-1">Água</h6>
+                                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoAgua, 1, 'POINT', 1, 'COMMA')} + ' L'"></p>
+                                <small class="text-muted">Processos industriais</small>
+                            </div>
+                        </div>
                     </div>
-                    <p class="fw-semibold mb-1">Pagamentos Digitais, eWallet <span class="badge bg-warning text-dark ms-1" style="font-size:0.7rem;">Simulacao</span></p>
-                    <span class="unit-badge fs-5" style="background:#d1e7dd;color:#0a3622;"
-                          th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoDigital, 1, 'POINT', 8, 'COMMA')} + ' kg CO&#8322;e'"></span>
-                    <div class="text-muted small mt-2">
-                        por transacao digital equivalente<br>
-                        <span class="text-secondary">Servidor + Rede + Dispositivo do usuario</span><br>
-                        E-wallet: menor emissao entre os meios digitais
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-                </div><!-- /accordion-body item3 -->
-            </div><!-- /collapse item3 -->
-        </div><!-- /accordion-item 3: Unidade Funcional -->
-
-        <!-- 4. Ciclo de Vida Físico — Recursos e Emissões por Etapa (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colFisico">
-                    <i class="fas fa-credit-card me-2 text-danger"></i>Ciclo de Vida Físico &mdash; Recursos e Emissões por Etapa
-                </button>
-            </h2>
-            <div id="colFisico" class="accordion-collapse collapse">
-                <div class="accordion-body">
-    <!-- SECAO 1: Resumo fisico -->
-    <h5 class="section-title"><i class="fas fa-credit-card me-2 text-danger"></i>Cenario Fisico &mdash; Ciclo de Vida Completo</h5>
-    <div class="row g-3 mb-4">
-        <div class="col-sm-6 col-lg-3">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-cloud fa-2x text-danger mb-3"></i>
-                <h6 class="text-muted mb-1">CO&#8322; Total (Fisico)</h6>
-                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
-                <small class="text-muted">Producao + Embalagem + Logistica + Descarte</small>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-recycle fa-2x text-primary mb-3"></i>
-                <h6 class="text-muted mb-1">Plastico</h6>
-                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoPlastico, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
-                <small class="text-muted">Cartoes + embalagens</small>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-file-alt fa-2x text-warning mb-3"></i>
-                <h6 class="text-muted mb-1">Papel e Papelao</h6>
-                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoPapel, 1, 'POINT', 2, 'COMMA')} + ' kg'"></p>
-                <small class="text-muted">Cartas e envelopes</small>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-tint fa-2x text-info mb-3"></i>
-                <h6 class="text-muted mb-1">Agua</h6>
-                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoAgua, 1, 'POINT', 1, 'COMMA')} + ' L'"></p>
-                <small class="text-muted">Processos industriais</small>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-bolt fa-2x text-warning mb-3"></i>
-                <h6 class="text-muted mb-1">Energia</h6>
-                <p class="impact-number mb-0" th:text="${#numbers.formatDecimal(impacto.recursos.consumoEnergia, 1, 'POINT', 1, 'COMMA')} + ' kWh'"></p>
-                <small class="text-muted">54,1% renovavel</small>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECAO 2: CO2 por etapa -->
-    <h5 class="section-title mt-4"><i class="fas fa-layer-group me-2 text-success"></i>Emissoes CO&#8322; por Etapa do Ciclo de Vida</h5>
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="stage-card producao p-4 shadow-sm h-100">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-industry fa-lg text-danger me-2"></i>
-                    <span class="fw-bold">Producao</span>
-                </div>
-                <p class="impact-number-sm mb-1"
-                   th:text="${#numbers.formatDecimal(impacto.co2Producao, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Material: <strong>PVC Reciclado</strong>. Chip, antena, energia industrial, Escopos 1-3.</small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stage-card embalagem p-4 shadow-sm h-100">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-box fa-lg text-warning me-2"></i>
-                    <span class="fw-bold">Embalagem</span>
-                </div>
-                <p class="impact-number-sm mb-1"
-                   th:text="${#numbers.formatDecimal(impacto.co2Embalagem, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Papel, papelao, plasticos de protecao e lacres.</small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stage-card logistica p-4 shadow-sm h-100">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-truck fa-lg text-primary me-2"></i>
-                    <span class="fw-bold">Logistica</span>
-                </div>
-                <p class="impact-number-sm mb-1"
-                   th:text="${#numbers.formatDecimal(impacto.co2Logistica, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">
-                    Modal: <strong th:text="${impacto.tipoTransporte}"></strong> &middot;
-                    <strong th:text="${#numbers.formatDecimal(impacto.distanciaLogistica, 1, 'POINT', 1, 'COMMA')}"></strong> km (CEP <span th:text="${impacto.cepDestino}"></span>) &middot;
-                    <strong th:text="${impacto.frequenciaRemessasAno}"></strong> viagens/ano.
-                </small>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stage-card fimdevida p-4 shadow-sm h-100">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="fas fa-trash-alt fa-lg me-2" style="color:#6f42c1"></i>
-                    <span class="fw-bold">Fim de Vida</span>
-                </div>
-                <p class="impact-number-sm mb-1"
-                   th:text="${#numbers.formatDecimal(impacto.co2FimDeVida, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Cenario: <strong th:text="${impacto.cenarioDescarte}"></strong>. Aterro, incineracao ou reciclagem.</small>
-            </div>
-        </div>
-    </div>
-                </div><!-- /accordion-body item4 -->
-            </div><!-- /collapse item4 -->
-        </div><!-- /accordion-item 4: Ciclo de Vida Físico -->
-
-        <!-- 5. Cenário Digital (E-wallet) — Detalhamento de Emissões (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colDigital">
-                    <i class="fas fa-mobile-alt me-2 text-info"></i>Cenário Digital (E-wallet) &mdash; Detalhamento de Emissões
-                </button>
-            </h2>
-            <div id="colDigital" class="accordion-collapse collapse">
-                <div class="accordion-body">
-    <!-- SECAO 3: Detalhamento digital Simulacao -->
-    <div class="hypothetical-banner mb-3 d-flex align-items-center gap-2">
-        <i class="fas fa-lightbulb text-warning"></i>
-        <span>
-            <strong>E se fossem digitais?</strong> &mdash; O bloco abaixo e um cenario Simulacao.
-            Compara as mesmas
-            <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong>
-            transacoes fisicas realizadas, simulando-as via <strong>E-wallet</strong>
-            (tecnologia de menor emissao entre os meios digitais avaliados).
-        </span>
-    </div>
-
-    <h5 class="section-title mt-2"><i class="fas fa-server me-2 text-info"></i>Cenario Simulacao Digital (E-wallet) &mdash; Detalhamento de Emissoes</h5>
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-server fa-2x text-secondary mb-3"></i>
-                <h6 class="text-muted mb-1">Servidores / Data Center</h6>
-                <p class="impact-number-xs mb-0"
-                   th:text="${#numbers.formatDecimal(impacto.co2ServidorDigital, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Processamento da transacao</small>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-wifi fa-2x text-info mb-3"></i>
-                <h6 class="text-muted mb-1">Telecomunicacoes</h6>
-                <p class="impact-number-xs mb-0"
-                   th:text="${#numbers.formatDecimal(impacto.co2Telecomunicacoes, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Redes de transmissao de dados</small>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="result-card card h-100 text-center p-4">
-                <i class="fas fa-mobile-alt fa-2x text-success mb-3"></i>
-                <h6 class="text-muted mb-1">Dispositivo do Usuario</h6>
-                <p class="impact-number-xs mb-0"
-                   th:text="${#numbers.formatDecimal(impacto.co2DispositivoUsuario, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Proporcao do smartphone por transacao</small>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECAO 4: Comparativo fisico x digital Simulacao -->
-    <h5 class="section-title mt-4"><i class="fas fa-exchange-alt me-2 text-success"></i>E se fossem digitais? &mdash; Comparativo Simulacao</h5>
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
-            <div class="result-card card h-100 text-center p-4 border border-danger border-2">
-                <i class="fas fa-credit-card fa-2x text-danger mb-3"></i>
-                <h6>Cenario Real: Cartao Fisico</h6>
-                <p class="impact-number text-danger mb-0"
-                   th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
-                <small class="text-muted">Producao + Embalagem + Logistica + Descarte</small>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="digital-card h-100 text-center p-4">
-                <i class="fas fa-mobile-alt fa-2x mb-3"></i>
-                <h6 class="text-white">Simulacao: E-wallet</h6>
-                <p class="mb-1" style="font-size:2.2rem;font-weight:700;"
-                   th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
-                <small>Servidor + Telecom + Dispositivo</small><br>
-                <span class="badge bg-light text-success mt-1" style="font-size:0.75rem;">mesmas <span th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></span> transacoes</span>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="result-card card h-100 text-center p-4 bg-success text-white">
-                <i class="fas fa-leaf fa-2x mb-3"></i>
-                <h6 class="text-white">Reducao Potencial</h6>
-                <p class="mb-0 text-white" style="font-size:2.2rem;font-weight:700;"
-                   th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
-                <small>Emissoes evitadas ao adotar o modelo digital</small>
-            </div>
-        </div>
-    </div>
-                </div><!-- /accordion-body item5 -->
-            </div><!-- /collapse item5 -->
-        </div><!-- /accordion-item 5: Cenário Digital -->
-
-        <!-- 6. Equivalências Ambientais da Digitalização (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colEquivalencias">
-                    <i class="fas fa-globe-americas me-2 text-success"></i>Equivalências Ambientais da Digitalização
-                </button>
-            </h2>
-            <div id="colEquivalencias" class="accordion-collapse collapse">
-                <div class="accordion-body">
-    <!-- SECAO 5: Equivalencias - Historia 6 -->
-    <div class="result-card card p-4 mb-4">
-        <h5 class="section-title">
-            <i class="fas fa-globe-americas me-2 text-success"></i>Equivalencias Ambientais da Digitalizacao
-        </h5>
-        <p class="text-muted small mb-4">
-            Para tornar os resultados mais compreensíveis, a reducao de CO&#8322; obtida ao migrar para pagamentos digitais
-            é convertida em equivalencias do mundo real.
-        </p>
-
-        <!-- Destaque da reducao base -->
-        <div class="text-center mb-4 p-3 rounded-3" style="background: linear-gradient(135deg, #e9f5ee, #d1e7dd); border: 2px solid #00a651;">
-            <div class="text-muted small mb-1">Reducao total de CO&#8322; que gerou estas equivalencias</div>
-            <div class="fw-bold text-success" style="font-size: 2rem;"
-                 th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO₂ evitados'">
-            </div>
-            <div class="text-muted small mt-1">ao substituir cartoes fisicos por pagamentos digitais</div>
-        </div>
-
-
-
-        <!-- Cards de equivalencia -->
-        <div class="row g-3 mb-4">
-
-            <!-- Arvores -->
-            <div class="col-md-4">
-                <div class="h-100 p-4 text-center rounded-3" style="background:#f0fff5; border: 2px solid #00a651;">
-                    <div style="font-size: 2.5rem;">&#127795;</div>
-
-                    <div class="fw-bold text-success mt-2" style="font-size: 1.8rem;"
-                         th:text="${impacto.equivalencias.arvoresSalvas < 1 ? '< 1' : impacto.equivalencias.arvoresSalvas}"></div>
-
-
-                    <div class="fw-semibold">arvores preservadas</div>
-                    <div class="text-muted small mt-2">absorvendo CO&#8322; durante <strong>1 ano inteiro</strong></div>
-                    <div class="mt-2 p-2 rounded-2" style="background:#d1e7dd; font-size:0.78rem; color:#0a3622;">
-                        Base: 22 kg CO&#8322; absorvido por arvore/ano (FAO / IPCC AR5)
+                    <h6 class="fw-bold text-secondary mb-3"><i class="fas fa-layer-group me-2"></i>Emissões CO&#8322; por Etapa</h6>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="stage-card producao p-4 shadow-sm h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-industry fa-lg text-danger me-2"></i>
+                                    <span class="fw-bold">Produção</span>
+                                </div>
+                                <p class="impact-number-sm mb-1" th:text="${#numbers.formatDecimal(impacto.co2Producao, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
+                                <small class="text-muted">PVC Reciclado. Chip, antena, energia industrial.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stage-card embalagem p-4 shadow-sm h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-box fa-lg text-warning me-2"></i>
+                                    <span class="fw-bold">Embalagem</span>
+                                </div>
+                                <p class="impact-number-sm mb-1" th:text="${#numbers.formatDecimal(impacto.co2Embalagem, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
+                                <small class="text-muted">Papel, papelão, plásticos de proteção e lacres.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stage-card logistica p-4 shadow-sm h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-truck fa-lg text-primary me-2"></i>
+                                    <span class="fw-bold">Logística</span>
+                                </div>
+                                <p class="impact-number-sm mb-1" th:text="${#numbers.formatDecimal(impacto.co2Logistica, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
+                                <small class="text-muted">
+                                    Modal: <strong th:text="${impacto.tipoTransporte}"></strong> &middot;
+                                    <strong th:text="${#numbers.formatDecimal(impacto.distanciaLogistica, 1, 'POINT', 1, 'COMMA')}"></strong> km
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stage-card fimdevida p-4 shadow-sm h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-trash-alt fa-lg me-2" style="color:#6f42c1"></i>
+                                    <span class="fw-bold">Fim de Vida</span>
+                                </div>
+                                <p class="impact-number-sm mb-1" th:text="${#numbers.formatDecimal(impacto.co2FimDeVida, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
+                                <small class="text-muted">Cenário: <strong th:text="${impacto.cenarioDescarte}"></strong></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Carro -->
-            <div class="col-md-4">
-                <div class="h-100 p-4 text-center rounded-3" style="background:#fff8f0; border: 2px solid #fd7e14;">
-                    <div style="font-size: 2.5rem;">&#128664;</div>
-                    <div class="fw-bold text-warning mt-2" style="font-size: 1.8rem;"
-                         th:text="${#numbers.formatInteger(impacto.equivalencias.kmCarroEvitado, 1, 'COMMA')}"></div>
-                    <div class="fw-semibold">km nao rodados de carro</div>
-                    <div class="text-muted small mt-2">equivalente a <strong>nao usar um carro a gasolina</strong> por essa distancia</div>
-                    <div class="mt-2 p-2 rounded-2" style="background:#ffe5d0; font-size:0.78rem; color:#7d3a00;">
-                        Base: 0,21 kg CO&#8322;/km — carro medio a gasolina (CETESB 2023)
+            <!-- ── ABA 5: Cenário Digital ── -->
+            <div class="tab-panel" id="tab-digital">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-mobile-alt me-2 text-info"></i>Cenário Digital (E-wallet) — Emissões</h5>
+                    <div class="hypothetical-banner mb-4 d-flex align-items-center gap-2">
+                        <i class="fas fa-lightbulb text-warning"></i>
+                        <span>
+                            <strong>E se fossem digitais?</strong> — Simulação das mesmas
+                            <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong>
+                            transações físicas via <strong>E-wallet</strong>.
+                        </span>
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-server fa-2x text-secondary mb-3"></i>
+                                <h6 class="text-muted mb-1">Servidores / Data Center</h6>
+                                <p class="impact-number-xs mb-0" th:text="${#numbers.formatDecimal(impacto.co2ServidorDigital, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-wifi fa-2x text-info mb-3"></i>
+                                <h6 class="text-muted mb-1">Telecomunicações</h6>
+                                <p class="impact-number-xs mb-0" th:text="${#numbers.formatDecimal(impacto.co2Telecomunicacoes, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="result-card card h-100 text-center p-4">
+                                <i class="fas fa-mobile-alt fa-2x text-success mb-3"></i>
+                                <h6 class="text-muted mb-1">Dispositivo do Usuário</h6>
+                                <p class="impact-number-xs mb-0" th:text="${#numbers.formatDecimal(impacto.co2DispositivoUsuario, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="result-card card h-100 text-center p-4 border border-danger border-2">
+                                <i class="fas fa-credit-card fa-2x text-danger mb-3"></i>
+                                <h6>Cenário Real: Cartão Físico</h6>
+                                <p class="impact-number text-danger mb-0" th:text="${#numbers.formatDecimal(impacto.co2Total, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="digital-card h-100 text-center p-4">
+                                <i class="fas fa-mobile-alt fa-2x mb-3"></i>
+                                <h6 class="text-white">Simulação: E-wallet</h6>
+                                <p class="mb-1" style="font-size:2.2rem;font-weight:700;" th:text="${#numbers.formatDecimal(impacto.co2CenarioDigital, 1, 'POINT', 4, 'COMMA')} + ' kg CO2e'"></p>
+                                <small>Servidor + Telecom + Dispositivo</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="result-card card h-100 text-center p-4 bg-success text-white">
+                                <i class="fas fa-leaf fa-2x mb-3"></i>
+                                <h6 class="text-white">Redução Potencial</h6>
+                                <p class="mb-0 text-white" style="font-size:2.2rem;font-weight:700;" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO2e'"></p>
+                                <small>Emissões evitadas</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Smartphones carregados -->
-            <div class="col-md-4">
-                <div class="h-100 p-4 text-center rounded-3" style="background:#f0f4ff; border: 2px solid #0d6efd;">
-                    <div style="font-size: 2.5rem;">&#128241;</div>
-                    <div class="fw-bold text-primary mt-2" style="font-size: 1.8rem;"
-                         th:text="${#numbers.formatInteger(impacto.reducaoCO2Digital / 0.00836, 1, 'COMMA')}"></div>
-                    <div class="fw-semibold">cargas de smartphone</div>
-                    <div class="text-muted small mt-2">equivalente a <strong>carregar um celular</strong> esse numero de vezes</div>
-                    <div class="mt-2 p-2 rounded-2" style="background:#dce8ff; font-size:0.78rem; color:#0a2a6e;">
-                        Base: 0,00836 kg CO&#8322; por carga completa de smartphone (IEA 2023)
+            <!-- ── ABA 6: Equivalências ── -->
+            <div class="tab-panel" id="tab-equivalencias">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-globe-americas me-2 text-success"></i>Equivalências Ambientais da Digitalização</h5>
+                    <div class="text-center mb-4 p-3 rounded-3" style="background:linear-gradient(135deg,#e9f5ee,#d1e7dd);border:2px solid #00a651;">
+                        <div class="text-muted small mb-1">Redução total de CO&#8322; que gerou estas equivalências</div>
+                        <div class="fw-bold text-success" style="font-size:2rem;" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO₂ evitados'"></div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="h-100 p-4 text-center rounded-3" style="background:#f0fff5;border:2px solid #00a651;">
+                                <div style="font-size:2.5rem;">&#127795;</div>
+                                <div class="fw-bold text-success mt-2" style="font-size:1.8rem;" th:text="${impacto.equivalencias.arvoresSalvas < 1 ? '< 1' : impacto.equivalencias.arvoresSalvas}"></div>
+                                <div class="fw-semibold">árvores preservadas</div>
+                                <div class="text-muted small mt-2">absorvendo CO&#8322; durante 1 ano inteiro</div>
+                                <div class="mt-2 p-2 rounded-2" style="background:#d1e7dd;font-size:.78rem;color:#0a3622;">Base: 22 kg CO&#8322;/árvore/ano (FAO/IPCC)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="h-100 p-4 text-center rounded-3" style="background:#fff8f0;border:2px solid #fd7e14;">
+                                <div style="font-size:2.5rem;">&#128664;</div>
+                                <div class="fw-bold text-warning mt-2" style="font-size:1.8rem;" th:text="${#numbers.formatInteger(impacto.equivalencias.kmCarroEvitado, 1, 'COMMA')}"></div>
+                                <div class="fw-semibold">km não rodados de carro</div>
+                                <div class="text-muted small mt-2">equivalente a não usar um carro a gasolina</div>
+                                <div class="mt-2 p-2 rounded-2" style="background:#ffe5d0;font-size:.78rem;color:#7d3a00;">Base: 0,21 kg CO&#8322;/km (CETESB 2023)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="h-100 p-4 text-center rounded-3" style="background:#f0f4ff;border:2px solid #0d6efd;">
+                                <div style="font-size:2.5rem;">&#128241;</div>
+                                <div class="fw-bold text-primary mt-2" style="font-size:1.8rem;" th:text="${#numbers.formatInteger(impacto.reducaoCO2Digital / 0.00836, 1, 'COMMA')}"></div>
+                                <div class="fw-semibold">cargas de smartphone</div>
+                                <div class="text-muted small mt-2">equivalente a carregar um celular</div>
+                                <div class="mt-2 p-2 rounded-2" style="background:#dce8ff;font-size:.78rem;color:#0a2a6e;">Base: 0,00836 kg CO&#8322;/carga (IEA 2023)</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-        <!-- Barra de impacto visual -->
-        <div class="p-3 rounded-3 mb-2" style="background:#f8f9fa; border: 1px solid #dee2e6;">
-            <div class="fw-semibold small mb-2 text-muted">
-                <i class="fas fa-chart-pie me-1"></i>O quanto isso representa: CO&#8322; Fisico vs CO&#8322; Evitado
-            </div>
-            <div class="d-flex rounded-3 overflow-hidden" style="height: 28px;">
-                <div class="d-flex align-items-center justify-content-center text-white small fw-bold"
-                     style="background:#dc3545; width: 100%;"
-                     th:style="'background:#dc3545; width:' + ${impacto.co2Total > 0 ? #numbers.formatDecimal((impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA') : 100} + '%;'"
-                     th:text="${#numbers.formatDecimal((impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA')} + '% evitado'">
-                </div>
-                <div class="d-flex align-items-center justify-content-center small fw-bold"
-                     style="background:#e9ecef; color:#6c757d; flex:1;"
-                     th:text="${#numbers.formatDecimal(100 - (impacto.reducaoCO2Digital / impacto.co2Total) * 100, 1, 'POINT', 1, 'COMMA')} + '% restante (digital)'">
-                </div>
-            </div>
-        </div>
-
-    </div>
-                </div><!-- /accordion-body item6 -->
-            </div><!-- /collapse item6 -->
-        </div><!-- /accordion-item 6: Equivalências -->
-
-        <!-- 7. Rastreabilidade e Fontes Científicas (colapsado) -->
-        <div class="accordion-item border rounded-3 mb-3 overflow-hidden">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#colRastreabilidade">
-                    <i class="fas fa-file-alt me-2 text-secondary"></i>Rastreabilidade e Fontes Científicas
-                </button>
-            </h2>
-            <div id="colRastreabilidade" class="accordion-collapse collapse">
-                <div class="accordion-body">
-    <!-- SECAO 6: Metadados / Governanca -->
-    <div class="meta-box p-4 mb-4">
-        <h6 class="fw-bold text-secondary mb-3"><i class="fas fa-file-alt me-2"></i>Rastreabilidade do Calculo (ISO 14064 / GHG Protocol)</h6>
-        <div class="row g-2">
-            <div class="col-md-4"><strong>Versao dos fatores:</strong> <span th:text="${impacto.metadados.versaoFatores}"></span></div>
-            <div class="col-md-4"><strong>Ano de referencia dos fatores:</strong> <span th:text="${impacto.metadados.anoReferenciaFatores}"></span></div>
-            <div class="col-md-4"><strong>Ano-base do inventario:</strong> <span th:text="${impacto.metadados.anoBaseInventario}"></span></div>
-            <div class="col-md-4"><strong>Horizonte temporal:</strong> <span th:text="${impacto.metadados.horizonteTemporal}"></span></div>
-            <div class="col-md-4"><strong>Abordagem:</strong> <span th:text="${impacto.metadados.abordagemCicloDeVida}"></span></div>
-            <div class="col-md-4"><strong>Escopo de aplicacao:</strong> <span th:text="${impacto.metadados.escopoAplicacao}"></span></div>
-            <div class="col-12"><strong>Fontes:</strong> <span th:text="${impacto.metadados.fontesFatores}"></span></div>
-        </div>
-    </div>
-
-
-    <!-- FONTES E REFERENCIAS -->
-    <div class="result-card card p-4 mb-5">
-        <h5 class="section-title mb-3">
-            <i class="fas fa-book-open me-2 text-secondary"></i>Fontes e Referencias Cientificas
-        </h5>
-        <p class="text-muted small mb-4">
-            Todos os fatores de emissao e consumo utilizados nesta calculadora sao baseados em publicacoes
-            cientificas, relatorios institucionais e inventarios de ciclo de vida reconhecidos internacionalmente.
-        </p>
-
-        <div class="row g-3">
-
-            <!-- Producao do cartao -->
-            <div class="col-12">
-                <div class="border-start border-danger border-3 ps-3 mb-1">
-                    <div class="fw-semibold text-danger small mb-1">
-                        <i class="fas fa-industry me-1"></i>Producao do Cartao (kg CO&#8322;e/cartao por material)
+            <!-- ── ABA 7: Fontes ── -->
+            <div class="tab-panel" id="tab-fontes">
+                <div class="result-card card p-4">
+                    <h5 class="section-title"><i class="fas fa-file-alt me-2 text-secondary"></i>Rastreabilidade e Fontes Científicas</h5>
+                    <div class="meta-box p-4 mb-4">
+                        <h6 class="fw-bold text-secondary mb-3"><i class="fas fa-file-alt me-2"></i>Rastreabilidade do Cálculo (ISO 14064 / GHG Protocol)</h6>
+                        <div class="row g-2">
+                            <div class="col-md-4"><strong>Versão dos fatores:</strong> <span th:text="${impacto.metadados.versaoFatores}"></span></div>
+                            <div class="col-md-4"><strong>Ano de referência:</strong> <span th:text="${impacto.metadados.anoReferenciaFatores}"></span></div>
+                            <div class="col-md-4"><strong>Ano-base do inventário:</strong> <span th:text="${impacto.metadados.anoBaseInventario}"></span></div>
+                            <div class="col-md-4"><strong>Horizonte temporal:</strong> <span th:text="${impacto.metadados.horizonteTemporal}"></span></div>
+                            <div class="col-md-4"><strong>Abordagem:</strong> <span th:text="${impacto.metadados.abordagemCicloDeVida}"></span></div>
+                            <div class="col-md-4"><strong>Escopo:</strong> <span th:text="${impacto.metadados.escopoAplicacao}"></span></div>
+                            <div class="col-12"><strong>Fontes:</strong> <span th:text="${impacto.metadados.fontesFatores}"></span></div>
+                        </div>
                     </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>GHG Protocol Corporate Standard</strong> — World Resources Institute / WBCSD.
-                            Escopos 1, 2 e 3 aplicados ao inventario de fabricacao de cartoes PVC.
-                            <a href="https://ghgprotocol.org/corporate-standard" target="_blank" class="text-decoration-none">ghgprotocol.org</a>
-                        </li>
-                        <li>
-                            <strong>Ecoinvent 3.9</strong> — Swiss Centre for Life Cycle Inventories (2023).
-                            Base de dados de ACV: producao de PVC virgem (0,476 kg CO&#8322;e), PVC reciclado pos-consumo (0,286 kg CO&#8322;e) e metal — aco inox/aluminio (1,420 kg CO&#8322;e) por cartao.
-                            <a href="https://ecoinvent.org" target="_blank" class="text-decoration-none">ecoinvent.org</a>
-                        </li>
-                        <li>
-                            <strong>Relatorio Ambiental Edenred 2023</strong> — Inventario de GEE publicado pela Edenred S.A.
-                            Base de referencia: 5,5 milhoes de cartoes/ano, totalizando 3.906,3 tCO&#8322;e/ano (Escopos 1+2+3).
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Embalagem -->
-            <div class="col-12">
-                <div class="border-start border-warning border-3 ps-3 mb-1">
-                    <div class="fw-semibold text-warning small mb-1">
-                        <i class="fas fa-box me-1"></i>Embalagem (0,100 kg CO&#8322;e/cartao)
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="border-start border-danger border-3 ps-3">
+                                <div class="fw-semibold text-danger small mb-1"><i class="fas fa-industry me-1"></i>Produção do Cartão</div>
+                                <ul class="mb-0 small text-muted ps-3">
+                                    <li><strong>GHG Protocol Corporate Standard</strong> — WRI/WBCSD. Escopos 1, 2 e 3. <a href="https://ghgprotocol.org/corporate-standard" target="_blank">ghgprotocol.org</a></li>
+                                    <li><strong>Ecoinvent 3.9</strong> — PVC virgem (0,476 kg CO&#8322;e), PVC reciclado (0,286 kg CO&#8322;e) por cartão. <a href="https://ecoinvent.org" target="_blank">ecoinvent.org</a></li>
+                                    <li><strong>Relatório Ambiental Edenred 2023</strong> — Inventário de GEE: 5,5M cartões/ano, 3.906,3 tCO&#8322;e/ano.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="border-start border-primary border-3 ps-3">
+                                <div class="fw-semibold text-primary small mb-1"><i class="fas fa-truck me-1"></i>Logística — DEFRA 2023</div>
+                                <ul class="mb-0 small text-muted ps-3">
+                                    <li><strong>DEFRA UK 2023</strong> — Rodoviário: 0,000268 kg CO&#8322;e/km/cartão · Aéreo: 0,001340 kg CO&#8322;e/km/cartão. <a href="https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting" target="_blank">gov.uk/defra</a></li>
+                                    <li><strong>ICAO</strong> — Fórmula de Haversine para distância aérea. <a href="https://www.icao.int/environmental-protection/CarbonOffset" target="_blank">icao.int</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="border-start border-5 ps-3" style="border-color:#6f42c1!important;">
+                                <div class="fw-semibold small mb-1" style="color:#6f42c1;"><i class="fas fa-trash-alt me-1"></i>Fim de Vida — IPCC AR6 (2021)</div>
+                                <ul class="mb-0 small text-muted ps-3">
+                                    <li>Aterro: +0,0085 kg CO&#8322;e/cartão · Incineração: +0,0210 · Reciclagem: -0,0030 (crédito). <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank">ipcc.ch/ar6</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="border-start border-success border-3 ps-3">
+                                <div class="fw-semibold text-success small mb-1"><i class="fas fa-server me-1"></i>Cenário Digital</div>
+                                <ul class="mb-0 small text-muted ps-3">
+                                    <li><strong>IEA (2023)</strong> — Consumo energético de data centers. <a href="https://www.iea.org/reports/data-centres-and-data-transmission-networks" target="_blank">iea.org</a></li>
+                                    <li><strong>Freitag et al. (2021)</strong> — Patterns, Vol.2, Issue 9. <a href="https://doi.org/10.1016/j.patter.2021.100340" target="_blank">doi.org/10.1016</a></li>
+                                    <li><strong>MCTI 2023</strong> — Fator elétrico brasileiro: 0,0839 kg CO&#8322;e/kWh. <a href="https://www.gov.br/mcti/pt-br" target="_blank">gov.br/mcti</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="border-start border-secondary border-3 ps-3">
+                                <div class="fw-semibold text-secondary small mb-1"><i class="fas fa-leaf me-1"></i>Equivalências Ambientais</div>
+                                <ul class="mb-0 small text-muted ps-3">
+                                    <li><strong>Árvores:</strong> 22 kg CO&#8322;/árvore/ano (FAO/IPCC AR5)</li>
+                                    <li><strong>Carro:</strong> 0,21 kg CO&#8322;/km — CETESB 2023. <a href="https://cetesb.sp.gov.br/veicular/" target="_blank">cetesb.sp.gov.br</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>GHG Protocol Scope 3, Categoria 1</strong> — Bens e servicos adquiridos.
-                            Representa ~15% do Escopo 3 Edenred: 552.060 kg CO&#8322;e / 5.500.000 cartoes.
-                        </li>
-                        <li>
-                            <strong>Ecoinvent 3.9</strong> — Dados de producao de papelao ondulado e plastico de embalagem.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Logistica -->
-            <div class="col-12">
-                <div class="border-start border-primary border-3 ps-3 mb-1">
-                    <div class="fw-semibold text-primary small mb-1">
-                        <i class="fas fa-truck me-1"></i>Logistica — Fatores por km/cartao
+                    <div class="mt-4 p-3 bg-light rounded-3 text-muted small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Estimativas baseadas em dados públicos e relatórios de referência do setor. Para auditorias formais, recomenda-se verificação conforme <strong>ISO 14064-3</strong> e <strong>GHG Protocol Corporate Standard</strong>.
                     </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>DEFRA UK Greenhouse Gas Conversion Factors 2023</strong> — Department for Environment, Food &amp; Rural Affairs (Reino Unido).
-                            Fator rodoviario: 0,000268 kg CO&#8322;e/km/cartao (derivado de 736.080 kg / 5.500.000 cartoes x 500 km de referencia).
-                            Fator aereo de carga: 0,001340 kg CO&#8322;e/km/cartao (~5x o rodoviario).
-                            <a href="https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting" target="_blank" class="text-decoration-none">gov.uk/defra-factors</a>
-                        </li>
-                        <li>
-                            <strong>ICAO Carbon Emissions Calculator</strong> — Formula de Haversine para distancia aerea, conforme padrao do calculador oficial de emissoes da aviacao civil internacional.
-                            <a href="https://www.icao.int/environmental-protection/CarbonOffset" target="_blank" class="text-decoration-none">icao.int</a>
-                        </li>
-                        <li>
-                            <strong>Nominatim / OpenStreetMap</strong> — Geocodificacao de enderecos via CEP.
-                            <strong>OSRM</strong> — Calculo de distancia rodoviaria real por rota.
-                        </li>
-                    </ul>
                 </div>
             </div>
 
-            <!-- Fim de vida -->
-            <div class="col-12">
-                <div class="border-start border-5 ps-3 mb-1" style="border-color:#6f42c1 !important;">
-                    <div class="fw-semibold small mb-1" style="color:#6f42c1;">
-                        <i class="fas fa-trash-alt me-1"></i>Fim de Vida / Descarte
-                    </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>GHG Protocol Scope 3, Categoria 12</strong> — Fim de vida de produtos vendidos.
-                        </li>
-                        <li>
-                            <strong>IPCC AR6 (2021)</strong> — Sexto Relatorio de Avaliacao do IPCC.
-                            Fatores de emissao por cenario: aterro sanitario (+0,0085 kg CO&#8322;e/cartao, emissao de CH&#8324;),
-                            incineracao com recuperacao de energia (+0,0210 kg CO&#8322;e/cartao, combustao de PVC),
-                            reciclagem mecanica (-0,0030 kg CO&#8322;e/cartao, credito de evitacao).
-                            <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank" class="text-decoration-none">ipcc.ch/ar6</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Recursos consumidos -->
-            <div class="col-12">
-                <div class="border-start border-info border-3 ps-3 mb-1">
-                    <div class="fw-semibold text-info small mb-1">
-                        <i class="fas fa-tint me-1"></i>Recursos Consumidos (plastico, papel, agua, energia)
-                    </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>Relatorio Ambiental Edenred 2023</strong> — Dados de residuos e consumo de recursos do ciclo produtivo,
-                            rateados por cartao: plastico 56,36 g, papel 125,45 g, agua 1,636 L, energia 1,070 kWh.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Digital -->
-            <div class="col-12">
-                <div class="border-start border-success border-3 ps-3 mb-1">
-                    <div class="fw-semibold text-success small mb-1">
-                        <i class="fas fa-server me-1"></i>Cenario Digital — Emissoes por Transacao
-                    </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>IEA (2023)</strong> — International Energy Agency. Consumo energetico de data centers e redes de telecomunicacao.
-                            <a href="https://www.iea.org/reports/data-centres-and-data-transmission-networks" target="_blank" class="text-decoration-none">iea.org</a>
-                        </li>
-                        <li>
-                            <strong>Freitag et al. (2021)</strong> — "The real climate and transformative impact of ICT: A critique of commonly held beliefs".
-                            Patterns, Volume 2, Issue 9. Fatores de energia por transacao digital (servidor, telecom, dispositivo).
-                            <a href="https://doi.org/10.1016/j.patter.2021.100340" target="_blank" class="text-decoration-none">doi.org/10.1016/j.patter.2021.100340</a>
-                        </li>
-                        <li>
-                            <strong>EBA (European Banking Authority)</strong> — Benchmarks de consumo energetico para pagamentos instantaneos (E-wallet, NFC, QR Code).
-                        </li>
-                        <li>
-                            <strong>MCTI 2023</strong> — Ministerio da Ciencia, Tecnologia e Inovacoes do Brasil.
-                            Fator de emissao da rede eletrica brasileira: 0,0839 kg CO&#8322;e/kWh.
-                            <a href="https://www.gov.br/mcti/pt-br" target="_blank" class="text-decoration-none">gov.br/mcti</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Equivalencias -->
-            <div class="col-12">
-                <div class="border-start border-secondary border-3 ps-3">
-                    <div class="fw-semibold text-secondary small mb-1">
-                        <i class="fas fa-leaf me-1"></i>Equivalencias Ambientais
-                    </div>
-                    <ul class="mb-0 small text-muted ps-3">
-                        <li>
-                            <strong>Arvores:</strong> 22 kg CO&#8322;/arvore/ano — media internacional amplamente utilizada em relatorios de sustentabilidade (FAO / IPCC AR5).
-                        </li>
-                        <li>
-                            <strong>Carro:</strong> 0,21 kg CO&#8322;/km — emissao media de automovel a gasolina no Brasil (CETESB — Relatorio de Emissoes Veiculares 2023).
-                            <a href="https://cetesb.sp.gov.br/veicular/" target="_blank" class="text-decoration-none">cetesb.sp.gov.br</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="mt-4 p-3 bg-light rounded-3 text-muted small">
-            <i class="fas fa-info-circle me-1"></i>
-            Os fatores aqui aplicados sao estimativas baseadas em dados publicos e relatorios de referencia do setor.
-            Para auditorias formais de inventario de GEE, recomenda-se a verificacao por organismo independente
-            conforme <strong>ISO 14064-3</strong> e o <strong>GHG Protocol Corporate Standard</strong>.
-        </div>
-    </div>
-                </div><!-- /accordion-body item7 -->
-            </div><!-- /collapse item7 -->
-        </div><!-- /accordion-item 7: Rastreabilidade -->
-
-    </div><!-- /accordion -->
+        </div><!-- /tabs-content -->
+    </div><!-- /tabs-layout -->
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <script>
-(function () {
+// ── Lógica das abas ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const target = this.dataset.tab;
+
+        // Remove active de todos
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+        // Ativa o clicado
+        this.classList.add('active');
+        document.getElementById('tab-' + target).classList.add('active');
+
+        // Se for a aba de parâmetros (que contém gráficos), renderiza
+        if (target === 'parametros') {
+            renderGraficos();
+        }
+    });
+});
+
+// Renderiza gráficos se parametros for a aba ativa no carregamento
+document.addEventListener('DOMContentLoaded', function() {
+    const tabAtiva = document.querySelector('.tab-btn.active');
+    if (tabAtiva && tabAtiva.dataset.tab === 'parametros') {
+        renderGraficos();   
+    }
+});
+
+// ── Gráficos ──
+let graficosRenderizados = false;
+
+function renderGraficos() {
+    if (graficosRenderizados) return;
+    graficosRenderizados = true;
+
     const d = document.getElementById('dadosGraficos').dataset;
     const num = (k) => parseFloat(d[k]) || 0;
 
@@ -986,9 +814,7 @@
     const co2Digital     = co2Servidor + co2Telecom + co2Dispositivo;
     const plastico       = num('plastico');
     const papel          = num('papel');
-
     const fmt4 = (v) => parseFloat(v.toFixed(4));
-
 
     // Gráfico 1 — CO2 físico vs digital
     new Chart(document.getElementById('graficoCO2'), {
@@ -1000,50 +826,30 @@
                 data: [fmt4(co2Total), fmt4(co2Digital)],
                 backgroundColor: ['rgba(220,53,69,0.85)', 'rgba(0,166,81,0.85)'],
                 borderColor:     ['rgba(220,53,69,1)',    'rgba(0,166,81,1)'],
-                borderRadius: 8,
-                borderWidth: 2
+                borderRadius: 8, borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             plugins: {
                 legend: { display: false },
-                datalabels: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (c) => ` ${fmt4(c.raw)} kg CO₂`
-                    }
-                }
+                tooltip: { callbacks: { label: (c) => ` ${fmt4(c.raw)} kg CO₂` } }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'kg CO₂e' },
-                    ticks: { callback: (v) => v + ' kg' },
-                    afterFit: (scale) => { scale.paddingTop = 30; }
-                },
-
+                y: { beginAtZero: true, title: { display: true, text: 'kg CO₂e' }, ticks: { callback: (v) => v + ' kg' } },
                 x: { grid: { display: false } }
             },
             animation: {
                 onComplete: function() {
                     const chart = this;
                     const ctx = chart.ctx;
-                    ctx.save();
-                    ctx.font = 'bold 13px Segoe UI';
-                    ctx.fillStyle = '#333';
-                    ctx.textAlign = 'center';
+                    ctx.save(); ctx.font = 'bold 13px Segoe UI'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
                     chart.data.datasets.forEach((dataset, i) => {
                         const meta = chart.getDatasetMeta(i);
                         meta.data.forEach((bar, index) => {
                             const value = dataset.data[index];
-                            const label = value < 0.01
-                                ? value.toExponential(2) + ' kg'
-                                : fmt4(value) + ' kg';
-                            // posição: se barra muito pequena, mostra acima do eixo
-                            const yPos = bar.y < chart.scales.y.bottom - 25
-                                ? bar.y - 8
-                                : chart.scales.y.bottom - 8;
+                            const label = value < 0.01 ? value.toExponential(2) + ' kg' : fmt4(value) + ' kg';
+                            const yPos = bar.y < chart.scales.y.bottom - 25 ? bar.y - 8 : chart.scales.y.bottom - 8;
                             ctx.fillText(label, bar.x, yPos);
                         });
                     });
@@ -1053,68 +859,39 @@
         }
     });
 
-
-    // Gráfico 2 — Materiais físico vs digital
+    // Gráfico 2 — Materiais
     new Chart(document.getElementById('graficoMateriais'), {
         type: 'bar',
         data: {
             labels: ['Plástico (kg)', 'Papel (kg)'],
             datasets: [
-                {
-                    label: 'Cartão Físico',
-                    data: [fmt4(plastico), fmt4(papel)],
-                    backgroundColor: 'rgba(220,53,69,0.85)',
-                    borderColor: 'rgba(220,53,69,1)',
-                    borderRadius: 8, borderWidth: 2
-                },
-                {
-                    label: 'Digital (E-wallet) — zero consumo',
-                    data: [0, 0],
-                    backgroundColor: 'rgba(0,166,81,0.5)',
-                    borderColor: 'rgba(0,166,81,1)',
-                    borderRadius: 8, borderWidth: 2,
-                    barThickness: 30
-                }
+                { label: 'Cartão Físico', data: [fmt4(plastico), fmt4(papel)], backgroundColor: 'rgba(220,53,69,0.85)', borderColor: 'rgba(220,53,69,1)', borderRadius: 8, borderWidth: 2 },
+                { label: 'Digital (E-wallet) — zero consumo', data: [0, 0], backgroundColor: 'rgba(0,166,81,0.5)', borderColor: 'rgba(0,166,81,1)', borderRadius: 8, borderWidth: 2, barThickness: 30 }
             ]
         },
         options: {
             responsive: true,
             plugins: {
                 legend: { position: 'top' },
-                tooltip: {
-                    callbacks: {
-                        label: (c) => c.raw === 0
-                            ? ` ${c.dataset.label}: 0 kg (sem consumo material)`
-                            : ` ${c.dataset.label}: ${fmt4(c.raw)} kg`
-                    }
-                }
+                tooltip: { callbacks: { label: (c) => c.raw === 0 ? ` ${c.dataset.label}: 0 kg` : ` ${c.dataset.label}: ${fmt4(c.raw)} kg` } }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'kg de material' },
-                    ticks: { callback: (v) => v + ' kg' }
-                },
+                y: { beginAtZero: true, title: { display: true, text: 'kg de material' }, ticks: { callback: (v) => v + ' kg' } },
                 x: { grid: { display: false } }
             },
             animation: {
                 onComplete: function() {
-                    const chart = this;
-                    const ctx = chart.ctx;
-                    ctx.save();
-                    ctx.font = 'bold 12px Segoe UI';
-                    ctx.textAlign = 'center';
-                    chart.data.datasets.forEach((dataset, i) => {
-                        const meta = chart.getDatasetMeta(i);
+                    const ctx = this.ctx;
+                    ctx.save(); ctx.font = 'bold 12px Segoe UI'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+                    this.data.datasets.forEach((dataset, i) => {
+                        const meta = this.getDatasetMeta(i);
                         meta.data.forEach((bar, index) => {
                             const value = dataset.data[index];
-                            if (value === 0) {
-                                ctx.fillStyle = 'rgba(0,166,81,1)';
-                                ctx.fillText('0 kg', bar.x, chart.scales.y.bottom - 8);
-                            } else {
-                                ctx.fillStyle = '#333';
-                                ctx.fillText(fmt4(value) + ' kg', bar.x, bar.y - 8);
-                            }
+                            const label = value === 0 ? '0 kg' : (value < 0.01 ? value.toExponential(2) + ' kg' : fmt4(value) + ' kg');
+                            const yPos = value === 0
+                                ? (this.scales.y.getPixelForValue(0) - 18)
+                                : bar.y - 8;    
+                            ctx.fillText(label, bar.x, yPos);
                         });
                     });
                     ctx.restore();
@@ -1123,7 +900,7 @@
         }
     });
 
-    // Gráfico 3 — Detalhamento CO2 físico por etapa
+    // Gráfico 3 — Etapas
     new Chart(document.getElementById('graficoEtapas'), {
         type: 'bar',
         data: {
@@ -1131,18 +908,8 @@
             datasets: [{
                 label: 'CO₂ por etapa (kg)',
                 data: [fmt4(co2Producao), fmt4(co2Embalagem), fmt4(co2Logistica), fmt4(co2FimDeVida)],
-                backgroundColor: [
-                    'rgba(220,53,69,0.85)',
-                    'rgba(253,126,20,0.85)',
-                    'rgba(13,110,253,0.85)',
-                    'rgba(111,66,193,0.85)'
-                ],
-                borderColor: [
-                    'rgba(220,53,69,1)',
-                    'rgba(253,126,20,1)',
-                    'rgba(13,110,253,1)',
-                    'rgba(111,66,193,1)'
-                ],
+                backgroundColor: ['rgba(220,53,69,0.85)','rgba(253,126,20,0.85)','rgba(13,110,253,0.85)','rgba(111,66,193,0.85)'],
+                borderColor:     ['rgba(220,53,69,1)',    'rgba(253,126,20,1)',   'rgba(13,110,253,1)',   'rgba(111,66,193,1)'],
                 borderRadius: 8, borderWidth: 2
             }]
         },
@@ -1150,24 +917,33 @@
             responsive: true,
             plugins: {
                 legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: (c) => ` ${fmt4(c.raw)} kg CO₂e`
-                    }
-                }
+                tooltip: { callbacks: { label: (c) => ` ${fmt4(c.raw)} kg CO₂e` } }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: { display: true, text: 'kg CO₂e' },
-                    ticks: { callback: (v) => v + ' kg' }
-                },
+                y: { beginAtZero: true, title: { display: true, text: 'kg CO₂e' }, ticks: { callback: (v) => v + ' kg' } },
                 x: { grid: { display: false } }
+            },
+            animation: {
+                onComplete: function() {
+                    const ctx = this.ctx;
+                    ctx.save(); ctx.font = 'bold 12px Segoe UI'; ctx.fillStyle = '#333'; ctx.textAlign = 'center';
+                    this.data.datasets.forEach((dataset, i) => {
+                        const meta = this.getDatasetMeta(i);
+                        meta.data.forEach((bar, index) => {
+                            const value = dataset.data[index];
+                            const label = value === 0 ? '0 kg' : (value < 0.01 ? value.toExponential(2) + ' kg' : fmt4(value) + ' kg');
+                            const yPos = value === 0
+                                ? (this.scales.y.getPixelForValue(0) - 18)
+                                : bar.y - 8;
+                            ctx.fillText(label, bar.x, yPos);
+                        });
+                    });
+                    ctx.restore();
+                }
             }
         }
     });
-
-})();
+}
 </script>
 </body>
 </html>

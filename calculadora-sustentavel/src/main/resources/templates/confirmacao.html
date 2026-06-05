@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #fff0f0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        /* ── Header ── */
         .header-edenred {
             background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
             color: white; padding: 14px 0;
@@ -28,8 +27,6 @@
             display: inline-flex; align-items: center; gap: 6px;
         }
         .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
-
-        /* ── Círculo de sucesso ── */
         .success-circle {
             width: 96px; height: 96px;
             background: linear-gradient(135deg, #00a651, #007a3d);
@@ -39,8 +36,6 @@
             margin: 0 auto 20px;
             box-shadow: 0 8px 24px rgba(0,166,81,.35);
         }
-
-        /* ── Caixa do protocolo ── */
         .protocolo-box {
             background: #f0fff5;
             border: 2px dashed #00a651;
@@ -50,8 +45,6 @@
         }
         .protocolo-label { font-size: .78rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .6px; }
         .protocolo-num   { font-size: 1.7rem; font-weight: 800; color: #00a651; letter-spacing: 3px; font-family: monospace; }
-
-        /* ── Próximos passos ── */
         .step-item {
             display: flex; align-items: flex-start; gap: 14px;
             background: white; border-radius: 12px; padding: 14px 18px;
@@ -65,18 +58,50 @@
         }
         .step-title { font-size: .9rem; font-weight: 700; color: #333; }
         .step-desc  { font-size: .82rem; color: #777; margin-top: 2px; }
-
-        /* ── Resumo do pedido ── */
         .resumo-card { background: white; border-radius: 14px; border: 1px solid #dee2e6; padding: 20px 24px; }
         .resumo-label { font-size: .75rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .5px; }
         .resumo-value { font-size: .95rem; font-weight: 700; color: #333; margin-top: 2px; }
-
-        /* ── Disclaimer ── */
         .disclaimer { font-size: 0.78rem; color: #999; }
+
+        /* ── Modal de sugestão de conta ── */
+        .modal-conta-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.55);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+            animation: fadeIn .25s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-conta-box {
+            background: white;
+            border-radius: 20px;
+            padding: 36px 32px;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+            animation: slideUp .3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-conta-icon {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, #e6f4ea, #c8ecd4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; margin: 0 auto 16px;
+        }
+        .vantagem-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: .9rem; color: #444;
+        }
+        .vantagem-item:last-child { border-bottom: none; }
+        .vantagem-icon { color: #00a651; font-size: 1rem; min-width: 18px; }
     </style>
 </head>
 <body>
 
+<!-- ══ Header ══ -->
 <header class="header-edenred">
     <div class="container d-flex justify-content-between align-items-center">
         <a href="/" class="hd-logo">
@@ -89,6 +114,48 @@
         <a href="/" class="hd-btn"><i class="fas fa-home"></i>Pagina Inicial</a>
     </div>
 </header>
+
+<!-- ══ Modal: sugerir criação de conta (só aparece se não tem conta) ══ -->
+<div th:if="${mostrarModalConta}" id="modalCriaConta" class="modal-conta-overlay">
+    <div class="modal-conta-box">
+        <div class="modal-conta-icon">🌱</div>
+        <h5 class="fw-bold text-center mb-1">Percebemos que voce nao tem conta ainda</h5>
+        <p class="text-muted text-center small mb-3">
+            Crie sua conta gratuita e acompanhe seus pedidos com muito mais facilidade.
+        </p>
+
+        <div class="mb-4">
+            <div class="vantagem-item">
+                <i class="fas fa-chart-line vantagem-icon"></i>
+                Contabilidade de CO&#8322; evitado em tempo real
+            </div>
+            <div class="vantagem-item">
+                <i class="fas fa-file-contract vantagem-icon"></i>
+                Contratacao e gestao de planos
+            </div>
+            <div class="vantagem-item">
+                <i class="fas fa-headset vantagem-icon"></i>
+                Suporte ao cliente dedicado
+            </div>
+            <div class="vantagem-item">
+                <i class="fas fa-history vantagem-icon"></i>
+                Historico completo de simulacoes e pedidos
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+            <a th:href="@{/auth/cadastro(email=${emailContato})}"
+                class="btn btn-success rounded-pill py-2 fw-semibold">
+                <i class="fas fa-user-plus me-2"></i>Criar minha conta gratuitamente
+            </a>
+            <button type="button"
+                    onclick="document.getElementById('modalCriaConta').style.display='none'"
+                    class="btn btn-outline-secondary rounded-pill py-2">
+                Nao, vou apenas guardar meu protocolo
+            </button>
+        </div>
+    </div>
+</div>
 
 <div class="container py-5" style="max-width: 720px;">
 
@@ -178,16 +245,28 @@
 
     <!-- ══ Botões de navegação ══ -->
     <div class="text-center d-flex gap-3 justify-content-center flex-wrap">
-        <a href="/" class="btn btn-success px-5 rounded-pill">
+        <!-- Mostra "Ir para Meu Portal" apenas se já tem conta -->
+        <a th:if="${!mostrarModalConta}" href="/portal" class="btn btn-primary px-5 rounded-pill">
+            <i class="fas fa-dashboard me-2"></i>Ir para Meu Portal
+        </a>
+        <!-- Se não tem conta, mostra botão de cadastro no lugar -->
+        <a th:if="${mostrarModalConta}"
+            th:href="@{/auth/cadastro(email=${emailContato})}"
+            class="btn btn-success px-5 rounded-pill">
+            <i class="fas fa-user-plus me-2"></i>Criar minha conta
+        </a>
+        <a href="/" class="btn btn-outline-success px-5 rounded-pill">
             <i class="fas fa-home me-2"></i>Pagina Inicial
         </a>
-        <a href="/calculadora" class="btn btn-outline-success px-4 rounded-pill">
+        <a href="/calculadora" class="btn btn-outline-secondary px-4 rounded-pill">
             <i class="fas fa-redo me-2"></i>Nova Simulacao
         </a>
     </div>
 
     <p class="disclaimer text-center mt-4">
-        Voce tambem pode entrar em contato diretamente pelo e-mail <strong>comercial@greeneden.com.br</strong> informando o protocolo <span th:text="${protocolo}">GE-000000</span>.
+        Voce tambem pode entrar em contato diretamente pelo e-mail
+        <strong>comercial@greeneden.com.br</strong>
+        informando o protocolo <span th:text="${protocolo}">GE-000000</span>.
     </p>
 
 </div>

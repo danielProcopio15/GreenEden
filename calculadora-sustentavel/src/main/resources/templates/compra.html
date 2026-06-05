@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background-color: #fff0f0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        /* ── Header ── */
         .header-edenred {
             background: linear-gradient(135deg, #1a0404 0%, #3d0909 100%);
             color: white; padding: 14px 0;
@@ -28,41 +27,20 @@
             display: inline-flex; align-items: center; gap: 6px;
         }
         .hd-btn:hover { background: rgba(255,255,255,.22); color: white; }
-
-        /* ── Resumo topo ── */
         .summary-strip { background: white; border-radius: 14px; border: 1px solid #dee2e6; padding: 14px 20px; font-size: 0.85rem; color: #555; }
         .summary-strip strong { color: #333; }
-
-        /* ── Cards de plano ── */
         .plan-col { overflow: visible !important; }
         .plan-card {
-            border-radius: 20px;
-            border: 2px solid #dee2e6;
-            background: white;
-            transition: transform 0.25s, box-shadow 0.25s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: visible;
+            border-radius: 20px; border: 2px solid #dee2e6; background: white;
+            transition: transform 0.25s, box-shadow 0.25s; position: relative;
+            display: flex; flex-direction: column; overflow: visible;
         }
         .plan-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.13); }
-        .plan-card.recommended {
-            border-color: #00a651;
-            box-shadow: 0 8px 32px rgba(0,166,81,0.18);
-        }
+        .plan-card.recommended { border-color: #00a651; box-shadow: 0 8px 32px rgba(0,166,81,0.18); }
         .badge-recommended {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00a651;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 4px 16px;
-            border-radius: 20px;
-            white-space: nowrap;
-            z-index: 1;
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: #00a651; color: white; font-size: 0.75rem; font-weight: 700;
+            padding: 4px 16px; border-radius: 20px; white-space: nowrap; z-index: 1;
         }
         .plan-name { font-size: 1.1rem; font-weight: 700; color: #333; }
         .plan-qty  { font-size: 1.8rem; font-weight: 800; color: #00a651; line-height: 1.1; overflow-wrap: break-word; word-break: break-word; }
@@ -74,102 +52,51 @@
         .plan-feature i { width: 18px; flex-shrink: 0; }
         .plan-eco { background: #f0fff5; border-radius: 10px; padding: 10px 14px; margin-top: 14px; font-size: 0.82rem; }
         .plan-eco .eco-num { font-size: 1.1rem; font-weight: 700; color: #00a651; overflow-wrap: break-word; word-break: break-word; }
-
         .btn-buy {
             background: #00a651; color: white; border: none;
             padding: 12px 0; font-size: 1rem; font-weight: 600;
-            border-radius: 50px; width: 100%;
-            transition: background 0.2s, transform 0.2s;
+            border-radius: 50px; width: 100%; transition: background 0.2s, transform 0.2s;
         }
         .btn-buy:hover { background: #008c44; transform: translateY(-2px); color: white; }
         .btn-buy-outline {
             background: white; color: #00a651; border: 2px solid #00a651;
             padding: 11px 0; font-size: 1rem; font-weight: 600;
-            border-radius: 50px; width: 100%;
-            transition: background 0.2s, color 0.2s;
+            border-radius: 50px; width: 100%; transition: background 0.2s, color 0.2s;
         }
         .btn-buy-fisico {
             background: #e30613; color: white; border: none;
             padding: 12px 0; font-size: 1rem; font-weight: 600;
-            border-radius: 50px; width: 100%;
-            transition: background 0.2s, transform 0.2s;
+            border-radius: 50px; width: 100%; transition: background 0.2s, transform 0.2s;
         }
         .btn-buy-fisico:hover { background: #b00010; transform: translateY(-2px); color: white; }
-        .plan-card.recommended.recommended-fisico {
-            border-color: #e30613;
-            box-shadow: 0 8px 32px rgba(227,6,19,0.18);
-        }
-
-        /* ── Tabela comparativa ── */
+        .plan-card.recommended.recommended-fisico { border-color: #e30613; box-shadow: 0 8px 32px rgba(227,6,19,0.18); }
         .compare-table th { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; }
         .compare-table td { font-size: 0.9rem; vertical-align: middle; }
         .check { color: #00a651; }
         .cross { color: #dc3545; }
-
-        /* ── Bandeirinha de economia ── */
-        .savings-banner {
-            background: linear-gradient(135deg, #00a651, #007a3d);
-            color: white; border-radius: 16px; padding: 20px 28px;
-        }
+        .savings-banner { background: linear-gradient(135deg, #00a651, #007a3d); color: white; border-radius: 16px; padding: 20px 28px; }
         .savings-banner .big-num { font-size: 2.4rem; font-weight: 800; }
-
-        /* ── Disclaimer ── */
         .disclaimer { font-size: 0.78rem; color: #999; }
-
-        /* ── Toggle switch ── */
         .mode-toggle-wrap {
-            display: inline-flex;
-            align-items: center;
-            background: #f0f0f0;
-            border-radius: 50px;
-            padding: 4px;
-            gap: 4px;
-            user-select: none;
+            display: inline-flex; align-items: center; background: #f0f0f0;
+            border-radius: 50px; padding: 4px; gap: 4px; user-select: none;
         }
         .mode-toggle-wrap .mode-btn {
-            border: none;
-            background: transparent;
-            border-radius: 50px;
-            padding: 8px 22px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.25s, color 0.25s;
-            color: #888;
+            border: none; background: transparent; border-radius: 50px;
+            padding: 8px 22px; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: background 0.25s, color 0.25s; color: #888;
         }
-        .mode-toggle-wrap .mode-btn.active-digital {
-            background: #00a651;
-            color: white;
-            box-shadow: 0 3px 10px rgba(0,166,81,0.3);
-        }
-        .mode-toggle-wrap .mode-btn.active-fisico {
-            background: #e30613;
-            color: white;
-            box-shadow: 0 3px 10px rgba(227,6,19,0.3);
-        }
-
-        /* ── Ajuste de demanda ── */
+        .mode-toggle-wrap .mode-btn.active-digital { background: #00a651; color: white; box-shadow: 0 3px 10px rgba(0,166,81,0.3); }
+        .mode-toggle-wrap .mode-btn.active-fisico  { background: #e30613; color: white; box-shadow: 0 3px 10px rgba(227,6,19,0.3); }
         .demand-box {
-            background: white;
-            border-radius: 14px;
-            border: 2px dashed #dee2e6;
-            padding: 16px 22px;
-            display: inline-flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
+            background: white; border-radius: 14px; border: 2px dashed #dee2e6;
+            padding: 16px 22px; display: inline-flex; align-items: center;
+            gap: 16px; flex-wrap: wrap; justify-content: center;
         }
         .demand-input {
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 6px 14px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #333;
-            width: 150px;
-            text-align: center;
-            transition: border-color .2s, box-shadow .2s;
+            border: 2px solid #dee2e6; border-radius: 10px; padding: 6px 14px;
+            font-size: 1.1rem; font-weight: 700; color: #333; width: 150px;
+            text-align: center; transition: border-color .2s, box-shadow .2s;
         }
         .demand-input:focus { outline: none; border-color: #00a651; box-shadow: 0 0 0 3px rgba(0,166,81,.15); }
         .demand-input.modo-fisico:focus { border-color: #e30613; box-shadow: 0 0 0 3px rgba(227,6,19,.15); }
@@ -192,12 +119,15 @@
                 <div class="hd-logo-sub">Impacto Ambiental</div>
             </div>
         </a>
-        <a href="/resultado" class="hd-btn"><i class="fas fa-arrow-left"></i>Resultados</a>
+        <a th:if="${from == 'resultado'}" th:href="${temImpacto} ? '/resultado' : '/'" class="hd-btn">
+            <i class="fas fa-arrow-left"></i>
+            <span th:text="${temImpacto} ? 'Resultados' : 'Início'"></span>
+        </a>
     </div>
 </header>
 
-<!-- Bloco oculto para cálculos JS -->
-<div id="dados" style="display:none;"
+<!-- Dados reais da sessão -->
+<div th:if="${temImpacto}" id="dados" style="display:none;"
      th:data-cartoes="${impacto.quantidadeCartoes}"
      th:data-remessas="${impacto.frequenciaRemessasAno}"
      th:data-co2-total="${impacto.co2Total}"
@@ -207,9 +137,19 @@
      th:data-transacoes="${impacto.quantidadeTransacoes}">
 </div>
 
+<!-- Dados de demonstração (home) -->
+<div id="dadosPadrao" style="display:none;"
+     data-cartoes="1000"
+     data-remessas="12"
+     data-co2-total="4800"
+     data-co2-digital="0.001"
+     data-reducao="4800"
+     data-arvores="218"
+     data-transacoes="150000">
+</div>
+
 <div class="container py-5">
 
-    <!-- Toggle de modo -->
     <div class="text-center mb-4">
         <div class="mode-toggle-wrap">
             <button class="mode-btn active-digital" id="btnDigital" onclick="setModo('digital')">
@@ -222,12 +162,11 @@
     </div>
 
     <div class="text-center mb-4">
-        <span class="badge mb-2" id="modoBadge" style="font-size:.85rem; background:#00a651; color:white;">&#127807; Solucao Digital</span>
+        <span class="badge mb-2" id="modoBadge" style="font-size:.85rem; background:#00a651; color:white;"><i class="fas fa-leaf me-1"></i>Solucao Digital</span>
         <h2 class="fw-bold display-6" id="modoTitulo">Escolha seu Plano de E-Wallet</h2>
         <p class="text-muted" id="modoSubtitulo">Planos calculados com base na sua simulacao. Substitua os cartoes fisicos e elimine o impacto ambiental.</p>
     </div>
 
-    <!-- ── Ajuste de demanda ── -->
     <div class="text-center mb-4">
         <div class="demand-box mx-auto" style="max-width:540px;">
             <div class="text-start">
@@ -244,8 +183,7 @@
         </div>
     </div>
 
-    <!-- Faixa de resumo -->
-    <div class="summary-strip mb-5 d-flex flex-wrap gap-3 align-items-center">
+    <div th:if="${temImpacto}" class="summary-strip mb-5 d-flex flex-wrap gap-3 align-items-center">
         <span><i class="fas fa-credit-card text-danger me-1"></i>Sua demanda atual:
             <strong th:text="${#numbers.formatInteger(impacto.quantidadeCartoes, 1, 'COMMA')} + ' cartoes/remessa'"></strong>
         </span>
@@ -258,17 +196,21 @@
             <strong class="text-success" th:text="${#numbers.formatDecimal(impacto.reducaoCO2Digital, 1, 'POINT', 2, 'COMMA')} + ' kg CO&#8322;'"></strong>
         </span>
         <span class="text-muted">·</span>
-        <span>&#127795;
+        <span><i class="fas fa-tree text-success me-1"></i>
             <strong th:text="${impacto.equivalencias.arvoresSalvas}"></strong> arvores equivalentes/ano
         </span>
     </div>
 
-    <!-- ══ 3 PLANOS ══ -->
-    <div class="row g-4 mb-5 align-items-start" id="planosContainer" style="padding-top: 18px;">
-        <!-- Planos gerados via JS com base nos dados da sessão -->
+    <div th:if="!${temImpacto}" class="summary-strip mb-5 d-flex flex-wrap gap-3 align-items-center">
+        <i class="fas fa-info-circle text-info me-2"></i>
+        <span>
+            <strong>Simulação de demonstração</strong> —
+            <a href="/calculadora" class="text-decoration-none">Faça sua simulação</a> para ver seus dados reais
+        </span>
     </div>
 
-    <!-- ══ BANNER DE ECONOMIA ══ -->
+    <div class="row g-4 mb-5 align-items-start" id="planosContainer" style="padding-top: 18px;"></div>
+
     <div class="savings-banner mb-5" id="savingsBanner">
         <div class="row align-items-center g-3">
             <div class="col-md-8">
@@ -282,8 +224,7 @@
         </div>
     </div>
 
-    <!-- ══ TABELA COMPARATIVA ══ -->
-    <div class="card border-0 shadow-sm rounded-4 p-4 mb-5">
+    <div th:if="${temImpacto}" class="card border-0 shadow-sm rounded-4 p-4 mb-5">
         <h5 class="fw-bold mb-4"><i class="fas fa-table me-2 text-success"></i>Comparativo: Fisico vs. Digital</h5>
         <div class="table-responsive">
             <table class="table compare-table align-middle">
@@ -335,13 +276,18 @@
         </div>
     </div>
 
-    <!-- ══ BOTÕES DE NAVEGAÇÃO ══ -->
     <div class="text-center pt-2">
-        <a href="/resultado" class="btn btn-outline-secondary btn-lg px-4 me-2">
+        <a th:if="${fromHome != true}" href="/resultado" class="btn btn-outline-secondary btn-lg px-4 me-2">
             <i class="fas fa-arrow-left me-2"></i>Voltar aos Resultados
         </a>
-        <a href="/calculadora" class="btn btn-outline-success btn-lg px-4">
+        <a th:if="${fromHome == true}" href="/" class="btn btn-outline-secondary btn-lg px-4 me-2">
+            <i class="fas fa-arrow-left me-2"></i>Voltar ao Início
+        </a>
+        <a th:if="${fromHome != true}" href="/calculadora" class="btn btn-outline-success btn-lg px-4">
             <i class="fas fa-redo me-2"></i>Nova Simulacao
+        </a>
+        <a th:if="${fromHome == true}" href="/calculadora" class="btn btn-outline-success btn-lg px-4">
+            <i class="fas fa-calculator me-2"></i>Ir para Calculadora
         </a>
     </div>
 
@@ -354,13 +300,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 (function () {
-    const d = document.getElementById('dados').dataset;
-    const cartoesRemessa   = parseInt(d.cartoes)   || 0;
-    const remessasAno      = parseInt(d.remessas)  || 0;
-    const totalAnual       = cartoesRemessa * remessasAno;
-    const co2Total         = parseFloat(d.co2Total) || 0;
-    const reducao          = parseFloat(d.reducao)  || 0;
-    const arvores          = parseInt(d.arvores)   || 0;
+    const dadosEl = document.getElementById('dados') || document.getElementById('dadosPadrao');
+    if (!dadosEl) return;
+
+    const d = dadosEl.dataset;
+    const cartoesRemessa = parseInt(d.cartoes)   || 1000;
+    const remessasAno    = parseInt(d.remessas)  || 12;
+    const totalAnual     = cartoesRemessa * remessasAno;
+    const co2Total       = parseFloat(d.co2Total) || 4800;
+    const reducao        = parseFloat(d.reducao)  || 4800;
+    const arvores        = parseInt(d.arvores)   || 218;
 
     function precoPorUnidade(qty, digital) {
         if (digital) {
@@ -378,10 +327,9 @@
     const arvoresPorCartao    = totalAnual > 0 ? arvores / totalAnual : 0;
     const co2FisicoPorCartao  = totalAnual > 0 ? co2Total / totalAnual : 0;
 
-    let demandaBase = cartoesRemessa; // valor editável pelo usuário
-    let modoAtual   = true;      // true = digital
+    let demandaBase = cartoesRemessa;
+    let modoAtual   = true;
 
-    // ── 3 planos digitais ──
     const planosDigital = [
         {
             nome: 'Plano Essencial', icon: 'fas fa-seedling', cor: '#6c757d',
@@ -406,19 +354,18 @@
         },
     ];
 
-    // ── 1 plano fisico (processo apresentado de forma neutra) ──
     const planosFisico = [
         {
             nome: 'Cartao Fisico Personalizado', icon: 'fas fa-credit-card', cor: '#e30613',
             borderClass: 'recommended recommended-fisico', recommended: true, fator: 1.0,
             label: 'Volume equivalente a sua demanda atual',
             features: [
-                { icon: 'fas fa-industry',        texto: 'Producao em fabrica parceira homologada' },
-                { icon: 'fas fa-paint-brush',     texto: 'Personalizacao completa com dados do portador' },
-                { icon: 'fas fa-shield-alt',      texto: 'Processo de compliance e controle de qualidade' },
-                { icon: 'fas fa-calendar-check',  texto: 'Prazo de producao e entrega: 7 a 10 dias uteis' },
-                { icon: 'fas fa-truck',           texto: 'Entrega rastreada ate o endereco de destino' },
-                { icon: 'fas fa-headset',         texto: 'Suporte dedicado para gestao de remessas' },
+                { icon: 'fas fa-industry',       texto: 'Producao em fabrica parceira homologada' },
+                { icon: 'fas fa-paint-brush',    texto: 'Personalizacao completa com dados do portador' },
+                { icon: 'fas fa-shield-alt',     texto: 'Processo de compliance e controle de qualidade' },
+                { icon: 'fas fa-calendar-check', texto: 'Prazo de producao e entrega: 7 a 10 dias uteis' },
+                { icon: 'fas fa-truck',          texto: 'Entrega rastreada ate o endereco de destino' },
+                { icon: 'fas fa-headset',        texto: 'Suporte dedicado para gestao de remessas' },
             ],
             btnClass: 'btn-buy btn-buy-fisico', btnText: 'Solicitar Orcamento',
         },
@@ -428,8 +375,6 @@
         const planos    = digital ? planosDigital : planosFisico;
         const container = document.getElementById('planosContainer');
         container.innerHTML = '';
-
-        // No modo fisico, centraliza o unico card
         container.className = digital
             ? 'row g-4 mb-5 align-items-start'
             : 'row g-4 mb-5 align-items-start justify-content-center';
@@ -442,76 +387,76 @@
             const co2Exibido = digital
                 ? (co2EvitadoPorCartao * qty).toFixed(2)
                 : (co2FisicoPorCartao  * qty).toFixed(2);
-            const arv = Math.round((digital ? arvoresPorCartao : arvoresPorCartao) * qty);
+            const arv = Math.round(arvoresPorCartao * qty);
 
-            // Features: digital usa string simples, fisico usa {icon, texto}
             const featuresHtml = p.features.map(function (f) {
                 if (typeof f === 'string') {
-                    return `<div class="plan-feature"><i class="fas fa-check text-success me-2"></i>${f}</div>`;
+                    return '<div class="plan-feature"><i class="fas fa-check text-success me-2"></i>' + f + '</div>';
                 }
-                return `<div class="plan-feature"><i class="${f.icon} me-2" style="color:#6c757d;width:18px;"></i>${f.texto}</div>`;
+                return '<div class="plan-feature"><i class="' + f.icon + ' me-2" style="color:#6c757d;width:18px;"></i>' + f.texto + '</div>';
             }).join('');
 
             const badgeColor = digital ? '#00a651' : '#e30613';
             const badgeLabel = digital ? '<i class="fas fa-star me-1"></i>Recomendado para voce' : '<i class="fas fa-credit-card me-1"></i>Opcao atual';
             const badgeHtml  = p.recommended
-                ? `<span class="badge-recommended" style="background:${badgeColor};">${badgeLabel}</span>`
+                ? '<span class="badge-recommended" style="background:' + badgeColor + ';">' + badgeLabel + '</span>'
                 : '';
 
             const ecoLabel = digital ? 'kg CO&#8322; evitados/remessa' : 'kg CO&#8322; gerados/remessa';
             const ecoColor = digital ? '#00a651' : '#e30613';
             const arvText  = digital
-                ? `&#127795; ${arv.toLocaleString('pt-BR')} arvores equiv.`
-                : `&#127795; ${arv.toLocaleString('pt-BR')} arvores/remessa impactadas`;
+                ? '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores equiv.'
+                : '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores/remessa impactadas';
 
-            const colClass = digital ? 'col-md-4' : 'col-md-6';
+            const colClass  = digital ? 'col-md-4' : 'col-md-6';
             const unidLabel = digital ? 'E-Wallets / remessa' : 'Cartoes fisicos / remessa';
 
-            const html = `
-            <div class="${colClass} plan-col">
-                <div class="plan-card p-4 h-100 ${p.borderClass}">
-                    ${badgeHtml}
-                    <div class="text-center mb-3 mt-2">
-                        <i class="${p.icon} fa-2x mb-2" style="color:${p.cor};"></i>
-                        <div class="plan-name">${p.nome}</div>
-                        <div class="text-muted small mt-1">${p.label}</div>
-                    </div>
-                    <div class="text-center mb-3">
-                        <div class="plan-qty">${qty.toLocaleString('pt-BR')}</div>
-                        <div class="plan-qty-label">${unidLabel}</div>
-                    </div>
-                    <div class="text-center mb-1">
-                        <span class="plan-price">R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</span>
-                        <div class="plan-price-unit">R$ ${precoUnit.toFixed(2).replace('.',',')} por unidade &middot; cobranca por remessa</div>
-                    </div>
-                    <div class="plan-divider"></div>
-                    ${featuresHtml}
-                    <div class="plan-eco mt-3">
-                        <div class="d-flex justify-content-between">
-                            <div class="text-center flex-fill">
-                                <div class="eco-num" style="color:${ecoColor};">${parseFloat(co2Exibido).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
-                                <div class="text-muted" style="font-size:.72rem;">${ecoLabel}</div>
-                            </div>
-                            <div class="text-center flex-fill">
-                                <div class="eco-num" style="color:${ecoColor}; font-size:.95rem;">${arvText}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-auto pt-4">
-                        <button class="${p.btnClass}" onclick="irContato('${p.nome}', ${qty}, '${digital ? 'digital' : 'fisico'}', ${total.toFixed(2)})">
-                            <i class="fas fa-paper-plane me-2"></i>${p.btnText}
-                        </button>
-                    </div>
-                </div>
-            </div>`;
+            // ── co2Exibido e arv passados para irContato ──
+            const html =
+            '<div class="' + colClass + ' plan-col">' +
+                '<div class="plan-card p-4 h-100 ' + p.borderClass + '">' +
+                    badgeHtml +
+                    '<div class="text-center mb-3 mt-2">' +
+                        '<i class="' + p.icon + ' fa-2x mb-2" style="color:' + p.cor + ';"></i>' +
+                        '<div class="plan-name">' + p.nome + '</div>' +
+                        '<div class="text-muted small mt-1">' + p.label + '</div>' +
+                    '</div>' +
+                    '<div class="text-center mb-3">' +
+                        '<div class="plan-qty">' + qty.toLocaleString('pt-BR') + '</div>' +
+                        '<div class="plan-qty-label">' + unidLabel + '</div>' +
+                    '</div>' +
+                    '<div class="text-center mb-1">' +
+                        '<span class="plan-price">R$ ' + total.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) + '</span>' +
+                        '<div class="plan-price-unit">R$ ' + precoUnit.toFixed(2).replace('.',',') + ' por unidade &middot; cobranca por remessa</div>' +
+                    '</div>' +
+                    '<div class="plan-divider"></div>' +
+                    featuresHtml +
+                    '<div class="plan-eco mt-3">' +
+                        '<div class="d-flex justify-content-between">' +
+                            '<div class="text-center flex-fill">' +
+                                '<div class="eco-num" style="color:' + ecoColor + ';">' + parseFloat(co2Exibido).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2}) + '</div>' +
+                                '<div class="text-muted" style="font-size:.72rem;">' + ecoLabel + '</div>' +
+                            '</div>' +
+                            '<div class="text-center flex-fill">' +
+                                '<div class="eco-num" style="color:' + ecoColor + '; font-size:.95rem;">' + arvText + '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="mt-auto pt-4">' +
+                        '<button type="button" class="' + p.btnClass + '" onclick="irContato(\'' + p.nome + '\', ' + qty + ', \'' + (digital ? 'digital' : 'fisico') + '\', ' + total.toFixed(2) + ', ' + parseFloat(co2Exibido).toFixed(2) + ', ' + arv + '); return false;">' +
+                            '<i class="fas fa-paper-plane me-2"></i>' + p.btnText +
+                        '</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
 
             container.insertAdjacentHTML('beforeend', html);
 
             if (p.recommended) {
                 const num  = parseFloat(co2Exibido).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
                 const desc = digital
-                    ? `Com ${qty.toLocaleString('pt-BR')} E-Wallets voce elimina ${num} kg de CO\u2082 e salva o equivalente a ${arv} arvores por remessa \u2014 sem nenhum cartao fisico.`
-                    : `Com ${qty.toLocaleString('pt-BR')} cartoes fisicos, o ciclo completo gera ${num} kg de CO\u2082 por remessa \u2014 equivalente ao impacto de ${arv} arvores.`;
+                    ? 'Com ' + qty.toLocaleString('pt-BR') + ' E-Wallets voce elimina ' + num + ' kg de CO\u2082 e salva o equivalente a ' + arv + ' arvores por remessa \u2014 sem nenhum cartao fisico.'
+                    : 'Com ' + qty.toLocaleString('pt-BR') + ' cartoes fisicos, o ciclo completo gera ' + num + ' kg de CO\u2082 por remessa \u2014 equivalente ao impacto de ' + arv + ' arvores.';
                 document.getElementById('savingsNum').textContent  = num;
                 document.getElementById('savingsDesc').textContent = desc;
 
@@ -549,7 +494,6 @@
         const inp = document.getElementById('demandaInput');
         if (inp) inp.classList.toggle('modo-fisico', !digital);
         document.getElementById('demandaUnidLabel').textContent = digital ? 'unidades/remessa' : 'cartoes/remessa';
-
         renderPlanos(digital);
     };
 
@@ -560,14 +504,16 @@
         renderPlanos(modoAtual);
     };
 
-    window.irContato = function (plano, quantidade, tipo, precoTotal) {
+    // ── ALTERADO: recebe co2Evitado e arvores da tela de compra ──
+    window.irContato = function (plano, quantidade, tipo, precoTotal, co2Evitado, arvores) {
         window.location.href = '/contato?plano=' + encodeURIComponent(plano)
             + '&quantidade=' + quantidade
             + '&tipo=' + tipo
-            + '&precoTotal=' + precoTotal;
+            + '&precoTotal=' + precoTotal
+            + '&co2Evitado=' + co2Evitado
+            + '&arvores=' + arvores;
     };
 
-    // Inicializa: popula input e registra listener
     const inputEl = document.getElementById('demandaInput');
     if (inputEl) {
         inputEl.value = cartoesRemessa;

@@ -107,7 +107,6 @@
             </div>
             <div class="col-6 col-md-3">
                 <div class="resumo-label">CO&#8322; evitado/ano</div>
-                <!-- Mostra o valor calculado na tela de compra (co2Evitado vindo da URL) -->
                 <div class="resumo-value text-success"
                      th:text="${co2Evitado != null and co2Evitado > 0} ? ${#numbers.formatDecimal(co2Evitado, 1, 'POINT', 2, 'COMMA')} + ' kg' : '—'">—</div>
             </div>
@@ -120,12 +119,10 @@
 
         <form id="contatoForm" th:action="@{/contato}" method="post" novalidate class="needs-validation">
 
-            <!-- Campos ocultos: resumo do pedido -->
             <input type="hidden" name="plano"       th:value="${plano}">
             <input type="hidden" name="quantidade"  th:value="${quantidade}">
             <input type="hidden" name="tipo"        th:value="${tipo}">
             <input type="hidden" name="precoTotal"  th:value="${precoTotal}">
-            <!-- NOVOS: co2 e arvores calculados na tela de compra -->
             <input type="hidden" name="co2Evitado"  th:value="${co2Evitado}">
             <input type="hidden" name="arvores"     th:value="${arvores}">
 
@@ -171,16 +168,6 @@
                     <input type="text" class="form-control" name="telefone" id="telefoneInput" required
                            placeholder="(11) 9 0000-0000" maxlength="16" inputmode="numeric">
                     <div class="invalid-feedback">Informe um telefone valido.</div>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold">
-                        Senha (opcional)
-                        <span class="text-muted fw-normal" style="font-size:.8rem;">deixe em branco se já tem conta</span>
-                    </label>
-                    <input type="password" class="form-control" name="senha"
-                           placeholder="Defina uma senha para sua conta" autocomplete="new-password">
-                    <div class="small text-muted" style="margin-top:4px;">Será criada automaticamente se deixado em branco.</div>
                 </div>
 
                 <div class="col-md-6">

@@ -198,42 +198,25 @@ public class CalculadoraController {
             @RequestParam(defaultValue = "0") double precoTotal,
             @RequestParam(defaultValue = "0") double co2Evitado,
             @RequestParam(defaultValue = "0") double arvores,
-            @RequestParam(defaultValue = "") String senha,
             HttpSession session,
             Model model) {
 
         try {
-            // Gerar protocolo único
             String protocolo = "GE-" + (100000 + (int)(Math.random() * 899999));
 
-            // Verificar se já existe conta com esse email
             Optional<Usuario> usuarioOpt = autenticacaoService.buscarPorEmail(email);
-            boolean jaTemConta = usuarioOpt.isPresent();
             Long usuarioId = null;
 
-            if (jaTemConta) {
-                // Usuário já tem conta: associar o pedido à conta existente
+            if (usuarioOpt.isPresent()) {
                 usuarioId = usuarioOpt.get().getId();
                 session.setAttribute("usuarioId", usuarioId);
                 session.setAttribute("usuarioNome", usuarioOpt.get().getNome());
                 session.setAttribute("usuarioEmail", email);
-            } else if (senha != null && !senha.trim().isEmpty()) {
-                // Usuário não tem conta MAS escolheu criar uma senha: criar conta
-                Usuario novoUsuario = autenticacaoService.registrarUsuario(
-                        nome, email, empresa, cnpj, telefone, cargo, senha);
-                usuarioId = novoUsuario.getId();
-                jaTemConta = true; // conta criada agora
-                session.setAttribute("usuarioId", usuarioId);
-                session.setAttribute("usuarioNome", novoUsuario.getNome());
-                session.setAttribute("usuarioEmail", email);
             }
-            // Se não tem conta e não colocou senha: usuarioId permanece null
-            // O pedido será salvo sem vínculo de conta
 
             ImpactoAmbiental impacto = (ImpactoAmbiental) session.getAttribute("ultimoImpacto");
 
             if (impacto != null) {
-                // Fluxo calculadora: usa dados reais do impacto calculado
                 pedidoService.criarPedido(
                         usuarioId,
                         impacto.getQuantidadeCartoes(),
@@ -255,7 +238,6 @@ public class CalculadoraController {
                         nome, email, empresa, cnpj, telefone, cargo
                 );
             } else {
-                // Fluxo home: usa co2Evitado e arvores calculados pela tela de compra
                 pedidoService.criarPedido(
                         usuarioId,
                         quantidade > 0 ? quantidade : 1000,
@@ -278,7 +260,6 @@ public class CalculadoraController {
                 );
             }
 
-            // Passar dados para a tela de confirmação
             model.addAttribute("protocolo", protocolo);
             model.addAttribute("nome", nome);
             model.addAttribute("empresa", empresa);
@@ -287,9 +268,7 @@ public class CalculadoraController {
             model.addAttribute("tipo", tipo);
             model.addAttribute("precoTotal", precoTotal);
             model.addAttribute("emailContato", email);
-
-            // Flag para mostrar modal de "quer criar conta?" apenas se não tem conta
-            model.addAttribute("mostrarModalConta", !jaTemConta);
+            model.addAttribute("mostrarModalConta", !usuarioOpt.isPresent());
 
             return "confirmacao";
 

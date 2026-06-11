@@ -1,4 +1,4 @@
-package com.greeneden.calculadora_sustentavel.service;
+﻿package com.greeneden.calculadora_sustentavel.service;
 
 import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
 import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;
@@ -18,13 +18,19 @@ public class CalculadoraService implements CalculadoraServiceInterface {
     // â”€â”€â”€ Fatores de emissÃ£o â€” Embalagem â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Fonte: GHG Protocol Scope 3 Cat.1 / Ecoinvent 3.9 (ano-base 2024)
     // ~15% do Escopo3 Edenred / 5.500.000 cartÃµes = 0,100 kg COâ‚‚e/cartÃ£o
-    private static final double CO2_EMBALAGEM_POR_CARTAO = 0.100;
+    private static final double CO2_EMBALAGEM_POR_CARTAO = 0.020;  // LCA ISO 14040/44: envelope + plastico protetor + cartao guia
 
     // â”€â”€â”€ Fatores logÃ­sticos por km/cartÃ£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Fonte: DEFRA UK (2023) convertido para tonelada-km modal
     // Base rodoviÃ¡rio: 736.080 kg / (5.500.000 Ã— 500 km) = 0,000268 kg/km/cartÃ£o
-    private static final double CO2_KM_RODOVIARIO  = 0.000268;
-    private static final double CO2_KM_AEREO       = 0.001340;  // ~5Ã— rodoviÃ¡rio
+    // Modelo: 1 veiculo por remessa, ida e volta (2x distancia), independente do numero de cartoes.
+    // Fonte: DEFRA UK (2023) - emissoes por veiculo-km
+    // Logistica por tonelada-km (DEFRA 2023) - peso real da carga, ida e volta
+    // Cartao fisico: ~5 g = 0,005 kg/cartao (ISO 7810 ID-1)
+    // HGV carregado medio: 0,107 kg CO2e/tonelada-km | Aviao cargueiro: 0,599 kg CO2e/tonelada-km
+    private static final double PESO_CARTAO_KG           = 0.005;   // kg por cartao (ISO 7810 ID-1)
+    private static final double CO2_TONELADA_KM_CAMINHAO = 0.107;   // kg CO2e/tonelada-km (DEFRA 2023 HGV)
+    private static final double CO2_TONELADA_KM_AVIAO    = 0.599;   // kg CO2e/tonelada-km (DEFRA 2023 air freight)
 
     // â”€â”€â”€ Recursos por cartÃ£o PVC padrÃ£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Fonte: relatÃ³rio ambiental Edenred 2023 / 5.500.000 cartÃµes
@@ -96,9 +102,10 @@ public class CalculadoraService implements CalculadoraServiceInterface {
         // â”€â”€ 3. LogÃ­stica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         String modal = entrada.getTipoTransporte() != null
                 ? entrada.getTipoTransporte().toUpperCase() : "RODOVIARIO";
-        double fatorKm = "AEREO".equals(modal) ? CO2_KM_AEREO : CO2_KM_RODOVIARIO;
+        double fatorTonKm = "AEREO".equals(modal) ? CO2_TONELADA_KM_AVIAO : CO2_TONELADA_KM_CAMINHAO;
         // Cada remessa Ã© uma viagem completa: custo logÃ­stico Ã© frequencia Ã— cartÃµes/remessa Ã— distÃ¢ncia
-        double co2Logistica = qtdCartoesPorRemessa * distancia * fatorKm * frequencia;
+        double pesoRemessaTon = qtdCartoesPorRemessa * PESO_CARTAO_KG / 1000.0;
+        double co2Logistica = pesoRemessaTon * distancia * fatorTonKm * 2.0 * frequencia;
 
         // â”€â”€ 4. Fim de vida â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         CenarioDescarte descarte = entrada.getCenarioDescarte() != null

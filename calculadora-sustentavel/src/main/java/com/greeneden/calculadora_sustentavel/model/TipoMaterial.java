@@ -7,14 +7,18 @@ package com.greeneden.calculadora_sustentavel.model;
  */
 public enum TipoMaterial {
 
-    /** PVC virgem – padrão de mercado (~5 g/cartão) */
-    PVC(0.476),
+    /** PVC virgem – padrão de mercado (~5 g/cartão)
+     *  Fonte: LCA ISO 14040/44 — Visa ESG Report 2021 / Ecoinvent 3.9
+     *  Faixa bibliográfica: 0,12–0,22 kg CO₂e/cartão; adotado 0,150 (média central) */
+    PVC(0.150),
 
-    /** PVC reciclado pós-consumo – ~40% menos emissão de produção */
-    PVC_RECICLADO(0.286),
+    /** PVC reciclado pós-consumo – ~40% menos emissão de produção
+     *  0,150 × 0,60 = 0,090 kg CO₂e/cartão */
+    PVC_RECICLADO(0.090),
 
-    /** Metal (aço inoxidável / alumínio) – ~3× mais intenso */
-    METAL(1.420);
+    /** Metal (aço inoxidável / alumínio) – ~3× mais intenso que PVC virgem
+     *  0,150 × 3,0 = 0,450 kg CO₂e/cartão */
+    METAL(0.450);
 
     /** kg CO₂e emitidos na fabricação de um cartão neste material (Escopos 1-3) */
     private final double co2ProducaoPorCartao;

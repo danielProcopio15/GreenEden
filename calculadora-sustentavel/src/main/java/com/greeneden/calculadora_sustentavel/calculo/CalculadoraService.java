@@ -118,7 +118,10 @@ public class CalculadoraService {
 
         // â”€â”€ 6. Unidade funcional fÃ­sica â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         // kg COâ‚‚e / transaÃ§Ã£o = co2Total / (cartÃµes Ã— vida Ãºtil)
-        double co2PorTransacaoFisico = co2Total / ((double) qtdCartoes * vidaUtil);
+        // Mesmo denominador do calculo digital: comparacao justa (ISO 14044 unidade funcional)
+        double co2PorTransacaoFisico = qtdTransacoes > 0
+                ? co2Total / (double) qtdTransacoes
+                : co2Total / ((double) qtdCartoes * vidaUtil);
 
         // â”€â”€ 7. CenÃ¡rio digital detalhado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         TipoTransacaoDigital tecDigital = entrada.getTipoTransacaoDigital() != null

@@ -168,6 +168,7 @@ public class CalculadoraController {
             @RequestParam(defaultValue = "digital") String tipo,
             @RequestParam(defaultValue = "0") double precoTotal,
             @RequestParam(defaultValue = "0") double co2Evitado,
+            @RequestParam(defaultValue = "0") double co2Fisico,
             @RequestParam(defaultValue = "0") double arvores,
             @RequestParam(defaultValue = "false") boolean fromHome,
             HttpSession session, Model model) {
@@ -178,6 +179,7 @@ public class CalculadoraController {
         model.addAttribute("tipo", tipo);
         model.addAttribute("precoTotal", precoTotal);
         model.addAttribute("co2Evitado", co2Evitado);
+        model.addAttribute("co2Fisico", co2Fisico);
         model.addAttribute("arvores", arvores);
         model.addAttribute("fromHome", fromHome);
         return "contato";
@@ -197,6 +199,7 @@ public class CalculadoraController {
             @RequestParam(defaultValue = "digital") String tipo,
             @RequestParam(defaultValue = "0") double precoTotal,
             @RequestParam(defaultValue = "0") double co2Evitado,
+            @RequestParam(defaultValue = "0") double co2Fisico,
             @RequestParam(defaultValue = "0") double arvores,
             HttpSession session,
             Model model) {
@@ -238,6 +241,9 @@ public class CalculadoraController {
                         nome, email, empresa, cnpj, telefone, cargo
                 );
             } else {
+                // Compra direta da homepage: usa valores calculados pelo JS da página de compra
+                double co2FisicoSalvo  = co2Fisico > 0 ? co2Fisico : (quantidade > 0 ? quantidade * 0.13 : 130.0);
+                double co2DigitalSalvo = Math.max(0, co2FisicoSalvo - co2Evitado);
                 pedidoService.criarPedido(
                         usuarioId,
                         quantidade > 0 ? quantidade : 1000,
@@ -249,8 +255,8 @@ public class CalculadoraController {
                         "RODOVIARIO",
                         "ATERRO",
                         0.0,
-                        0.0,
-                        0.0,
+                        co2FisicoSalvo,
+                        co2DigitalSalvo,
                         co2Evitado,
                         arvores,
                         precoTotal,

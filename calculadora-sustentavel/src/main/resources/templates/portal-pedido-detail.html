@@ -52,6 +52,12 @@
             <a href="/portal/pedidos" class="sidebar-item active"><i class="fas fa-shopping-cart"></i>Pedidos</a>
             <a href="/portal/configuracoes" class="sidebar-item"><i class="fas fa-cog"></i>Configurações</a>
         </div>
+        <div style="padding: 20px 16px 0;">
+            <a href="/compra" class="btn w-100 d-flex align-items-center justify-content-center gap-2"
+               style="background: #E63312; color: white; border-radius: 10px; font-weight: 700; font-size: 0.9rem; padding: 10px 0;">
+                <i class="fas fa-plus-circle"></i> Novo Pedido
+            </a>
+        </div>
     </div>
 
     <div class="main-portal" style="flex: 1;">
@@ -68,19 +74,26 @@
         <div th:if="${pedido.status == 'Cancelado'}" class="alert alert-danger mb-3" style="border-radius: 10px;">
             <i class="fas fa-exclamation-triangle me-2"></i>Este pedido foi <strong>cancelado</strong> e não está mais ativo.
         </div>
+        <div th:if="${param.atualizado}" class="alert alert-success alert-dismissible fade show mb-3" style="border-radius:10px;">
+            <i class="fas fa-check-circle me-2"></i>Quantidades atualizadas e emissões recalculadas com sucesso.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
 
         <!-- Métricas principais -->
         <div class="row g-3 mb-3">
-            <div class="col-md-3">
+            <!-- DIGITAL: CO2 Evitado -->
+            <div class="col-md-3" th:if="${isDigital}">
                 <div class="metric-box">
                     <div class="metric-label">CO₂ Evitado</div>
                     <div class="metric-value" th:text="${#numbers.formatDecimal(pedido.co2Evitado ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <!-- FÍSICO: primeira caixa vazia / status -->
+            <div class="col-md-3" th:unless="${isDigital}">
                 <div class="metric-box">
-                    <div class="metric-label">Árvores Equiv.</div>
-                    <div class="metric-value" th:text="${#numbers.formatDecimal(pedido.arvoresEquivalentes ?: 0, 1, 'POINT', 0, 'COMMA')}"></div>
+                    <div class="metric-label">Cartões/Ano</div>
+                    <div class="metric-value" style="color:#E63312;"
+                         th:text="${pedido.quantidadeCartoes * pedido.remessasPorAno}"></div>
                 </div>
             </div>
             <div class="col-md-3">
@@ -199,41 +212,67 @@
             </div>
         </div>
 
-        <!-- Relatório de Emissões -->
-        <div class="card-detail">
-            <h5 class="mb-4"><i class="fas fa-cloud me-2" style="color: #E63312;"></i>Relatório de Emissões</h5>
+        <!-- Relatório de Emissões — apenas para pedidos digitais -->
+        <div class="card-detail" th:if="${isDigital}">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <h5 class="mb-0"><i class="fas fa-cloud me-2" style="color: #E63312;"></i>Relatório de Emissões</h5>
+                <!-- Botão de edição só para pedidos ativos -->
+                <button th:if="${pedido.status == 'Ativo'}" class="btn btn-sm btn-outline-secondary"
+                        style="border-radius:20px;" data-bs-toggle="modal" data-bs-target="#modalEditarQtd">
+                    <i class="fas fa-edit me-1"></i>Editar Quantidades
+                </button>
+            </div>
 
-            <!-- Total geral destacado -->
-            <div class="mb-4 p-3" style="background: #f8f9fa; border-radius: 10px; border-left: 4px solid #E63312;">
-                <div style="font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 4px;">Total de CO₂ gerado pelo processo</div>
-                <div style="font-size: 1.8rem; font-weight: 800; color: #E63312;"
+            <!-- DIGITAL: Total = físico + digital -->
+            <div th:if="${isDigital}" class="mb-4 p-3" style="background:#f8f9fa;border-radius:10px;border-left:4px solid #E63312;">
+                <div style="font-size:.85rem;color:#888;text-transform:uppercase;margin-bottom:4px;">Total de CO₂ gerado pelo processo</div>
+                <div style="font-size:1.8rem;font-weight:800;color:#E63312;"
                      th:text="${#numbers.formatDecimal((pedido.co2Fisico ?: 0) + (pedido.co2Digital ?: 0), 1, 'POINT', 2, 'COMMA')} + ' kg de CO₂'"></div>
                 <small class="text-muted">Soma das emissões físicas e digitais do processo completo</small>
             </div>
 
+            <!-- FÍSICO: destaque diferente -->
+            <div th:unless="${isDigital}" class="mb-4 p-3" style="background:#fff0ee;border-radius:10px;border-left:4px solid #dc3545;">
+                <div style="font-size:.85rem;color:#dc3545;text-transform:uppercase;margin-bottom:4px;">CO₂ emitido pelo cartão físico</div>
+                <div style="font-size:1.8rem;font-weight:800;color:#dc3545;"
+                     th:text="${#numbers.formatDecimal(pedido.co2Fisico ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg de CO₂'"></div>
+                <small class="text-muted">Ciclo de vida completo: produção + logística + fim de vida</small>
+            </div>
+
             <div class="row g-3">
+                <!-- CO2 Físico -->
                 <div class="col-md-4">
-                    <div style="background: #fff5f4; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #dc3545;">
-                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">CO₂ Físico</div>
-                        <div style="font-size: 1.6rem; font-weight: 800; color: #dc3545;"
+                    <div style="background:#fff5f4;border-radius:10px;padding:20px;text-align:center;border-top:3px solid #dc3545;">
+                        <div style="font-size:.85rem;color:#888;margin-bottom:8px;text-transform:uppercase;">CO₂ Físico</div>
+                        <div style="font-size:1.6rem;font-weight:800;color:#dc3545;"
                              th:text="${#numbers.formatDecimal(pedido.co2Fisico ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
-                        <small class="text-muted">Emissão do cartão físico</small>
+                        <small class="text-muted" th:text="${isDigital} ? 'Cenário físico simulado' : 'Emitido pelo cartão físico'"></small>
                     </div>
                 </div>
+                <!-- CO2 Digital -->
                 <div class="col-md-4">
-                    <div style="background: #f0faf4; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #00a651;">
-                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">CO₂ Digital</div>
-                        <div style="font-size: 1.6rem; font-weight: 800; color: #00a651;"
-                             th:text="${#numbers.formatDecimal(pedido.co2Digital ?: 0, 1, 'POINT', 4, 'COMMA')} + ' kg'"></div>
-                        <small class="text-muted">Emissão do e-wallet</small>
+                    <div style="background:#f0faf4;border-radius:10px;padding:20px;text-align:center;border-top:3px solid #00a651;">
+                        <div style="font-size:.85rem;color:#888;margin-bottom:8px;text-transform:uppercase;">CO₂ Digital</div>
+                        <div style="font-size:1.6rem;font-weight:800;color:#00a651;"
+                             th:text="${#numbers.formatDecimal(pedido.co2Digital ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                        <small class="text-muted" th:text="${isDigital} ? 'Emitido pelo e-wallet' : 'Se fosse digital seria'"></small>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div style="background: #f0f4ff; border-radius: 10px; padding: 20px; text-align: center; border-top: 3px solid #0d6efd;">
-                        <div style="font-size: 0.85rem; color: #888; margin-bottom: 8px; text-transform: uppercase;">Economia</div>
-                        <div style="font-size: 1.6rem; font-weight: 800; color: #0d6efd;"
+                <!-- Economia (digital) ou Excesso (físico) -->
+                <div class="col-md-4" th:if="${isDigital}">
+                    <div style="background:#f0f4ff;border-radius:10px;padding:20px;text-align:center;border-top:3px solid #0d6efd;">
+                        <div style="font-size:.85rem;color:#888;margin-bottom:8px;text-transform:uppercase;">Economia</div>
+                        <div style="font-size:1.6rem;font-weight:800;color:#0d6efd;"
                              th:text="${#numbers.formatDecimal(pedido.co2Evitado ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
                         <small class="text-muted">CO₂ deixado de emitir</small>
+                    </div>
+                </div>
+                <div class="col-md-4" th:unless="${isDigital}">
+                    <div style="background:#fff0ee;border-radius:10px;padding:20px;text-align:center;border-top:3px solid #fd7e14;">
+                        <div style="font-size:.85rem;color:#888;margin-bottom:8px;text-transform:uppercase;">Impacto Adicional</div>
+                        <div style="font-size:1.6rem;font-weight:800;color:#fd7e14;"
+                             th:text="${#numbers.formatDecimal(pedido.co2Evitado ?: 0, 1, 'POINT', 2, 'COMMA')} + ' kg'"></div>
+                        <small class="text-muted">CO₂ a mais vs. versão digital</small>
                     </div>
                 </div>
             </div>
@@ -281,5 +320,44 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Modal: Editar Quantidades -->
+<div class="modal fade" id="modalEditarQtd" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#E63312;color:white;">
+                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Editar Quantidades</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form th:action="@{/portal/pedido/{id}/atualizar(id=${pedido.id})}" method="post">
+                <div class="modal-body">
+                    <p class="text-muted small mb-3">
+                        Ao alterar as quantidades, o CO₂ será recalculado proporcionalmente ao novo volume.
+                    </p>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Cartões por Remessa</label>
+                        <input type="number" name="quantidadeCartoes" class="form-control"
+                               min="1" th:value="${pedido.quantidadeCartoes}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Remessas por Ano</label>
+                        <input type="number" name="remessasPorAno" class="form-control"
+                               min="1" th:value="${pedido.remessasPorAno}" required>
+                    </div>
+                    <div class="alert alert-info py-2 small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Total atual: <strong th:text="${pedido.quantidadeCartoes * pedido.remessasPorAno} + ' cartões/ano'"></strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn text-white" style="background:#E63312;">
+                        <i class="fas fa-save me-1"></i>Salvar e Recalcular
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

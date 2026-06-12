@@ -461,24 +461,24 @@
                     </p>
                     <div class="bg-light rounded-3 px-4 py-2 mb-4 text-center text-muted small">
                         <i class="fas fa-calculator me-1"></i>
-                        CO&#8322;e / transação (físico) = <strong>CO&#8322; total do ciclo de vida</strong> ÷ (<strong>cartões emitidos</strong> × <strong>vida útil por cartão</strong>)
+                        CO&#8322;e / transação (físico) = <strong>CO&#8322; total do ciclo de vida</strong> ÷ <strong>transações reais do período</strong>
                     </div>
                     <div class="row g-3 text-center">
                         <div class="col-md-4">
                             <div class="border rounded-3 p-3 h-100" style="border-color:#fd7e14!important;border-width:2px!important;">
                                 <div class="mb-2"><i class="fas fa-credit-card fa-lg text-warning"></i></div>
                                 <p class="fw-semibold mb-1">Cartão Físico</p>
-                                <span class="unit-badge fs-5" th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoFisico, 1, 'POINT', 6, 'COMMA')} + ' kg CO&#8322;e'"></span>
+                                <span class="unit-badge fs-5" th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoFisico, 1, 'POINT', 4, 'COMMA')} + ' kg CO&#8322;e'"></span>
                                 <div class="text-muted small mt-2">
                                     por transação realizada<br>
-                                    Vida útil de <strong th:text="${#numbers.formatInteger(impacto.vidaUtilTransacoesPorCartao, 1, 'COMMA')}"></strong> tx/cartão
+                                    Baseado em <strong th:text="${#numbers.formatInteger(impacto.quantidadeTransacoes, 1, 'COMMA')}"></strong> transações reais
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
                             <div class="mb-2 text-muted small fw-semibold">O cartão físico emite</div>
                             <span class="unit-badge fs-3" style="background:#cff4fc;color:#055160;"
-                                  th:text="${impacto.co2PorTransacaoDigital > 0 ?
+                                      th:text="${impacto.co2PorTransacaoDigital > 0 ?
                                     #numbers.formatDecimal(impacto.co2PorTransacaoFisico / impacto.co2PorTransacaoDigital, 1, 'POINT', 0, 'COMMA') + 'x mais' :
                                     'N/D'}"></span>
                             <div class="text-muted small mt-2">CO&#8322;e por transação do que a E-wallet</div>
@@ -488,7 +488,7 @@
                                 <div class="mb-2"><i class="fas fa-mobile-alt fa-lg text-success"></i></div>
                                 <p class="fw-semibold mb-1">E-Wallet <span class="badge bg-warning text-dark ms-1" style="font-size:.7rem;">Simulação</span></p>
                                 <span class="unit-badge fs-5" style="background:#d1e7dd;color:#0a3622;"
-                                      th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoDigital, 1, 'POINT', 8, 'COMMA')} + ' kg CO&#8322;e'"></span>
+                                      th:text="${#numbers.formatDecimal(impacto.co2PorTransacaoDigital, 1, 'POINT', 4, 'COMMA')} + ' kg CO&#8322;e'"></span>
                                 <div class="text-muted small mt-2">por transação digital equivalente</div>
                             </div>
                         </div>

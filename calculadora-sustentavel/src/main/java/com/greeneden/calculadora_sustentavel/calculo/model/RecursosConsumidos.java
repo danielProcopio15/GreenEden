@@ -1,4 +1,4 @@
-package com.greeneden.calculadora_sustentavel.model;
+package com.greeneden.calculadora_sustentavel.calculo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

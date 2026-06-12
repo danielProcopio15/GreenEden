@@ -405,8 +405,8 @@
             const ecoLabel = digital ? 'kg CO&#8322; evitados/remessa' : 'kg CO&#8322; gerados/remessa';
             const ecoColor = digital ? '#00a651' : '#e30613';
             const arvText  = digital
-                ? '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores equiv.'
-                : '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores/remessa impactadas';
+                ? arv.toLocaleString('pt-BR') + ' arvores equiv.'
+                : arv.toLocaleString('pt-BR') + ' arvores/remessa impactadas';
 
             const colClass  = digital ? 'col-md-4' : 'col-md-6';
             const unidLabel = digital ? 'E-Wallets / remessa' : 'Cartoes fisicos / remessa';

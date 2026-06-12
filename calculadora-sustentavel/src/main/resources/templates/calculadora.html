@@ -81,6 +81,29 @@
         .popover-header { background: #fff0ee; border-bottom: 1px solid #f3c6be; font-weight: 700; color: #9e2008; }
         .popover-body { font-size: .88rem; color: #555; }
         .fonte-badge { display:inline-block; background:#f3e8e6; color:#9e2008; border-radius:6px; font-size:.75rem; padding:2px 8px; margin-top:6px; font-weight:600; }
+
+        /* ── Preview de total de transações ── */
+        .transacoes-preview {
+            background: linear-gradient(135deg, #fff5f4, #ffe8e4);
+            border: 2px solid #f3c6be; border-radius: 12px;
+            padding: 14px 18px; transition: all .3s ease;
+        }
+        .transacoes-preview.ativo {
+            border-color: #E63312;
+            background: linear-gradient(135deg, #fff0ee, #ffd8d2);
+        }
+        .transacoes-preview .formula {
+            font-size: .82rem; color: #a0573e; margin-bottom: 6px;
+        }
+        .transacoes-preview .total-valor {
+            font-size: 1.7rem; font-weight: 800; color: #C0280F; line-height: 1;
+        }
+        .transacoes-preview .total-label {
+            font-size: .75rem; color: #a0573e; font-weight: 600; margin-top: 2px;
+        }
+        .transacoes-preview .placeholder-txt {
+            font-size: .88rem; color: #b08070; font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -169,22 +192,39 @@
                     </div>
 
                     <!-- BLOCO 2: Transações físicas realizadas -->
+                    <input type="hidden" name="quantidadeTransacoes" id="quantidadeTransacoes">
                     <div class="section-divider">
                         <p class="section-label"><i class="fas fa-exchange-alt me-1"></i> 2. Transações físicas realizadas</p>
                         <div class="row g-3 mb-2">
-                            <div class="col-md-8">
-                                <label class="form-label">Total de transações realizadas com cartão físico</label>
-                                <input type="number" name="quantidadeTransacoes" class="form-control"
-                                       placeholder="Ex: 150.000" min="0" required>
-                                <div class="invalid-feedback">Por favor, preencha o total de transações realizadas.</div>
-                                <div class="form-text">Soma de todos os usos dos cartões no período avaliado.</div>
+
+                            <!-- Usos médios por cartão/mês -->
+                            <div class="col-md-4">
+                                <label class="form-label">Usos médios por cartão/mês</label>
+                                <input type="number" id="usosPorCartaoMes" class="form-control"
+                                       placeholder="Ex: 15" min="1" required>
+                                <div class="invalid-feedback">Informe quantas vezes cada cartão é usado por mês.</div>
+                                <div class="form-text">Média de transações por cartão em cada mês.</div>
                             </div>
+
+                            <!-- Período em meses -->
+                            <div class="col-md-4">
+                                <label class="form-label">Período avaliado (meses)</label>
+                                <input type="number" id="periodoMeses" class="form-control"
+                                       placeholder="Ex: 12" min="1" max="120" required>
+                                <div class="invalid-feedback">Informe o período em meses (ex: 3, 6 ou 12).</div>
+                                <div class="form-text">Duração do período que deseja analisar.</div>
+                            </div>
+
+                            <!-- Preview calculado automaticamente -->
                             <div class="col-md-4 d-flex align-items-end">
-                                <div class="example-box p-3 w-100">
-                                    <strong>Exemplo prático:</strong><br>
-                                    10.000 cartões &times; 15 usos/mês = <strong>150.000 transações</strong>
+                                <div class="transacoes-preview w-100" id="transacoesPreview">
+                                    <div class="formula" id="transacoesFormula">cartões &times; usos/mês &times; meses</div>
+                                    <div id="transacoesTotal">
+                                        <span class="placeholder-txt">Preencha os campos ao lado</span>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -283,11 +323,52 @@
         }
     });
 
+    // Cálculo automático de transações
+    function calcularTransacoes() {
+        const cartoes    = parseInt(document.querySelector('[name="quantidadeCartoes"]')?.value) || 0;
+        const usos       = parseInt(document.getElementById('usosPorCartaoMes')?.value) || 0;
+        const meses      = parseInt(document.getElementById('periodoMeses')?.value) || 0;
+        const total      = cartoes * usos * meses;
+        const hiddenField = document.getElementById('quantidadeTransacoes');
+        const preview     = document.getElementById('transacoesPreview');
+        const formula     = document.getElementById('transacoesFormula');
+        const totalDiv    = document.getElementById('transacoesTotal');
+
+        hiddenField.value = total > 0 ? total : '';
+
+        if (total > 0) {
+            formula.innerHTML = `${cartoes.toLocaleString('pt-BR')} &times; ${usos} &times; ${meses} meses`;
+            totalDiv.innerHTML = `
+                <div class="total-valor">${total.toLocaleString('pt-BR')}</div>
+                <div class="total-label">transações no período</div>`;
+            preview.classList.add('ativo');
+            document.getElementById('usosPorCartaoMes').setCustomValidity('');
+            document.getElementById('periodoMeses').setCustomValidity('');
+        } else {
+            formula.innerHTML = 'cartões &times; usos/mês &times; meses';
+            totalDiv.innerHTML = '<span class="placeholder-txt">Preencha os campos ao lado</span>';
+            preview.classList.remove('ativo');
+        }
+    }
+
+    ['quantidadeCartoes', 'frequenciaRemessasAno'].forEach(name => {
+        document.querySelector(`[name="${name}"]`)?.addEventListener('input', calcularTransacoes);
+    });
+    document.getElementById('usosPorCartaoMes')?.addEventListener('input', calcularTransacoes);
+    document.getElementById('periodoMeses')?.addEventListener('input', calcularTransacoes);
+
     // Validação do formulário
     (function () {
         'use strict';
         const form = document.querySelector('form.needs-validation');
         form.addEventListener('submit', function (event) {
+            // Garante que o hidden field está preenchido antes de validar
+            calcularTransacoes();
+            const totalInput = document.getElementById('quantidadeTransacoes');
+            if (!totalInput.value || parseInt(totalInput.value) <= 0) {
+                document.getElementById('usosPorCartaoMes').setCustomValidity('Preencha os usos por cartão/mês.');
+                document.getElementById('periodoMeses').setCustomValidity('Preencha o período em meses.');
+            }
             if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();

@@ -1,7 +1,7 @@
-package com.greeneden.calculadora_sustentavel.service;
+package com.greeneden.calculadora_sustentavel.pedido;
 
-import com.greeneden.calculadora_sustentavel.model.Pedido;
-import com.greeneden.calculadora_sustentavel.model.Usuario;
+import com.greeneden.calculadora_sustentavel.pedido.model.Pedido;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

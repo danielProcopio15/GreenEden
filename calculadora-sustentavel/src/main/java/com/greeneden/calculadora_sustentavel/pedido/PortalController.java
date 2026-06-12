@@ -1,9 +1,9 @@
-package com.greeneden.calculadora_sustentavel;
+package com.greeneden.calculadora_sustentavel.pedido;
 
-import com.greeneden.calculadora_sustentavel.model.Pedido;
-import com.greeneden.calculadora_sustentavel.model.Usuario;
-import com.greeneden.calculadora_sustentavel.service.AutenticacaoService;
-import com.greeneden.calculadora_sustentavel.service.PedidoService;
+import com.greeneden.calculadora_sustentavel.pedido.model.Pedido;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
+import com.greeneden.calculadora_sustentavel.pedido.AutenticacaoService;
+import com.greeneden.calculadora_sustentavel.pedido.PedidoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

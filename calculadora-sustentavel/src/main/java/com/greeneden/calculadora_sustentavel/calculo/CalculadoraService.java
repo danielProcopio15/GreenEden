@@ -1,24 +1,24 @@
-﻿package com.greeneden.calculadora_sustentavel.service;
+﻿package com.greeneden.calculadora_sustentavel.calculo;
 
-import com.greeneden.calculadora_sustentavel.model.BeneficiosOperacionais;
-import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;
-import com.greeneden.calculadora_sustentavel.model.EmissoesCO2;
-import com.greeneden.calculadora_sustentavel.model.EntradaCalculo;
-import com.greeneden.calculadora_sustentavel.model.EquivalenciasAmbientais;
-import com.greeneden.calculadora_sustentavel.model.ImpactoAmbiental;
-import com.greeneden.calculadora_sustentavel.model.MetadadosCalculo;
-import com.greeneden.calculadora_sustentavel.model.RecursosConsumidos;
-import com.greeneden.calculadora_sustentavel.model.TipoMaterial;
-import com.greeneden.calculadora_sustentavel.model.TipoTransacaoDigital;
+import com.greeneden.calculadora_sustentavel.calculo.model.BeneficiosOperacionais;
+import com.greeneden.calculadora_sustentavel.calculo.model.CenarioDescarte;
+import com.greeneden.calculadora_sustentavel.calculo.model.EmissoesCO2;
+import com.greeneden.calculadora_sustentavel.calculo.model.EntradaCalculo;
+import com.greeneden.calculadora_sustentavel.calculo.model.EquivalenciasAmbientais;
+import com.greeneden.calculadora_sustentavel.calculo.model.ImpactoAmbiental;
+import com.greeneden.calculadora_sustentavel.calculo.model.MetadadosCalculo;
+import com.greeneden.calculadora_sustentavel.calculo.model.RecursosConsumidos;
+import com.greeneden.calculadora_sustentavel.calculo.model.TipoMaterial;
+import com.greeneden.calculadora_sustentavel.calculo.model.TipoTransacaoDigital;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CalculadoraService implements CalculadoraServiceInterface {
+public class CalculadoraService {
 
     // â”€â”€â”€ Fatores de emissÃ£o â€” Embalagem â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // Fonte: GHG Protocol Scope 3 Cat.1 / Ecoinvent 3.9 (ano-base 2024)
-    // ~15% do Escopo3 Edenred / 5.500.000 cartÃµes = 0,100 kg COâ‚‚e/cartÃ£o
-    private static final double CO2_EMBALAGEM_POR_CARTAO = 0.020;  // LCA ISO 14040/44: envelope + plastico protetor + cartao guia
+    // Fonte: LCA ISO 14040/44 — envelope kraft (~30 g) + protetor plastico (~2 g) + cartao-guia (~15 g)
+    // Faixa bibliografica: 0,015-0,035 kg CO2e/cartao; adotado 0,020 (media central, Ecoinvent 3.9)
+    private static final double CO2_EMBALAGEM_POR_CARTAO = 0.020;  // kg CO2e/cartao
 
     // â”€â”€â”€ Fatores logÃ­sticos por km/cartÃ£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Fonte: DEFRA UK (2023) convertido para tonelada-km modal
@@ -40,18 +40,22 @@ public class CalculadoraService implements CalculadoraServiceInterface {
     private static final double ENERGIA_POR_CARTAO  = 1.070;    // kWh
 
     // â”€â”€â”€ Digital â€” fatores detalhados por transaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    // Fonte: IEA 2023, Freitag et al. (2021), benchmarks de instant payment EBA
-    // Fator emissÃ£o rede elÃ©trica Brasil: 0,0839 kg COâ‚‚e/kWh (MCTI 2023)
-    // Servidor/data center: 0,000040 kWh/transaÃ§Ã£o Ã— 0,0839 = 0,00000336 kg COâ‚‚e
-    private static final double CO2_SERVIDOR_POR_TRANSACAO      = 0.00000336; // kg COâ‚‚e
-    // Telecom: 0,000008 kWh/transaÃ§Ã£o Ã— 0,0839
-    private static final double CO2_TELECOM_POR_TRANSACAO       = 0.00000067; // kg COâ‚‚e
-    // Dispositivo do usuÃ¡rio: 0,000011 kWh/transaÃ§Ã£o Ã— 0,0839
-    private static final double CO2_DISPOSITIVO_POR_TRANSACAO   = 0.00000092; // kg COâ‚‚e
+    // Fontes: Freitag et al. (2021) Patterns, Cell Press; EBA (2023) instant payments carbon benchmark;
+    // Malmodin & Lunden (2018) J. Industrial Ecology; IEA (2023) Data Centres and Transmission Networks;
+    // Falk & Obwegeser (2020) J. Cleaner Production.
+    // Inclui carbono operacional + carbono incorporado (embodied carbon) da infraestrutura — omitir
+    // o embodied carbon subestima 40-70% do footprint digital (Freitag et al. 2021).
+    // PIX baseline total: ~0,0002 kg CO2e/transacao (EBA 2023 instant payment, limite inferior conservador).
+    // Servidor/DC: operacional + embodied carbon de servidores e data centers
+    private static final double CO2_SERVIDOR_POR_TRANSACAO    = 0.000080; // kg CO2e
+    // Telecom: infraestrutura fixa + movel amortizada — Malmodin & Lunden (2018)
+    private static final double CO2_TELECOM_POR_TRANSACAO     = 0.000070; // kg CO2e
+    // Dispositivo: amortizacao de fabricacao (~70 kg CO2e / 3 anos / 1095 tx/ano) — Falk & Obwegeser (2020)
+    private static final double CO2_DISPOSITIVO_POR_TRANSACAO = 0.000050; // kg CO2e
 
     // â”€â”€â”€ EquivalÃªncias â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     private static final double CO2_POR_ARVORE_ANO = 22.0;  // kg COâ‚‚/Ã¡rvore/ano
-    private static final double CO2_POR_KM_CARRO   = 0.21;  // kg COâ‚‚/km (carro mÃ©dio)
+    private static final double CO2_POR_KM_CARRO   = 0.170; // kg CO2/km (frota brasileira flex - ANFAVEA/SEEG 2023)
 
     // â”€â”€â”€ Metadados fixos desta versÃ£o do serviÃ§o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     private static final MetadadosCalculo METADADOS = new MetadadosCalculo(
@@ -62,10 +66,7 @@ public class CalculadoraService implements CalculadoraServiceInterface {
             "Anual",
             "Cradle-to-Grave (fÃ­sico) / Cradle-to-Gate (digital)",
             "Por produto (cartÃ£o fÃ­sico vs. transaÃ§Ã£o digital)"
-    );
-
-    @Override
-    public ImpactoAmbiental calcularImpacto(EntradaCalculo entrada) {
+    );    public ImpactoAmbiental calcularImpacto(EntradaCalculo entrada) {
 
         int qtdCartoesPorRemessa = entrada.getQuantidadeCartoes();
         int frequencia    = entrada.getFrequenciaRemessasAno() > 0 ? entrada.getFrequenciaRemessasAno() : 1;

@@ -1,6 +1,6 @@
-package com.greeneden.calculadora_sustentavel.service;
+package com.greeneden.calculadora_sustentavel.calculo;
 
-import com.greeneden.calculadora_sustentavel.model.OrigemFabrica;
+import com.greeneden.calculadora_sustentavel.calculo.model.OrigemFabrica;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

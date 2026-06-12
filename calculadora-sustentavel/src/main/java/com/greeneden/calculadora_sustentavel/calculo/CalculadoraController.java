@@ -1,16 +1,16 @@
-package com.greeneden.calculadora_sustentavel;
+package com.greeneden.calculadora_sustentavel.calculo;
 
-import com.greeneden.calculadora_sustentavel.model.CenarioDescarte;
-import com.greeneden.calculadora_sustentavel.model.EntradaCalculo;
-import com.greeneden.calculadora_sustentavel.model.ImpactoAmbiental;
-import com.greeneden.calculadora_sustentavel.model.OrigemFabrica;
-import com.greeneden.calculadora_sustentavel.model.TipoMaterial;
-import com.greeneden.calculadora_sustentavel.model.TipoTransacaoDigital;
-import com.greeneden.calculadora_sustentavel.service.CalculadoraServiceInterface;
-import com.greeneden.calculadora_sustentavel.service.GeolocalizacaoService;
-import com.greeneden.calculadora_sustentavel.service.AutenticacaoService;
-import com.greeneden.calculadora_sustentavel.service.PedidoService;
-import com.greeneden.calculadora_sustentavel.model.Usuario;
+import com.greeneden.calculadora_sustentavel.calculo.model.CenarioDescarte;
+import com.greeneden.calculadora_sustentavel.calculo.model.EntradaCalculo;
+import com.greeneden.calculadora_sustentavel.calculo.model.ImpactoAmbiental;
+import com.greeneden.calculadora_sustentavel.calculo.model.OrigemFabrica;
+import com.greeneden.calculadora_sustentavel.calculo.model.TipoMaterial;
+import com.greeneden.calculadora_sustentavel.calculo.model.TipoTransacaoDigital;
+import com.greeneden.calculadora_sustentavel.calculo.CalculadoraService;
+import com.greeneden.calculadora_sustentavel.calculo.GeolocalizacaoService;
+import com.greeneden.calculadora_sustentavel.pedido.AutenticacaoService;
+import com.greeneden.calculadora_sustentavel.pedido.PedidoService;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +22,12 @@ import java.util.Optional;
 @Controller
 public class CalculadoraController {
 
-    private final CalculadoraServiceInterface calculadoraService;
+    private final CalculadoraService calculadoraService;
     private final GeolocalizacaoService geolocalizacaoService;
     private final AutenticacaoService autenticacaoService;
     private final PedidoService pedidoService;
 
-    public CalculadoraController(CalculadoraServiceInterface calculadoraService,
+    public CalculadoraController(CalculadoraService calculadoraService,
                                   GeolocalizacaoService geolocalizacaoService,
                                   AutenticacaoService autenticacaoService,
                                   PedidoService pedidoService) {

@@ -1,4 +1,4 @@
-package com.greeneden.calculadora_sustentavel.model;
+package com.greeneden.calculadora_sustentavel.pedido.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

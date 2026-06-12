@@ -88,7 +88,7 @@ Certifique-se de ter instalado em sua máquina:
 - [Java JDK 17+](https://www.oracle.com/java/technologies/downloads/)
 - [Maven 3.8+](https://maven.apache.org/download.cgi)
 
-### Passos para execução
+### Passos para execução.
 
 **1. Clone o repositório:**
 ```bash

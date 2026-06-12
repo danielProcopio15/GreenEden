@@ -181,3 +181,6 @@ http://localhost:8080
 
 [VÍDEO DE HISTÓRIAS 5 À 10](https://youtu.be/1VJKZM58rHU)
 
+## Colaboradores
+
+- Lucas Rocha

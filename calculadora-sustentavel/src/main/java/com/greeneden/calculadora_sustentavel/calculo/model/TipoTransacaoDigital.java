@@ -1,4 +1,4 @@
-package com.greeneden.calculadora_sustentavel.model;
+package com.greeneden.calculadora_sustentavel.calculo.model;
 
 /**
  * Tecnologia utilizada na transação digital.

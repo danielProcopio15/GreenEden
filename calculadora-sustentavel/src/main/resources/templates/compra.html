@@ -405,8 +405,8 @@
             const ecoLabel = digital ? 'kg CO&#8322; evitados/remessa' : 'kg CO&#8322; gerados/remessa';
             const ecoColor = digital ? '#00a651' : '#e30613';
             const arvText  = digital
-                ? '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores equiv.'
-                : '&#127795; ' + arv.toLocaleString('pt-BR') + ' arvores/remessa impactadas';
+                ? arv.toLocaleString('pt-BR') + ' arvores equiv.'
+                : arv.toLocaleString('pt-BR') + ' arvores/remessa impactadas';
 
             const colClass  = digital ? 'col-md-4' : 'col-md-6';
             const unidLabel = digital ? 'E-Wallets / remessa' : 'Cartoes fisicos / remessa';
@@ -443,7 +443,7 @@
                         '</div>' +
                     '</div>' +
                     '<div class="mt-auto pt-4">' +
-                        '<button type="button" class="' + p.btnClass + '" onclick="irContato(\'' + p.nome + '\', ' + qty + ', \'' + (digital ? 'digital' : 'fisico') + '\', ' + total.toFixed(2) + ', ' + parseFloat(co2Exibido).toFixed(2) + ', ' + arv + '); return false;">' +
+                        '<button type="button" class="' + p.btnClass + '" onclick="irContato(\'' + p.nome + '\', ' + qty + ', \'' + (digital ? 'digital' : 'fisico') + '\', ' + total.toFixed(2) + ', ' + parseFloat(co2Exibido).toFixed(2) + ', ' + arv + ', ' + (co2FisicoPorCartao * qty).toFixed(2) + '); return false;">' +
                             '<i class="fas fa-paper-plane me-2"></i>' + p.btnText +
                         '</button>' +
                     '</div>' +
@@ -504,14 +504,15 @@
         renderPlanos(modoAtual);
     };
 
-    // ── ALTERADO: recebe co2Evitado e arvores da tela de compra ──
-    window.irContato = function (plano, quantidade, tipo, precoTotal, co2Evitado, arvores) {
+    // ── ALTERADO: recebe co2Evitado, arvores e co2Fisico da tela de compra ──
+    window.irContato = function (plano, quantidade, tipo, precoTotal, co2Evitado, arvores, co2Fisico) {
         window.location.href = '/contato?plano=' + encodeURIComponent(plano)
             + '&quantidade=' + quantidade
             + '&tipo=' + tipo
             + '&precoTotal=' + precoTotal
             + '&co2Evitado=' + co2Evitado
-            + '&arvores=' + arvores;
+            + '&arvores=' + arvores
+            + '&co2Fisico=' + (co2Fisico || 0);
     };
 
     const inputEl = document.getElementById('demandaInput');

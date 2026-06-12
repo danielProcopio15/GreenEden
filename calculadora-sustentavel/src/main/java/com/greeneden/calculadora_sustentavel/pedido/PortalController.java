@@ -1,9 +1,9 @@
-package com.greeneden.calculadora_sustentavel;
+package com.greeneden.calculadora_sustentavel.pedido;
 
-import com.greeneden.calculadora_sustentavel.model.Pedido;
-import com.greeneden.calculadora_sustentavel.model.Usuario;
-import com.greeneden.calculadora_sustentavel.service.AutenticacaoService;
-import com.greeneden.calculadora_sustentavel.service.PedidoService;
+import com.greeneden.calculadora_sustentavel.pedido.model.Pedido;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
+import com.greeneden.calculadora_sustentavel.pedido.AutenticacaoService;
+import com.greeneden.calculadora_sustentavel.pedido.PedidoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,12 @@ public class PortalController {
         return null;
     }
 
+    /** Pedido é digital quando o plano não contém "fisico"/"físico"/"personalizado" */
+    private boolean isDigitalPedido(Pedido p) {
+        String plano = p.getTipoPlano() != null ? p.getTipoPlano().toLowerCase() : "";
+        return !plano.contains("fisico") && !plano.contains("ísico") && !plano.contains("personalizado");
+    }
+
     @GetMapping("")
     public String dashboard(HttpSession session, Model model) {
         String redirectCheck = verificarAutenticacao(session, model);
@@ -39,9 +45,12 @@ public class PortalController {
 
         List<Pedido> pedidos = pedidoService.listarPedidosDoUsuario(usuarioId);
 
-        double totalCO2 = pedidos.stream().filter(p -> p.getCo2Evitado() != null)
+        double totalCO2 = pedidos.stream().filter(p -> p.getCo2Evitado() != null && isDigitalPedido(p))
                 .mapToDouble(Pedido::getCo2Evitado).sum();
-        double totalArvores = pedidos.stream().filter(p -> p.getArvoresEquivalentes() != null)
+        double totalCO2Fisico = pedidos.stream().filter(p -> p.getCo2Fisico() != null && !isDigitalPedido(p))
+                .mapToDouble(Pedido::getCo2Fisico).sum();
+        double totalCO2Liquido = totalCO2 - totalCO2Fisico;
+        double totalArvores = pedidos.stream().filter(p -> p.getArvoresEquivalentes() != null && isDigitalPedido(p))
                 .mapToDouble(Pedido::getArvoresEquivalentes).sum();
         double totalInvestimento = pedidos.stream().filter(p -> p.getPrecoTotal() != null)
                 .mapToDouble(Pedido::getPrecoTotal).sum();
@@ -53,6 +62,8 @@ public class PortalController {
 
         model.addAttribute("usuarioNome", usuarioNome);
         model.addAttribute("totalCO2Evitado", String.format("%.2f", totalCO2));
+        model.addAttribute("totalCO2Fisico", String.format("%.2f", totalCO2Fisico));
+        model.addAttribute("totalCO2Liquido", String.format("%.2f", totalCO2Liquido));
         model.addAttribute("totalArvoresEquivalentes", (long) totalArvores);
         model.addAttribute("totalPedidos", pedidos.size());
         model.addAttribute("pedidosAtivos", pedidos.stream().filter(p -> "Ativo".equals(p.getStatus())).count());
@@ -76,9 +87,12 @@ public class PortalController {
 
         double totalPreco = ativos.stream().filter(p -> p.getPrecoTotal() != null)
                 .mapToDouble(Pedido::getPrecoTotal).sum();
-        double totalCO2 = ativos.stream().filter(p -> p.getCo2Evitado() != null)
+        double totalCO2 = ativos.stream().filter(p -> p.getCo2Evitado() != null && isDigitalPedido(p))
                 .mapToDouble(Pedido::getCo2Evitado).sum();
-        double totalArvores = ativos.stream().filter(p -> p.getArvoresEquivalentes() != null)
+        double totalCO2Fisico = ativos.stream().filter(p -> p.getCo2Fisico() != null && !isDigitalPedido(p))
+                .mapToDouble(Pedido::getCo2Fisico).sum();
+        double totalCO2Liquido = totalCO2 - totalCO2Fisico;
+        double totalArvores = ativos.stream().filter(p -> p.getArvoresEquivalentes() != null && isDigitalPedido(p))
                 .mapToDouble(Pedido::getArvoresEquivalentes).sum();
 
         model.addAttribute("usuarioNome", usuarioNome);
@@ -87,6 +101,8 @@ public class PortalController {
         model.addAttribute("totalPedidos", todos.size());
         model.addAttribute("totalPreco", String.format("%.2f", totalPreco));
         model.addAttribute("totalCO2Pedidos", String.format("%.2f", totalCO2));
+        model.addAttribute("totalCO2FisicoPedidos", String.format("%.2f", totalCO2Fisico));
+        model.addAttribute("totalCO2LiquidoPedidos", String.format("%.2f", totalCO2Liquido));
         model.addAttribute("totalArvoresPedidos", (long) totalArvores);
 
         return "portal-pedidos";
@@ -113,7 +129,8 @@ public class PortalController {
                 && !tipoPlano.contains("personalizado");
 
         double reducaoPercentual = 0;
-        if (isDigital && pedido.getCo2Fisico() != null && pedido.getCo2Fisico() > 0) {
+        if (isDigital && pedido.getCo2Fisico() != null && pedido.getCo2Fisico() > 0
+                && pedido.getCo2Evitado() != null) {
             reducaoPercentual = (pedido.getCo2Evitado() / pedido.getCo2Fisico()) * 100;
         }
 
@@ -123,6 +140,27 @@ public class PortalController {
         model.addAttribute("reducaoPercentual", String.format("%.1f", reducaoPercentual));
 
         return "portal-pedido-detail";
+    }
+
+    @PostMapping("/pedido/{id}/atualizar")
+    public String atualizarQuantidades(
+            @PathVariable Long id,
+            @RequestParam int quantidadeCartoes,
+            @RequestParam int remessasPorAno,
+            HttpSession session) {
+        String redirectCheck = verificarAutenticacao(session, null);
+        if (redirectCheck != null) return redirectCheck;
+
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        Optional<Pedido> pedidoOpt = pedidoService.obterPorId(id);
+        if (pedidoOpt.isEmpty() || pedidoOpt.get().getUsuario() == null
+                || !pedidoOpt.get().getUsuario().getId().equals(usuarioId)) {
+            return "redirect:/portal/pedidos";
+        }
+        if (quantidadeCartoes > 0 && remessasPorAno > 0) {
+            pedidoService.atualizarQuantidades(id, quantidadeCartoes, remessasPorAno);
+        }
+        return "redirect:/portal/pedido/" + id + "?atualizado=true";
     }
 
     @PostMapping("/pedido/{id}/cancelar")

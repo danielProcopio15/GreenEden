@@ -1,7 +1,7 @@
-package com.greeneden.calculadora_sustentavel.service;
+package com.greeneden.calculadora_sustentavel.pedido;
 
-import com.greeneden.calculadora_sustentavel.model.Pedido;
-import com.greeneden.calculadora_sustentavel.model.Usuario;
+import com.greeneden.calculadora_sustentavel.pedido.model.Pedido;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,5 +103,34 @@ public class PedidoService {
     @Transactional
     public int vincularPedidosOrfaos(Long usuarioId, String email) {
         return pedidoRepository.vincularPedidosOrfaos(usuarioId, email);
+    }
+
+    /**
+     * Atualiza quantidade e remessas do pedido, escalando todos os valores de CO₂
+     * proporcionalmente ao novo volume total (novaQtd × novasRemessas).
+     */
+    @Transactional
+    public void atualizarQuantidades(Long pedidoId, int novaQtd, int novasRemessas) {
+        Optional<Pedido> opt = pedidoRepository.findById(pedidoId);
+        if (opt.isEmpty()) return;
+        Pedido p = opt.get();
+
+        int oldTotal = (p.getQuantidadeCartoes() != null ? p.getQuantidadeCartoes() : 1)
+                     * (p.getRemessasPorAno()     != null ? p.getRemessasPorAno()     : 1);
+        int newTotal = novaQtd * novasRemessas;
+        if (oldTotal <= 0 || newTotal <= 0) return;
+
+        double scale = (double) newTotal / oldTotal;
+
+        p.setQuantidadeCartoes(novaQtd);
+        p.setRemessasPorAno(novasRemessas);
+        if (p.getQuantidadeTransacoes() != null)
+            p.setQuantidadeTransacoes((int) Math.round(p.getQuantidadeTransacoes() * scale));
+        if (p.getCo2Fisico() != null)       p.setCo2Fisico(p.getCo2Fisico() * scale);
+        if (p.getCo2Digital() != null)      p.setCo2Digital(p.getCo2Digital() * scale);
+        if (p.getCo2Evitado() != null)      p.setCo2Evitado(p.getCo2Evitado() * scale);
+        if (p.getArvoresEquivalentes() != null) p.setArvoresEquivalentes(p.getArvoresEquivalentes() * scale);
+
+        pedidoRepository.save(p);
     }
 }

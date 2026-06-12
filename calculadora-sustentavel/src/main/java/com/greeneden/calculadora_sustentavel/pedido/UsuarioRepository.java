@@ -1,6 +1,6 @@
-package com.greeneden.calculadora_sustentavel.service;
+package com.greeneden.calculadora_sustentavel.pedido;
 
-import com.greeneden.calculadora_sustentavel.model.Usuario;
+import com.greeneden.calculadora_sustentavel.pedido.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

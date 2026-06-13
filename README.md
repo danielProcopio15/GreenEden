@@ -15,7 +15,7 @@ A aplicação tem como objetivo fornecer **dados claros e mensuráveis** que evi
 <a href="https://www.figma.com/design/RvPYGINYFSBpAgE24C5KMr/Untitled?node-id=0-1&p=f" target="_blank">
   <img src="https://img.shields.io/badge/Figma-A259FF?style=for-the-badge&logo=figma&logoColor=white" alt="Figma"/>
 </a>
-<a href="#" target="_blank">
+<a href="https://www.youtube.com/watch?v=azZcPUxhi8U" target="_blank">
   <img src="https://img.shields.io/badge/Screencast-FF4444?style=for-the-badge&logo=youtube&logoColor=white" alt="Screencast"/>
 </a>
 <a href="https://www.youtube.com/watch?v=azZcPUxhi8U" target="_blank">

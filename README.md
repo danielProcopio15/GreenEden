@@ -13,6 +13,25 @@ A aplicação tem como objetivo fornecer **dados claros e mensuráveis** que evi
   <img src="https://img.shields.io/badge/Google%20Sites-GreenEden-34A853?style=for-the-badge&logo=google&logoColor=white" alt="Google Sites - Projeto"/>
 </a>
 
+<a href="https://www.figma.com/design/RvPYGINYFSBpAgE24C5KMr/Untitled?node-id=0-1&p=f" target="_blank">
+  <img src="https://img.shields.io/badge/Figma-GreenEden-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma"/>
+</a>
+
+<a href="#" target="_blank">
+  <img src="https://img.shields.io/badge/Screencast-GreenEden-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Screencast"/>
+</a>
+
+<a href="https://greeneden.onrender.com" target="_blank">
+  <img src="https://img.shields.io/badge/Site%20Online-GreenEden-46E3B7?style=for-the-badge&logo=render&logoColor=white" alt="Site Online"/>
+</a>
+
+<a href="https://app.clickup.com/90133097961/v/b/2ky5kvf9-313" target="_blank">
+  <img src="https://img.shields.io/badge/ClickUp-GreenEden-7B68EE?style=for-the-badge&logo=clickup&logoColor=white" alt="ClickUp"/>
+</a>
+
+<a href="https://drive.google.com/drive/folders/1XiBvM3WJrKAb-JnYdhzs_hXR9To0FmcD?hl=pt-br" target="_blank">
+  <img src="https://img.shields.io/badge/Google%20Drive-GreenEden-4285F4?style=for-the-badge&logo=googledrive&logoColor=white" alt="Google Drive"/>
+</a>
 
 ## 🎯 Objetivo
 

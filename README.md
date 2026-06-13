@@ -155,7 +155,7 @@ http://localhost:8080
 - História de usuário 1: Informar quantidade de transações
 - História de usuário 2: Executar cálculo da simulação
 
-[ VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
+[DEMONSTRAÇÃO EM VÍDEO DE HISTÓRIAS 1 E 2](https://youtu.be/5JnaSlpTr1o)
 
 
 ---
@@ -174,7 +174,7 @@ http://localhost:8080
 - História do usuário 3: Exibir comparação entre transações físicas e digitais
 - História do usuário 4: Mostrar redução de impacto ambiental
 
-[VÍDEO DE HISTÓRIAS 3 E 4](https://youtu.be/YY-lYN32ajc)
+[DEMONSTRAÇÃO EM VÍDEO DE HISTÓRIAS 3 E 4](https://youtu.be/YY-lYN32ajc)
 
 
 ---
@@ -196,6 +196,6 @@ http://localhost:8080
 - História do usuário 9: Botão de redirecionamento de calculo final para compra do digital
 - História do usuário 10: Página de Compra com opção para digital
 
-[VÍDEO DE HISTÓRIAS 5 À 10](https://youtu.be/1VJKZM58rHU)
+[DEMONSTRAÇÃO EM VÍDEO DE HISTÓRIAS 5 À 10](https://youtu.be/1VJKZM58rHU)
 
  

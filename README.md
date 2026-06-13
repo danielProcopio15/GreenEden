@@ -113,7 +113,7 @@ git clone https://github.com/danielProcopio15/GreenEden.git
 cd GreenEden
 ```
 
-**2. Acesse a pasta do projeto:**
+**2. Acesse a pasta do projeto :**
 ```bash
 cd calculadora-sustentavel
 ```
